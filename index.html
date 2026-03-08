@@ -8,13 +8,20 @@
 <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
 
 <style>
+html, body{
+    height:100%;
+    margin:0;
+    padding:0;
+}
+
 body{
     font-family:Arial, sans-serif;
     background:#111;
     color:white;
-    margin:0;
     padding:40px 20px;
     cursor:url("cursor.png"), auto;
+    position:relative; /* important for z-index stacking */
+    overflow-x:hidden;
 }
 
 a,button{
@@ -27,12 +34,14 @@ a,button{
     height:100%;
     top:0;
     left:0;
-    z-index:-1;
+    z-index:0; /* behind everything */
 }
 
 .container{
     max-width:800px;
     margin:auto;
+    position:relative;
+    z-index:1; /* in front of particles */
 }
 
 .header{
@@ -115,6 +124,9 @@ hr{
 </head>
 
 <body>
+
+<!-- Particles background -->
+<div id="particles-js"></div>
 
 <!-- Hidden YouTube Playlist -->
 <div id="bg-music" style="display:none;">
@@ -223,7 +235,7 @@ particlesJS("particles-js",{
     }
 });
 
-// Autoplay hidden YouTube playlist (may require first click due to browser rules)
+// Autoplay hidden YouTube playlist (after first click)
 document.addEventListener("click", function(){
     const iframe = document.getElementById("music-iframe");
     iframe.src = iframe.src;
