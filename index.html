@@ -8,110 +8,117 @@
 <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
 
 <style>
-/* Make sure html and body take full height */
-html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    overflow-x: hidden;
-    font-family: Arial, sans-serif;
-    background: #111;
-    color: white;
-    cursor: url("cursor.png"), auto;
+html, body{
+    height:100%;
+    margin:0;
+    padding:0;
 }
 
-/* Hidden YouTube iframe doesn't interfere */
-#bg-music { display: none; }
-
-/* Particles container full-screen behind everything */
-#particles-js {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1; /* behind all content */
+body{
+    font-family:Arial, sans-serif;
+    background:#111;
+    color:white;
+    padding:40px 20px;
+    cursor:url("cursor.png"), auto;
+    position:relative; /* important for z-index stacking */
+    overflow-x:hidden;
 }
 
-/* Content container */
-.container {
-    max-width: 800px;
-    margin: auto;
-    position: relative;
-    z-index: 1; /* in front of particles */
+a,button{
+    cursor:url("pointer.png"), pointer;
 }
 
-/* Header */
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
+#particles-js{
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    z-index:0; /* behind everything */
 }
 
-.avatar {
-    width: 62px;
-    border-radius: 50%;
+.container{
+    max-width:800px;
+    margin:auto;
+    position:relative;
+    z-index:1; /* in front of particles */
 }
 
-.divider {
-    font-size: 42px;
-    opacity: 0.8;
+.header{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
 }
 
-.header h1 {
-    font-size: 46px;
-    margin: 0;
+.avatar{
+    width:62px;
+    border-radius:50%;
 }
 
-.center { text-align: center; }
-
-h2 { text-align: center; margin-top: 40px; }
-
-hr {
-    border: none;
-    border-top: 1px solid #444;
-    margin: 30px 0;
+.divider{
+    font-size:42px;
+    opacity:0.8;
 }
 
-.badges {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 10px;
+.header h1{
+    font-size:46px;
+    margin:0;
 }
 
-.links {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-    margin-top: 10px;
+.center{
+    text-align:center;
 }
 
-.button {
-    color: white;
-    padding: 12px 24px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: bold;
-    font-family: sans-serif;
-    transition: 0.2s;
+h2{
+    text-align:center;
+    margin-top:40px;
 }
 
-.button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+hr{
+    border:none;
+    border-top:1px solid #444;
+    margin:30px 0;
 }
 
-.discord { background: #7289DA; }
-.profile { background: #5865F2; }
-.bot { background: #FFAC33; }
+.badges{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:10px;
+}
 
-@keyframes pop {
-    0% { transform: scale(1); opacity: 1; }
-    100% { transform: scale(6); opacity: 0; }
+.links{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:16px;
+    margin-top:10px;
+}
+
+.button{
+    color:white;
+    padding:12px 24px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:bold;
+    font-family:sans-serif;
+    transition:0.2s;
+}
+
+.button:hover{
+    transform:scale(1.05);
+    box-shadow:0 0 15px rgba(255,255,255,0.4);
+}
+
+.discord{background:#7289DA;}
+.profile{background:#5865F2;}
+.bot{background:#FFAC33;}
+
+@keyframes pop{
+    0%{transform:scale(1);opacity:1;}
+    100%{transform:scale(6);opacity:0;}
 }
 </style>
 </head>
@@ -122,7 +129,7 @@ hr {
 <div id="particles-js"></div>
 
 <!-- Hidden YouTube Playlist -->
-<div id="bg-music">
+<div id="bg-music" style="display:none;">
 <iframe id="music-iframe"
 width="0"
 height="0"
@@ -198,37 +205,37 @@ My Bot Profile
 
 <script>
 // Click sound + particle effect
-document.addEventListener("click", function(e){
-    const sound = document.getElementById("click-sound");
-    sound.currentTime = 0;
+document.addEventListener("click",function(e){
+    const sound=document.getElementById("click-sound");
+    sound.currentTime=0;
     sound.play();
 
-    const particle = document.createElement("div");
-    particle.style.position = "fixed";
-    particle.style.left = e.clientX+"px";
-    particle.style.top = e.clientY+"px";
-    particle.style.width = "8px";
-    particle.style.height = "8px";
-    particle.style.background = "#5865F2";
-    particle.style.borderRadius = "50%";
-    particle.style.pointerEvents = "none";
-    particle.style.animation = "pop 0.6s forwards";
+    const particle=document.createElement("div");
+    particle.style.position="fixed";
+    particle.style.left=e.clientX+"px";
+    particle.style.top=e.clientY+"px";
+    particle.style.width="8px";
+    particle.style.height="8px";
+    particle.style.background="#5865F2";
+    particle.style.borderRadius="50%";
+    particle.style.pointerEvents="none";
+    particle.style.animation="pop 0.6s forwards";
     document.body.appendChild(particle);
-    setTimeout(()=>particle.remove(), 600);
+    setTimeout(()=>particle.remove(),600);
 });
 
-// Particle.js initialization
+// Particle.js background
 particlesJS("particles-js",{
-    particles: {
-        number: { value: 80 },
-        size: { value: 3 },
-        color: { value: "#ffffff" },
-        line_linked: { enable: true, color: "#ffffff" },
-        move: { speed: 1 }
+    particles:{
+        number:{value:80},
+        size:{value:3},
+        color:{value:"#ffffff"},
+        line_linked:{enable:true,color:"#ffffff"},
+        move:{speed:1}
     }
 });
 
-// Start hidden YouTube playlist (requires first click in some browsers)
+// Autoplay hidden YouTube playlist (after first click)
 document.addEventListener("click", function(){
     const iframe = document.getElementById("music-iframe");
     iframe.src = iframe.src;
