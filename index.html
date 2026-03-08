@@ -8,135 +8,122 @@
 <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
 
 <style>
-
 body{
-font-family:Arial, sans-serif;
-background:#111;
-color:white;
-margin:0;
-padding:40px 20px;
-cursor:url("cursor.png"), auto;
+    font-family:Arial, sans-serif;
+    background:#111;
+    color:white;
+    margin:0;
+    padding:40px 20px;
+    cursor:url("cursor.png"), auto;
 }
 
 a,button{
-cursor:url("pointer.png"), pointer;
+    cursor:url("pointer.png"), pointer;
 }
 
 #particles-js{
-position:fixed;
-width:100%;
-height:100%;
-top:0;
-left:0;
-z-index:-1;
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    z-index:-1;
 }
 
 .container{
-max-width:800px;
-margin:auto;
+    max-width:800px;
+    margin:auto;
 }
 
 .header{
-display:flex;
-align-items:center;
-justify-content:center;
-gap:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
 }
 
 .avatar{
-width:62px;
-border-radius:50%;
+    width:62px;
+    border-radius:50%;
 }
 
 .divider{
-font-size:42px;
-opacity:0.8;
+    font-size:42px;
+    opacity:0.8;
 }
 
 .header h1{
-font-size:46px;
-margin:0;
+    font-size:46px;
+    margin:0;
 }
 
 .center{
-text-align:center;
+    text-align:center;
 }
 
 h2{
-text-align:center;
-margin-top:40px;
+    text-align:center;
+    margin-top:40px;
 }
 
 hr{
-border:none;
-border-top:1px solid #444;
-margin:30px 0;
+    border:none;
+    border-top:1px solid #444;
+    margin:30px 0;
 }
 
 .badges{
-display:flex;
-justify-content:center;
-flex-wrap:wrap;
-gap:8px;
-margin-top:10px;
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:10px;
 }
 
 .links{
-display:flex;
-flex-direction:column;
-align-items:center;
-gap:16px;
-margin-top:10px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:16px;
+    margin-top:10px;
 }
 
 .button{
-color:white;
-padding:12px 24px;
-border-radius:8px;
-text-decoration:none;
-font-weight:bold;
-font-family:sans-serif;
-transition:0.2s;
+    color:white;
+    padding:12px 24px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:bold;
+    font-family:sans-serif;
+    transition:0.2s;
 }
 
 .button:hover{
-transform:scale(1.05);
-box-shadow:0 0 15px rgba(255,255,255,0.4);
+    transform:scale(1.05);
+    box-shadow:0 0 15px rgba(255,255,255,0.4);
 }
 
 .discord{background:#7289DA;}
 .profile{background:#5865F2;}
 .bot{background:#FFAC33;}
 
-#music-player{
-position:fixed;
-top:20px;
-right:20px;
-z-index:999;
-box-shadow:0 0 20px rgba(0,0,0,0.6);
-border-radius:12px;
-}
-
 @keyframes pop{
-0%{transform:scale(1);opacity:1;}
-100%{transform:scale(6);opacity:0;}
+    0%{transform:scale(1);opacity:1;}
+    100%{transform:scale(6);opacity:0;}
 }
-
 </style>
 </head>
 
 <body>
 
-<div id="particles-js"></div>
-
-<div id="music-player">
-<iframe style="border-radius:12px"
-src="https://open.spotify.com/embed/playlist/37i9dQZF1DWWEJlAGA9gs0?utm_source=generator"
-width="300"
-height="152"
-frameBorder="0"
-allowfullscreen=""
-allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+<!-- Hidden YouTube Playlist -->
+<div id="bg-music" style="display:none;">
+<iframe id="music-iframe"
+width="0"
+height="0"
+src="https://www.youtube.com/embed?listType=playlist&list=PLh0jW7hW9YkP3zqjhz5SxyK0RYWf1RssC&autoplay=1&loop=1&controls=0&disablekb=1&modestbranding=1&iv_load_policy=3&rel=0"
+frameborder="0"
+allow="autoplay">
 </iframe>
 </div>
 
@@ -151,7 +138,6 @@ allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-pictur
 <hr>
 
 <h2>About Me</h2>
-
 <p class="center">
 Hi! I'm <b>Sh4dow</b>, a developer focused on building Discord & Fortnite Bots!<br>
 I enjoy coding useful tools and improving experiences with bots.
@@ -160,7 +146,6 @@ I enjoy coding useful tools and improving experiences with bots.
 <hr>
 
 <h2>Developer Badges</h2>
-
 <div class="badges">
 <img src="https://img.shields.io/badge/HTML-%23E34F26?style=for-the-badge&logo=html5&logoColor=white">
 <img src="https://img.shields.io/badge/CSS-%231572B6?style=for-the-badge&logo=css3&logoColor=white">
@@ -173,13 +158,11 @@ I enjoy coding useful tools and improving experiences with bots.
 <hr>
 
 <h2>My Bots</h2>
-
 <p class="center">
 <b>omg.bot</b><br>
 Formerly known as <b>cr4zy.bot</b><br>
 Active - Multipurpose Discord Bot
 </p>
-
 <p class="center">
 <b>Utility-Bot#8077</b><br>
 Discontinued since February 2026<br>
@@ -189,67 +172,62 @@ Transferred to omg.bot
 <hr>
 
 <h2>Links</h2>
-
 <div class="links">
-
 <a class="button discord" href="https://discord.gg/HQpNG7Cy4Q" target="_blank">
 Join My Discord Server
 </a>
-
 <a class="button profile" href="https://discord.com/users/1420110702516899910" target="_blank">
 My Discord Profile
 </a>
-
 <a class="button bot" href="https://discord.com/users/1477661871338291391" target="_blank">
 My Bot Profile
 </a>
-
 </div>
 
 </div>
 
+<!-- Click sound -->
 <audio id="click-sound">
 <source src="click.mp3" type="audio/mpeg">
 </audio>
 
 <script>
+// Click sound + particle effect
+document.addEventListener("click",function(e){
+    const sound=document.getElementById("click-sound");
+    sound.currentTime=0;
+    sound.play();
 
-document.addEventListener("click",function(){
-
-const sound=document.getElementById("click-sound");
-sound.currentTime=0;
-sound.play();
-
-const e=event;
-
-const particle=document.createElement("div");
-
-particle.style.position="fixed";
-particle.style.left=e.clientX+"px";
-particle.style.top=e.clientY+"px";
-particle.style.width="8px";
-particle.style.height="8px";
-particle.style.background="#5865F2";
-particle.style.borderRadius="50%";
-particle.style.pointerEvents="none";
-particle.style.animation="pop 0.6s forwards";
-
-document.body.appendChild(particle);
-
-setTimeout(()=>particle.remove(),600);
-
+    const particle=document.createElement("div");
+    particle.style.position="fixed";
+    particle.style.left=e.clientX+"px";
+    particle.style.top=e.clientY+"px";
+    particle.style.width="8px";
+    particle.style.height="8px";
+    particle.style.background="#5865F2";
+    particle.style.borderRadius="50%";
+    particle.style.pointerEvents="none";
+    particle.style.animation="pop 0.6s forwards";
+    document.body.appendChild(particle);
+    setTimeout(()=>particle.remove(),600);
 });
 
+// Particle.js background
 particlesJS("particles-js",{
-particles:{
-number:{value:80},
-size:{value:3},
-color:{value:"#ffffff"},
-line_linked:{enable:true,color:"#ffffff"},
-move:{speed:1}
-}
+    particles:{
+        number:{value:80},
+        size:{value:3},
+        color:{value:"#ffffff"},
+        line_linked:{enable:true,color:"#ffffff"},
+        move:{speed:1}
+    }
 });
 
+// Autoplay hidden YouTube playlist (may require first click due to browser rules)
+document.addEventListener("click", function(){
+    const iframe = document.getElementById("music-iframe");
+    iframe.src = iframe.src;
+},{once:true});
 </script>
 
 </body>
