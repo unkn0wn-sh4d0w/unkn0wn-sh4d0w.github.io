@@ -127,6 +127,23 @@ position:relative;
 overflow:hidden;
 }
 
+.rainbow-text {
+  font-weight: bold;
+  background: linear-gradient(
+    90deg,
+    red,
+    orange,
+    yellow,
+    green,
+    blue,
+    indigo,
+    violet
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
 /* SHINE 
 
 .shine{
@@ -449,7 +466,7 @@ grid-template-columns:1fr;
 <div class="header">
 <img src="https://cdn.discordapp.com/avatars/1420110702516899910/e780ec2241784db6e02497fc75693a43.png?size=1024" class="avatar">
 <span class="divider">|</span>
-<h1 id="typing"></h1>
+<h1 class="rainbow-text">Sh4d0w</h1>
 </div>
 
 <hr>
@@ -623,7 +640,7 @@ music.play();
 
 };
 
-/* TITLE */
+/* TITLE
 
 const text="Sh4dow";
 let i=0;
@@ -637,7 +654,7 @@ setTimeout(type,120);
 }
 
 setTimeout(type,600);
-
+*/
 /* SHINE */
 
 const shine=document.getElementById("shine");
