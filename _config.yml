@@ -1,5 +1,0 @@
-defaults:
-  - scope:
-      path: "well-known"
-    values:
-      permalink: /.well-known/:path
