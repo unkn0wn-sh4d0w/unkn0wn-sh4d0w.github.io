@@ -171,30 +171,30 @@ background:rgba(255,255,255,0.15);
 
 /* Friends Name Colors and effects */
 
-.kerno-name{
-background: linear-gradient(90deg,#ff0000,#8000ff,#000000);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-font-weight:bold;
-position:relative;
-display:inline-block;
+.kerno-name {
+  font-weight: bold;
+  background: linear-gradient(
+    90deg,
+    #ff0000,
+    #8000ff,
+    #000000,
+    #8000ff,
+    #ff0000
+  );
+  background-size: 300%; /* Makes the gradient wide so it can move */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+
+  /* Animate the gradient to move across the text */
+  animation: kernoShine 3s linear infinite;
 }
 
-.kerno-name::after{
-content:"";
-position:absolute;
-top:0;
-left:-75%;
-width:50%;
-height:100%;
-background:linear-gradient(120deg,transparent,rgba(255,255,255,0.8),transparent);
-animation:kernoShine 3s infinite;
+@keyframes kernoShine {
+  0% { background-position: 0%; }
+  100% { background-position: 300%; }
 }
 
-@keyframes kernoShine{
-0%{left:-75%;}
-100%{left:125%;}
-}
 
 /* PAGE SWITCH */
 
@@ -395,7 +395,7 @@ grid-template-columns:1fr;
 <div class="terminal-body">
 
 <p>> Connecting...</p>
-<p>> Initializing User Session</p>
+<p>> Initializing User Session...</p>
 
 <p>> Username: <span id="user-typing"></span></p>
 <p>> Password: <span id="pass-typing"></span></p>
