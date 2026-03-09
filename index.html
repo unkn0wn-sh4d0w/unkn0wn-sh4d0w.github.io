@@ -275,28 +275,27 @@ gap:14px;
 }
 
 .avatar{
-  width:78px;
-  height:78px;
+  width:72px;
+  height:72px;
+  border-radius:50%;
   display:flex;
   align-items:center;
   justify-content:center;
 
-  border-radius:50%;
-  padding:3px;
+  /* No ring */
+  background: none;
+  padding: 0;
 
-  /* Solid white ring */
-  background: #ffffff;
-
-  /* White glow like the name */
+  /* White glow only */
   box-shadow:
-    0 0 8px rgba(255,255,255,0.6),
-    0 0 16px rgba(255,255,255,0.4),
-    0 0 25px rgba(255,255,255,0.2);
+    0 0 10px rgba(255,255,255,0.6),
+    0 0 20px rgba(255,255,255,0.4),
+    0 0 35px rgba(255,255,255,0.2);
 }
 
 .avatar img{
-  width:72px;
-  height:72px;
+  width:100%;
+  height:100%;
   border-radius:50%;
   display:block;
 }
@@ -465,7 +464,7 @@ grid-template-columns:1fr;
 <span class="dot red"></span>
 <span class="dot yellow"></span>
 <span class="dot green"></span>
-<span class="title">Version 1.6</span>
+<span class="title">Version 1.7</span>
 </div>
 
 <div class="terminal-body">
