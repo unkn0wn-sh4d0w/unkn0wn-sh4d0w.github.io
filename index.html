@@ -20,7 +20,7 @@ color:white;
 overflow-x:hidden;
 }
 
-/* PARTICLES */
+/* PARTICLES BACKGROUND */
 
 #particles-js{
 position:fixed;
@@ -31,7 +31,7 @@ height:100%;
 z-index:0;
 }
 
-/* LOGIN */
+/* LOGIN SCREEN */
 
 #login-screen{
 position:fixed;
@@ -139,6 +139,49 @@ pointer-events:none;
 border-radius:inherit;
 }
 
+/* FRIEND ICON BUTTON */
+
+.friends-btn{
+position:absolute;
+top:20px;
+right:20px;
+
+width:42px;
+height:42px;
+
+border:none;
+border-radius:10px;
+
+background:rgba(255,255,255,0.08);
+color:white;
+font-size:20px;
+
+cursor:pointer;
+
+border:1px solid rgba(255,255,255,0.2);
+backdrop-filter:blur(10px);
+
+transition:.2s;
+}
+
+.friends-btn:hover{
+transform:scale(1.1);
+background:rgba(255,255,255,0.15);
+}
+
+/* PAGE SWITCH */
+
+.page{
+transition:opacity .4s ease;
+}
+
+.hidden{
+opacity:0;
+pointer-events:none;
+position:absolute;
+width:100%;
+}
+
 /* HEADER */
 
 .header{
@@ -178,6 +221,15 @@ border-top:1px solid rgba(255,255,255,0.2);
 margin:30px 0;
 }
 
+/* BADGES */
+
+.badges{
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:10px;
+}
+
 /* LINKS */
 
 .links{
@@ -203,20 +255,6 @@ transform:translateY(-3px) scale(1.05);
 .discord{background:#7289DA}
 .profile{background:#5865F2}
 .bot{background:#FFAC33}
-
-/* PAGE SWITCH */
-
-.page{
-transition:opacity .4s ease, transform .4s ease;
-}
-
-.hidden{
-opacity:0;
-transform:translateY(10px);
-pointer-events:none;
-position:absolute;
-width:100%;
-}
 
 /* FRIENDS */
 
@@ -245,23 +283,26 @@ height:48px;
 border-radius:50%;
 }
 
-.name{
+.friend .name{
 font-weight:bold;
 }
 
-.desc{
+.friend .desc{
 font-size:13px;
 opacity:.7;
 }
 
-.switch-btn{
-margin-top:20px;
+.back-btn{
+margin-top:25px;
 background:#5865F2;
 border:none;
-padding:12px 20px;
+padding:10px 20px;
 border-radius:8px;
 color:white;
 cursor:pointer;
+display:block;
+margin-left:auto;
+margin-right:auto;
 }
 
 footer{
@@ -348,6 +389,8 @@ grid-template-columns:1fr;
 
 <div class="shine" id="shine"></div>
 
+<button class="friends-btn" onclick="showFriends()">👥</button>
+
 <!-- MAIN PAGE -->
 
 <div id="mainPage" class="page">
@@ -367,7 +410,20 @@ Hi! I'm <b>Sh4dow</b>, a developer focused on building Discord & Fortnite Bots!<
 I enjoy coding useful tools and improving experiences with bots.
 </p>
 
-<button class="switch-btn" onclick="showFriends()">Friends</button>
+<hr>
+
+<h2>Developer Badges</h2>
+
+<div class="badges">
+
+<img src="https://img.shields.io/badge/HTML-%23E34F26?style=for-the-badge&logo=html5&logoColor=white">
+<img src="https://img.shields.io/badge/CSS-%231572B6?style=for-the-badge&logo=css3&logoColor=white">
+<img src="https://img.shields.io/badge/JavaScript-%23F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
+<img src="https://img.shields.io/badge/Python-%2314354C?style=for-the-badge&logo=python&logoColor=white">
+<img src="https://img.shields.io/badge/Go-%2300ADD8?style=for-the-badge&logo=go&logoColor=white">
+<img src="https://img.shields.io/badge/Lua-%23007ACC?style=for-the-badge&logo=lua&logoColor=white">
+
+</div>
 
 <hr>
 
@@ -429,7 +485,7 @@ I enjoy coding useful tools and improving experiences with bots.
 
 </div>
 
-<button class="switch-btn" onclick="showMain()">Back</button>
+<button class="back-btn" onclick="showMain()">Back</button>
 
 </div>
 
@@ -463,7 +519,7 @@ opacity:{value:.6}
 }
 });
 
-/* TERMINAL LOGIN */
+/* LOGIN TERMINAL */
 
 const user="Sh4d0w";
 const pass="1234";
@@ -474,16 +530,11 @@ let pi=0;
 function typeUser(){
 
 if(ui<user.length){
-
 document.getElementById("user-typing").innerHTML+=user.charAt(ui);
 ui++;
-
 setTimeout(typeUser,120);
-
 }else{
-
 setTimeout(typePass,400);
-
 }
 
 }
@@ -491,12 +542,9 @@ setTimeout(typePass,400);
 function typePass(){
 
 if(pi<pass.length){
-
 document.getElementById("pass-typing").innerHTML+="*";
 pi++;
-
 setTimeout(typePass,120);
-
 }else{
 
 const btn=document.getElementById("login-btn");
@@ -511,7 +559,7 @@ btn.style.opacity="1";
 
 setTimeout(typeUser,1200);
 
-/* LOGIN CLICK */
+/* LOGIN */
 
 document.getElementById("login-btn").onclick=function(){
 
@@ -524,7 +572,7 @@ music.play();
 
 };
 
-/* TITLE TYPING */
+/* TITLE */
 
 const text="Sh4dow";
 let i=0;
