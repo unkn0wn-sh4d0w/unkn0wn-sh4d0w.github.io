@@ -20,6 +20,17 @@ color:white;
 overflow-x:hidden;
 }
 
+/* PARTICLES BACKGROUND */
+
+#particles-js{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:-1;
+}
+
 /* LOGIN SCREEN */
 
 #login-screen{
@@ -87,37 +98,26 @@ cursor:pointer;
 font-weight:bold;
 }
 
-#login-btn:hover{
-transform:scale(1.05);
-}
-
-/* PARTICLES */
-
-#particles-js{
-position:fixed;
-width:100%;
-height:100%;
-top:0;
-left:0;
-z-index:0;
-}
-
-/* MAIN CONTAINER */
+/* GLASS CONTAINER */
 
 .container{
 max-width:820px;
-margin:60px auto;
+margin:70px auto;
 position:relative;
-z-index:1;
 padding:40px;
 border-radius:18px;
 
-background:rgba(255,255,255,0.02);
-backdrop-filter:blur(12px) saturate(120%);
--webkit-backdrop-filter:blur(12px) saturate(120%);
+/* guns.lol style glass */
 
-border:1px solid rgba(255,255,255,0.05);
-box-shadow:0 4px 20px rgba(0,0,0,0.25);
+background:rgba(255,255,255,0.05);
+
+backdrop-filter:blur(18px) saturate(140%);
+-webkit-backdrop-filter:blur(18px) saturate(140%);
+
+border:1px solid rgba(255,255,255,0.15);
+
+box-shadow:
+0 8px 30px rgba(0,0,0,0.35);
 
 overflow:hidden;
 }
@@ -131,14 +131,10 @@ left:0;
 width:200%;
 height:200%;
 pointer-events:none;
-
-background:radial-gradient(circle at 0 0,
-rgba(255,255,255,0.08),
-transparent 50%);
-
-transform:translate(-50%,-50%);
 mix-blend-mode:screen;
 }
+
+/* HEADER */
 
 .header{
 display:flex;
@@ -164,6 +160,8 @@ font-size:46px;
 margin:0;
 }
 
+/* TEXT */
+
 .center{
 text-align:center;
 }
@@ -175,17 +173,20 @@ margin-top:40px;
 
 hr{
 border:none;
-border-top:1px solid #444;
+border-top:1px solid rgba(255,255,255,0.2);
 margin:30px 0;
 }
+
+/* BADGES */
 
 .badges{
 display:flex;
 justify-content:center;
 flex-wrap:wrap;
 gap:10px;
-margin-top:10px;
 }
+
+/* BUTTONS */
 
 .links{
 display:flex;
@@ -202,18 +203,17 @@ border-radius:10px;
 text-decoration:none;
 font-weight:bold;
 transition:.25s;
-position:relative;
-overflow:hidden;
 }
 
 .button:hover{
 transform:translateY(-3px) scale(1.05);
-box-shadow:0 0 20px rgba(255,255,255,0.35);
 }
 
 .discord{background:#7289DA}
 .profile{background:#5865F2}
 .bot{background:#FFAC33}
+
+/* FOOTER */
 
 footer{
 text-align:center;
@@ -222,14 +222,14 @@ margin-top:30px;
 font-size:14px;
 }
 
-/* MOBILE OPTIMIZATION */
+/* MOBILE */
 
 @media(max-width:700px){
 
 .container{
-max-width:88%;
-padding:24px;
-margin:30px auto;
+max-width:90%;
+padding:25px;
+margin:40px auto;
 }
 
 .header{
@@ -252,10 +252,11 @@ text-align:center;
 }
 
 </style>
-
 </head>
 
 <body>
+
+<div id="particles-js"></div>
 
 <!-- LOGIN -->
 
@@ -289,8 +290,6 @@ text-align:center;
 <!-- SITE -->
 
 <div id="site" style="display:none;">
-
-<div id="particles-js"></div>
 
 <div class="container">
 
@@ -328,22 +327,6 @@ I enjoy coding useful tools and improving experiences with bots.
 
 <hr>
 
-<h2>My Bots</h2>
-
-<p class="center">
-<b>omg.bot</b><br>
-Formerly known as <b>cr4zy.bot</b><br>
-Active - Multipurpose Discord Bot
-</p>
-
-<p class="center">
-<b>Utility-Bot#8077</b><br>
-Discontinued since February 2026<br>
-Transferred to omg.bot
-</p>
-
-<hr>
-
 <h2>Links</h2>
 
 <div class="links">
@@ -356,19 +339,15 @@ Transferred to omg.bot
 
 </div>
 
-<footer>© 2026 Sh4dow • All rights reserved.</footer>
+<footer>© 2026 Sh4dow</footer>
 
 </div>
 
 </div>
-
-<audio id="music" loop>
-<source src="https://stream.laut.fm/electrolounge" type="audio/mpeg">
-</audio>
 
 <script>
 
-/* LOGIN TERMINAL */
+/* TERMINAL LOGIN */
 
 const user="Sh4d0w";
 const pass="1234";
@@ -377,78 +356,43 @@ let ui=0;
 let pi=0;
 
 function typeUser(){
-
 if(ui<user.length){
-
 document.getElementById("user-typing").innerHTML+=user.charAt(ui);
 ui++;
-
 setTimeout(typeUser,120);
-
 }else{
-
 setTimeout(typePass,400);
-
 }
-
 }
 
 function typePass(){
-
 if(pi<pass.length){
-
 document.getElementById("pass-typing").innerHTML+="*";
 pi++;
-
 setTimeout(typePass,120);
-
 }
-
 }
 
 setTimeout(typeUser,1200);
 
 document.getElementById("login-btn").onclick=function(){
 
-document.getElementById("login-screen").style.opacity="0";
-
-setTimeout(()=>{
-
 document.getElementById("login-screen").style.display="none";
 document.getElementById("site").style.display="block";
 
-startMusic();
-
-},600);
-
 };
 
-/* MUSIC */
-
-function startMusic(){
-
-const music=document.getElementById("music");
-music.volume=0.5;
-music.play().catch(()=>{});
-
-}
-
-/* TYPING TITLE */
+/* TITLE TYPING */
 
 const text="Sh4dow";
 let i=0;
 
 function type(){
-
 if(i<text.length){
-
 document.getElementById("typing").innerHTML+=text.charAt(i);
 i++;
-
 setTimeout(type,120);
-
 }
-
 }
 
 setTimeout(type,800);
@@ -456,7 +400,6 @@ setTimeout(type,800);
 /* PARTICLES */
 
 particlesJS("particles-js",{
-
 particles:{
 number:{value:60},
 size:{value:3},
@@ -465,12 +408,11 @@ line_linked:{
 enable:true,
 distance:150,
 color:"#ffffff",
-opacity:.2
+opacity:.25
 },
 move:{speed:.7},
-opacity:{value:.5}
+opacity:{value:.6}
 }
-
 });
 
 /* GLASS SHINE */
@@ -485,8 +427,8 @@ const x=e.clientX-rect.left;
 const y=e.clientY-rect.top;
 
 shine.style.background=`radial-gradient(circle at ${x}px ${y}px,
-rgba(255,255,255,0.12),
-transparent 55%)`;
+rgba(255,255,255,0.18),
+transparent 60%)`;
 
 });
 
