@@ -195,6 +195,29 @@ background:rgba(255,255,255,0.15);
   100% { background-position: 300%; }
 }
 
+.niki-name {
+  font-weight: bold;
+  background: linear-gradient(
+    90deg,
+    #ff6ec7, /* bubblegum pink */
+    #00f0ff, /* neon blue */
+    #ff6ec7,
+    #00f0ff,
+    #ff6ec7
+  );
+  background-size: 300%; /* makes the gradient wider so it can move */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+
+  /* Animate the gradient to move across the text */
+  animation: nikiShine 3s linear infinite;
+}
+
+@keyframes nikiShine {
+  0% { background-position: 0%; }
+  100% { background-position: 300%; }
+}
 
 /* PAGE SWITCH */
 
@@ -499,6 +522,14 @@ Transferred to omg.bot
   <div>
     <div class="name kerno-name">Kerno</div>
     <div class="desc">Der Motherfucker</div>
+  </div>
+</div>
+
+<div class="friend">
+  <img src="https://i.imgur.com/tztFA4A.png">
+  <div>
+    <div class="name niki-name">Niki</div>
+    <div class="desc">„Lowkey stupid“</div>
   </div>
 </div>
 
