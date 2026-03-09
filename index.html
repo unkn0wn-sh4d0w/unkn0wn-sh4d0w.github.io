@@ -148,11 +148,13 @@ to{opacity:1;transform:translateY(0)}
 </style></head>
 <body><!-- Particles --><div id="particles-js"></div><!-- Automatic Jazz Radio --><audio id="jazz-radio" autoplay loop playsinline>
   <source src="https://icecast.somafm.com/illstreet" type="audio/mpeg">
-</audio><div class="container"><div class="header">
+</audio><div class="container">
+<div class="header">
 <img src="https://cdn.discordapp.com/avatars/1420110702516899910/e780ec2241784db6e02497fc75693a43.png?size=1024" class="avatar">
 <span class="divider">|</span>
 <h1 id="typing"></h1>
-</div><hr>
+</div>
+<hr>
 <h2>About Me</h2>
 <p class="center">
 Hi! I'm <b>Sh4dow</b>, a developer focused on building Discord & Fortnite Bots!<br>
@@ -244,5 +246,15 @@ move:{speed:.7},
 opacity:{value:.5}
 }
 });
+
+/* ensure jazz radio plays on load and after first interaction */
+const radio = document.getElementById("jazz-radio");
+radio.volume = 0.5;
+radio.play().catch(()=>{}); // try autoplay
+
+document.addEventListener("click",()=>{
+radio.play().catch(()=>{});
+},{once:true});
+
 </script></body>
 </html>
