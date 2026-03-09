@@ -20,7 +20,7 @@ color:white;
 overflow-x:hidden;
 }
 
-/* PARTICLES BACKGROUND */
+/* PARTICLES */
 
 #particles-js{
 position:fixed;
@@ -31,7 +31,7 @@ height:100%;
 z-index:0;
 }
 
-/* LOGIN SCREEN */
+/* LOGIN */
 
 #login-screen{
 position:fixed;
@@ -127,7 +127,7 @@ position:relative;
 overflow:hidden;
 }
 
-/* SHINE FIX */
+/* SHINE */
 
 .shine{
 position:absolute;
@@ -178,12 +178,7 @@ border-top:1px solid rgba(255,255,255,0.2);
 margin:30px 0;
 }
 
-.badges{
-display:flex;
-justify-content:center;
-flex-wrap:wrap;
-gap:10px;
-}
+/* LINKS */
 
 .links{
 display:flex;
@@ -208,6 +203,66 @@ transform:translateY(-3px) scale(1.05);
 .discord{background:#7289DA}
 .profile{background:#5865F2}
 .bot{background:#FFAC33}
+
+/* PAGE SWITCH */
+
+.page{
+transition:opacity .4s ease, transform .4s ease;
+}
+
+.hidden{
+opacity:0;
+transform:translateY(10px);
+pointer-events:none;
+position:absolute;
+width:100%;
+}
+
+/* FRIENDS */
+
+.friends{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:16px;
+margin-top:20px;
+}
+
+.friend{
+display:flex;
+align-items:center;
+gap:12px;
+
+background:rgba(255,255,255,0.08);
+padding:12px;
+border-radius:10px;
+
+border:1px solid rgba(255,255,255,0.15);
+}
+
+.friend img{
+width:48px;
+height:48px;
+border-radius:50%;
+}
+
+.name{
+font-weight:bold;
+}
+
+.desc{
+font-size:13px;
+opacity:.7;
+}
+
+.switch-btn{
+margin-top:20px;
+background:#5865F2;
+border:none;
+padding:12px 20px;
+border-radius:8px;
+color:white;
+cursor:pointer;
+}
 
 footer{
 text-align:center;
@@ -241,6 +296,10 @@ font-size:34px;
 .button{
 width:85%;
 text-align:center;
+}
+
+.friends{
+grid-template-columns:1fr;
 }
 
 }
@@ -289,6 +348,10 @@ text-align:center;
 
 <div class="shine" id="shine"></div>
 
+<!-- MAIN PAGE -->
+
+<div id="mainPage" class="page">
+
 <div class="header">
 <img src="https://cdn.discordapp.com/avatars/1420110702516899910/e780ec2241784db6e02497fc75693a43.png?size=1024" class="avatar">
 <span class="divider">|</span>
@@ -304,20 +367,7 @@ Hi! I'm <b>Sh4dow</b>, a developer focused on building Discord & Fortnite Bots!<
 I enjoy coding useful tools and improving experiences with bots.
 </p>
 
-<hr>
-
-<h2>Developer Badges</h2>
-
-<div class="badges">
-
-<img src="https://img.shields.io/badge/HTML-%23E34F26?style=for-the-badge&logo=html5&logoColor=white">
-<img src="https://img.shields.io/badge/CSS-%231572B6?style=for-the-badge&logo=css3&logoColor=white">
-<img src="https://img.shields.io/badge/JavaScript-%23F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
-<img src="https://img.shields.io/badge/Python-%2314354C?style=for-the-badge&logo=python&logoColor=white">
-<img src="https://img.shields.io/badge/Go-%2300ADD8?style=for-the-badge&logo=go&logoColor=white">
-<img src="https://img.shields.io/badge/Lua-%23007ACC?style=for-the-badge&logo=lua&logoColor=white">
-
-</div>
+<button class="switch-btn" onclick="showFriends()">Friends</button>
 
 <hr>
 
@@ -334,6 +384,54 @@ I enjoy coding useful tools and improving experiences with bots.
 </div>
 
 <footer>© 2026 Sh4dow</footer>
+
+</div>
+
+<!-- FRIENDS PAGE -->
+
+<div id="friendsPage" class="page hidden">
+
+<h2>My Friends</h2>
+
+<div class="friends">
+
+<div class="friend">
+<img src="https://i.pravatar.cc/100?img=1">
+<div>
+<div class="name">Alex</div>
+<div class="desc">JavaScript Developer</div>
+</div>
+</div>
+
+<div class="friend">
+<img src="https://i.pravatar.cc/100?img=2">
+<div>
+<div class="name">Nova</div>
+<div class="desc">Discord Bot Creator</div>
+</div>
+</div>
+
+<div class="friend">
+<img src="https://i.pravatar.cc/100?img=3">
+<div>
+<div class="name">Kai</div>
+<div class="desc">UI Designer</div>
+</div>
+</div>
+
+<div class="friend">
+<img src="https://i.pravatar.cc/100?img=4">
+<div>
+<div class="name">Luna</div>
+<div class="desc">Python Developer</div>
+</div>
+</div>
+
+</div>
+
+<button class="switch-btn" onclick="showMain()">Back</button>
+
+</div>
 
 </div>
 
@@ -420,15 +518,13 @@ document.getElementById("login-btn").onclick=function(){
 document.getElementById("login-screen").style.display="none";
 document.getElementById("site").style.display="block";
 
-/* START MUSIC */
-
 const music=document.getElementById("music");
 music.volume=0.5;
 music.play();
 
 };
 
-/* TITLE */
+/* TITLE TYPING */
 
 const text="Sh4dow";
 let i=0;
@@ -457,6 +553,31 @@ const y=e.clientY-rect.top;
 shine.style.background=`radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.25), transparent 60%)`;
 
 });
+
+/* PAGE SWITCH */
+
+const mainPage=document.getElementById("mainPage");
+const friendsPage=document.getElementById("friendsPage");
+
+function showFriends(){
+
+mainPage.classList.add("hidden");
+
+setTimeout(()=>{
+friendsPage.classList.remove("hidden");
+},200);
+
+}
+
+function showMain(){
+
+friendsPage.classList.add("hidden");
+
+setTimeout(()=>{
+mainPage.classList.remove("hidden");
+},200);
+
+}
 
 </script>
 
