@@ -110,7 +110,6 @@ transition:.5s
 .discord{background:#7289DA}
 .profile{background:#5865F2}
 .bot{background:#FFAC33}
-.music{background:#2ecc71}
 
 footer{text-align:center;opacity:.6;margin-top:30px;font-size:14px}
 
@@ -139,36 +138,28 @@ from{opacity:0;transform:translateY(20px)}
 to{opacity:1;transform:translateY(0)}
 }
 
-
-
 @media(max-width:700px){
-
 .header{flex-direction:column}
-
 .divider{display:none}
-
 .header h1{font-size:34px}
-
 .container{padding:25px}
-
 .button{width:80%;text-align:center}
-
 }
-</style></head><body><div id="particles-js"></div><div id="bg-music" style="display:none">
-<iframe id="music-iframe" width="0" height="0"
-src="https://www.youtube.com/embed/WQhFl7RdBh8?autoplay=1&loop=1&playlist=WQhFl7RdBh8"
-allow="autoplay"></iframe>
-</div><div class="container"><div class="header">
+</style></head>
+<body><!-- Particles --><div id="particles-js"></div><!-- Automatic Jazz Radio --><audio id="jazz-radio" autoplay loop playsinline>
+  <source src="https://icecast.somafm.com/illstreet" type="audio/mpeg">
+</audio><div class="container"><div class="header">
 <img src="https://cdn.discordapp.com/avatars/1420110702516899910/e780ec2241784db6e02497fc75693a43.png?size=1024" class="avatar">
 <span class="divider">|</span>
 <h1 id="typing"></h1>
-</div><div class="center">
-<button id="music-toggle" class="button music">Toggle Music</button>
-</div><hr><h2>About Me</h2>
+</div><hr>
+<h2>About Me</h2>
 <p class="center">
 Hi! I'm <b>Sh4dow</b>, a developer focused on building Discord & Fortnite Bots!<br>
 I enjoy coding useful tools and improving experiences with bots.
-</p><hr><h2>Developer Badges</h2>
+</p>
+<hr>
+<h2>Developer Badges</h2>
 <div class="badges">
 <img src="https://img.shields.io/badge/HTML-%23E34F26?style=for-the-badge&logo=html5&logoColor=white">
 <img src="https://img.shields.io/badge/CSS-%231572B6?style=for-the-badge&logo=css3&logoColor=white">
@@ -176,49 +167,48 @@ I enjoy coding useful tools and improving experiences with bots.
 <img src="https://img.shields.io/badge/Python-%2314354C?style=for-the-badge&logo=python&logoColor=white">
 <img src="https://img.shields.io/badge/Go-%2300ADD8?style=for-the-badge&logo=go&logoColor=white">
 <img src="https://img.shields.io/badge/Lua-%23007ACC?style=for-the-badge&logo=lua&logoColor=white">
-</div><hr><h2>My Bots</h2>
+</div>
+<hr>
+<h2>My Bots</h2>
 <p class="center">
 <b>omg.bot</b><br>
 Formerly known as <b>cr4zy.bot</b><br>
 Active - Multipurpose Discord Bot
-</p><p class="center">
+</p>
+<p class="center">
 <b>Utility-Bot#8077</b><br>
 Discontinued since February 2026<br>
 Transferred to omg.bot
-</p><hr><h2>Links</h2>
+</p>
+<hr>
+<h2>Links</h2>
 <div class="links">
 <a class="button discord" href="https://discord.gg/HQpNG7Cy4Q" target="_blank">Join My Discord Server</a>
 <a class="button profile" href="https://discord.com/users/1420110702516899910" target="_blank">My Discord Profile</a>
 <a class="button bot" href="https://discord.com/users/1477661871338291391" target="_blank">My Bot Profile</a>
-</div><footer>
+</div>
+<footer>
 © 2026 Sh4dow • All rights reserved.
-</footer></div><audio id="click-sound">
+</footer>
+</div><audio id="click-sound">
 <source src="click.mp3" type="audio/mpeg">
 </audio><script>
-
-
-
 /* typing name */
 const text="Sh4dow";
 let i=0;
-
 function type(){
 if(i<text.length){
 document.getElementById("typing").innerHTML+=text.charAt(i);
 i++;
 setTimeout(type,120);
-}
-}
-
+}}
 setTimeout(type,1200);
 
 /* click sound + particle */
 document.addEventListener("click",function(e){
-
 const sound=document.getElementById("click-sound");
 sound.currentTime=0;
 sound.play();
-
 const particle=document.createElement("div");
 particle.style.position="fixed";
 particle.style.left=e.clientX+"px";
@@ -229,11 +219,8 @@ particle.style.background="#5865F2";
 particle.style.borderRadius="50%";
 particle.style.pointerEvents="none";
 particle.style.animation="pop .6s forwards";
-
 document.body.appendChild(particle);
-
 setTimeout(()=>particle.remove(),600);
-
 });
 
 /* cursor trail */
@@ -257,22 +244,5 @@ move:{speed:.7},
 opacity:{value:.5}
 }
 });
-
-/* music toggle */
-const iframe=document.getElementById("music-iframe");
-let playing=true;
-
-document.getElementById("music-toggle").onclick=()=>{
-
-if(playing){
-iframe.src="";
-playing=false;
-}else{
-iframe.src="https://www.youtube.com/embed/WQhFl7RdBh8?autoplay=1&loop=1&playlist=WQhFl7RdBh8";
-playing=true;
-}
-
-};
-
 </script></body>
 </html>
