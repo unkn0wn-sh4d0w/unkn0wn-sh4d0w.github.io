@@ -139,26 +139,7 @@ from{opacity:0;transform:translateY(20px)}
 to{opacity:1;transform:translateY(0)}
 }
 
-/* terminal intro */
-#intro{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:#000;
-color:#00ff9c;
-font-family:monospace;
-display:flex;
-justify-content:center;
-align-items:center;
-z-index:9999;
-flex-direction:column
-}
 
-#intro span{font-size:20px}
-
-.hidden{display:none}
 
 @media(max-width:700px){
 
@@ -173,9 +154,7 @@ flex-direction:column
 .button{width:80%;text-align:center}
 
 }
-</style></head><body><div id="intro">
-<span id="intro-text"></span>
-</div><div id="particles-js"></div><div id="bg-music" style="display:none">
+</style></head><body><div id="particles-js"></div><div id="bg-music" style="display:none">
 <iframe id="music-iframe" width="0" height="0"
 src="https://www.youtube.com/embed/WQhFl7RdBh8?autoplay=1&loop=1&playlist=WQhFl7RdBh8"
 allow="autoplay"></iframe>
@@ -217,23 +196,7 @@ Transferred to omg.bot
 <source src="click.mp3" type="audio/mpeg">
 </audio><script>
 
-/* terminal intro */
-const introText="initializing portfolio...";
-let introIndex=0;
 
-function introType(){
-if(introIndex<introText.length){
-document.getElementById("intro-text").textContent+=introText.charAt(introIndex);
-introIndex++;
-setTimeout(introType,60);
-}else{
-setTimeout(()=>{
-document.getElementById("intro").classList.add("hidden");
-},700);
-}
-}
-
-introType();
 
 /* typing name */
 const text="Sh4dow";
