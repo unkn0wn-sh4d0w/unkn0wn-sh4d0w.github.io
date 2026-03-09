@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>www.unkn0wn-sh4d0w.com</title>
+<title>@unkn0wn-sh4d0w</title>
 
 <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
 
@@ -134,14 +134,29 @@ overflow:hidden;
     red,
     orange,
     yellow,
-    green,
+    lime,
+    cyan,
     blue,
-    indigo,
-    violet
+    violet,
+    red
   );
+  background-size: 400%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline-block;
+
+  animation: rainbowMove 4s linear infinite;
+
+  /* sparkle glow */
+  text-shadow:
+    0 0 5px rgba(255,255,255,0.6),
+    0 0 10px rgba(255,255,255,0.4),
+    0 0 20px rgba(255,255,255,0.2);
+}
+
+@keyframes rainbowMove {
+  0% { background-position: 0%; }
+  100% { background-position: 400%; }
 }
 
 /* SHINE 
