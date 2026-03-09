@@ -275,9 +275,15 @@ gap:14px;
 }
 
 .avatar{
-width:72px;
+width:78px;
+height:78px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
 border-radius:50%;
-padding:3px; /* thickness of rainbow ring */
+padding:3px;
 
 background: linear-gradient(
   90deg,
@@ -292,21 +298,14 @@ background: linear-gradient(
 );
 
 background-size:400%;
-animation: avatarRGB 4s linear infinite;
-
-box-shadow:0 0 15px rgba(255,255,255,0.3);
+animation: rainbowMove 4s linear infinite;
 }
 
 .avatar img{
-width:100%;
-height:100%;
+width:72px;
+height:72px;
 border-radius:50%;
 display:block;
-}
-
-@keyframes avatarRGB{
-0%{background-position:0%}
-100%{background-position:400%}
 }
 
 .divider{
