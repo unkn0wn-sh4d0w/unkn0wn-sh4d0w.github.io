@@ -275,44 +275,45 @@ gap:14px;
 }
 
 .avatar{
-width:78px;
-height:78px;
+  width:78px;
+  height:78px;
 
-display:flex;
-align-items:center;
-justify-content:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 
-border-radius:50%;
-padding:1px;
+  border-radius:50%;
+  padding:3px;
 
-background: linear-gradient(
-  90deg,
-  red,
-  orange,
-  yellow,
-  lime,
-  cyan,
-  blue,
-  violet,
-  red
-);
+  background: linear-gradient(
+    90deg,
+    red,
+    orange,
+    yellow,
+    lime,
+    cyan,
+    blue,
+    violet,
+    red
+  );
+  background-size:400%;
+  animation: rainbowMove 4s linear infinite;
 
-background-size:400%;
-animation: rainbowMove 4s linear infinite;
-
-/* sparkle glow like the name */
-box-shadow:
-0 0 8px rgba(255,255,255,0.6),
-0 0 16px rgba(255,255,255,0.4),
-0 0 25px rgba(255,255,255,0.2);
+  /* Brighter, intense glow like text */
+  box-shadow:
+    0 0 12px rgba(255,255,255,0.8),
+    0 0 25px rgba(255,255,255,0.6),
+    0 0 40px rgba(255,255,255,0.4),
+    0 0 60px rgba(255,255,255,0.2);
 }
 
 .avatar img{
-width:72px;
-height:72px;
-border-radius:50%;
-display:block;
+  width:72px;
+  height:72px;
+  border-radius:50%;
+  display:block;
 }
+
 .divider{
 font-size:42px;
 opacity:.7;
