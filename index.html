@@ -31,8 +31,6 @@ height:100%;
 z-index:0;
 }
 
-/* LOGIN SCREEN */
-
 #login-screen{
 position:fixed;
 top:0;
@@ -99,14 +97,10 @@ cursor:not-allowed;
 opacity:.5;
 }
 
-/* SITE */
-
 #site{
 position:relative;
 z-index:2;
 }
-
-/* GLASS */
 
 .container{
 
@@ -148,7 +142,6 @@ overflow:hidden;
 
   animation: rainbowMove 4s linear infinite;
 
-  /* sparkle glow */
   text-shadow:
     0 0 5px rgba(255,255,255,0.6),
     0 0 10px rgba(255,255,255,0.4),
@@ -160,8 +153,7 @@ overflow:hidden;
   100% { background-position: 400%; }
 }
 
-/* SHINE 
-
+/*
 .shine{
 position:absolute;
 top:0;
@@ -172,8 +164,6 @@ pointer-events:none;
 border-radius:inherit;
 }
 */
-
-/* FRIEND ICON BUTTON */
 
 .friends-btn{
 position:absolute;
@@ -203,8 +193,6 @@ transform:scale(1.1);
 background:rgba(255,255,255,0.15);
 }
 
-/* Friends Name Colors and effects */
-
 .kerno-name {
   font-weight: bold;
   background: linear-gradient(
@@ -215,12 +203,11 @@ background:rgba(255,255,255,0.15);
     #8000ff,
     #ff0000
   );
-  background-size: 300%; /* Makes the gradient wide so it can move */
+  background-size: 300%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline-block;
 
-  /* Animate the gradient to move across the text */
   animation: kernoShine 3s linear infinite;
 }
 
@@ -233,18 +220,17 @@ background:rgba(255,255,255,0.15);
   font-weight: bold;
   background: linear-gradient(
     90deg,
-    #ff6ec7, /* bubblegum pink */
-    #00f0ff, /* neon blue */
+    #ff6ec7,
+    #00f0ff,
     #ff6ec7,
     #00f0ff,
     #ff6ec7
   );
-  background-size: 300%; /* makes the gradient wider so it can move */
+  background-size: 300%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline-block;
 
-  /* Animate the gradient to move across the text */
   animation: nikiShine 3s linear infinite;
 }
 
@@ -252,8 +238,6 @@ background:rgba(255,255,255,0.15);
   0% { background-position: 0%; }
   100% { background-position: 300%; }
 }
-
-/* PAGE SWITCH */
 
 .page{
 transition:opacity .4s ease;
@@ -265,8 +249,6 @@ pointer-events:none;
 position:absolute;
 width:100%;
 }
-
-/* HEADER */
 
 .header{
 display:flex;
@@ -287,7 +269,6 @@ gap:14px;
   background: none;
   padding: 0;
 
-  /* White glow only */
   box-shadow:
     0 0 10px rgba(255,255,255,0.6),
     0 0 20px rgba(255,255,255,0.4),
@@ -324,16 +305,12 @@ border-top:1px solid rgba(255,255,255,0.2);
 margin:30px 0;
 }
 
-/* BADGES */
-
 .badges{
 display:flex;
 justify-content:center;
 flex-wrap:wrap;
 gap:10px;
 }
-
-/* LINKS */
 
 .links{
 display:flex;
@@ -358,8 +335,6 @@ transform:translateY(-3px) scale(1.05);
 .discord{background:#7289DA}
 .profile{background:#5865F2}
 .bot{background:#FFAC33}
-
-/* FRIENDS */
 
 .friends{
 display:grid;
@@ -415,8 +390,6 @@ margin-top:30px;
 font-size:14px;
 }
 
-/* MOBILE */
-
 @media(max-width:700px){
 
 .container{
@@ -455,7 +428,6 @@ grid-template-columns:1fr;
 
 <div id="particles-js"></div>
 
-<!-- LOGIN -->
 
 <div id="login-screen">
 
@@ -484,7 +456,6 @@ grid-template-columns:1fr;
 
 </div>
 
-<!-- SITE -->
 
 <div id="site" style="display:none;">
 
@@ -494,7 +465,6 @@ grid-template-columns:1fr;
 
 <button class="friends-btn" onclick="showFriends()">👥</button>
 
-<!-- MAIN PAGE -->
 
 <div id="mainPage" class="page">
 
@@ -564,8 +534,6 @@ Transferred to omg.bot
 
 </div>
 
-<!-- FRIENDS PAGE -->
-
 <div id="friendsPage" class="page hidden">
 
 <h2>My Friends</h2>
@@ -600,7 +568,6 @@ Transferred to omg.bot
 
 </div>
 
-<!-- MUSIC -->
 
 <audio id="music" loop>
 <source src="https://stream.laut.fm/electrolounge" type="audio/mpeg">
@@ -608,7 +575,6 @@ Transferred to omg.bot
 
 <script>
 
-/* PARTICLES */
 
 particlesJS("particles-js",{
 particles:{
@@ -626,7 +592,6 @@ opacity:{value:.6}
 }
 });
 
-/* LOGIN TERMINAL */
 
 const user="Sh4d0w";
 const pass="1234";
@@ -666,8 +631,6 @@ btn.style.opacity="1";
 
 setTimeout(typeUser,1200);
 
-/* LOGIN */
-
 document.getElementById("login-btn").onclick=function(){
 
 document.getElementById("login-screen").style.display="none";
@@ -679,7 +642,7 @@ music.play();
 
 };
 
-/* TITLE
+/*
 
 const text="Sh4dow";
 let i=0;
@@ -694,7 +657,6 @@ setTimeout(type,120);
 
 setTimeout(type,600);
 */
-/* SHINE */
 
 const shine=document.getElementById("shine");
 
@@ -709,7 +671,6 @@ shine.style.background=`radial-gradient(circle at ${x}px ${y}px, rgba(255,255,25
 
 });
 
-/* PAGE SWITCH */
 
 const mainPage=document.getElementById("mainPage");
 const friendsPage=document.getElementById("friendsPage");
