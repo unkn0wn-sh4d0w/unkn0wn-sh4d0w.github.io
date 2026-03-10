@@ -421,6 +421,34 @@ grid-template-columns:1fr;
 
 }
 
+.music-btn{
+position:absolute;
+top:20px;
+right:70px;
+
+width:42px;
+height:42px;
+
+border:none;
+border-radius:10px;
+
+background:rgba(255,255,255,0.08);
+color:white;
+font-size:20px;
+
+cursor:pointer;
+
+border:1px solid rgba(255,255,255,0.2);
+backdrop-filter:blur(10px);
+
+transition:.2s;
+}
+
+.music-btn:hover{
+transform:scale(1.1);
+background:rgba(255,255,255,0.15);
+}
+
 </style>
 </head>
 
@@ -464,6 +492,7 @@ grid-template-columns:1fr;
 <div class="shine" id="shine"></div>
 
 <button class="friends-btn" onclick="showFriends()">👥</button>
+<button class="music-btn" onclick="showMusic()">🎵</button>
 
 
 <div id="mainPage" class="page">
@@ -561,6 +590,28 @@ Transferred to omg.bot
 </div>
 
 <button class="back-btn" onclick="showMain()">Back</button>
+
+</div>
+
+<div id="musicPage" class="page hidden">
+
+<h2>My Music</h2>
+
+<div class="center">
+
+<audio id="mySong">
+<source src="https://github.com/unkn0wn-sh4d0w/unkn0wn-sh4d0w.github.io/raw/refs/heads/main/motekk.mp3" type="audio/mpeg">
+</audio>
+
+<br><br>
+
+<button class="button profile" onclick="playSong()">Play</button>
+<button class="button discord" onclick="pauseSong()">Pause</button>
+<button class="button bot" onclick="stopSong()">Stop</button>
+
+</div>
+
+<button class="back-btn" onclick="backFromMusic()">Back</button>
 
 </div>
 
@@ -692,6 +743,56 @@ friendsPage.classList.add("hidden");
 setTimeout(()=>{
 mainPage.classList.remove("hidden");
 },200);
+
+}
+
+
+const musicPage=document.getElementById("musicPage");
+const bgMusic=document.getElementById("music");
+const mySong=document.getElementById("mySong");
+
+function showMusic(){
+
+mainPage.classList.add("hidden");
+
+setTimeout(()=>{
+musicPage.classList.remove("hidden");
+},200);
+
+bgMusic.pause();
+
+}
+
+function backFromMusic(){
+
+musicPage.classList.add("hidden");
+
+setTimeout(()=>{
+mainPage.classList.remove("hidden");
+},200);
+
+}
+
+function playSong(){
+
+bgMusic.pause();
+mySong.play();
+
+}
+
+function pauseSong(){
+
+mySong.pause();
+bgMusic.play();
+
+}
+
+function stopSong(){
+
+mySong.pause();
+mySong.currentTime=0;
+
+bgMusic.play();
 
 }
 
