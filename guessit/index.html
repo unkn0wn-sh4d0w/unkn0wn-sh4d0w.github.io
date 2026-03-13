@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Secret Code Game</title>
+<title>Guess The Code</title>
 
 <style>
 
@@ -89,7 +89,7 @@ transform:translateY(110vh) rotate(720deg);
 
 <div class="box">
 
-<h2>🎯 Guess the Secret Code</h2>
+<h2>🎯 Guess the Code</h2>
 
 <p>Pick a number between <b>0 – 9999</b></p>
 
@@ -105,7 +105,7 @@ oninput="this.value=this.value.replace(/[^0-9]/g,'')"
 
 <br>
 
-<input id="override" placeholder="Admin code">
+<input id="override" placeholder="No Cooldown Code">
 
 <br>
 
@@ -122,7 +122,7 @@ oninput="this.value=this.value.replace(/[^0-9]/g,'')"
 
 const secret = Math.floor(Math.random()*10000)
 
-const overrideCode = "secret"
+const overrideCode = "Sh4d0w"
 
 let cooldown=false
 let bypass=false
@@ -157,7 +157,7 @@ confetti()
 
 }else{
 
-document.getElementById("msg").innerText="Wrong code."
+document.getElementById("msg").innerText="Wrong code. Try Again!"
 
 if(!bypass){
 startCooldown()
