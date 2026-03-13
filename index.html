@@ -1,16 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>「criminal ꨄ︎」</title>
-
 <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
-
 <style>
-
 html,body{
 height:100%;
 margin:0;
@@ -21,7 +16,6 @@ overflow-x:hidden;
 }
 
 /* PARTICLES BACKGROUND */
-
 #particles-js{
 position:fixed;
 top:0;
@@ -29,6 +23,80 @@ left:0;
 width:100%;
 height:100%;
 z-index:0;
+}
+
+/* COMMENTS SECTION */
+#commentsPage {
+    max-width: 820px;
+    margin: 70px auto;
+    padding: 40px;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+
+#commentsPage h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.comment {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 12px;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    color: #e0ffe0;
+    box-shadow: 0 0 10px rgba(0,255,0,0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.comment b {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #33ff33;
+}
+
+.comment-btn {
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.08); /* same as other buttons */
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.2);
+  backdrop-filter: blur(10px);
+  transition: transform 0.2s, background 0.2s;
+}
+
+.comment-btn:hover {
+  transform: scale(1.1);
+  background: rgba(255,255,255,0.15);
+}
+
+.comment p {
+    margin: 0;
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+#commentsPage .back-btn {
+    margin-top: 25px;
+    background: #5865F2;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #login-screen{
@@ -103,21 +171,15 @@ z-index:2;
 }
 
 .container{
-
 max-width:820px;
 margin:70px auto;
 padding:40px;
 border-radius:18px;
-
 background:rgba(255,255,255,0.06);
-
 backdrop-filter:blur(18px);
 -webkit-backdrop-filter:blur(18px);
-
 border:1px solid rgba(255,255,255,0.15);
-
 box-shadow:0 8px 32px rgba(0,0,0,0.4);
-
 position:relative;
 overflow:hidden;
 }
@@ -139,9 +201,7 @@ overflow:hidden;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline-block;
-
   animation: rainbowMove 4s linear infinite;
-
   text-shadow:
     0 0 5px rgba(255,255,255,0.6),
     0 0 10px rgba(255,255,255,0.4),
@@ -153,41 +213,22 @@ overflow:hidden;
   100% { background-position: 400%; }
 }
 
-/*
-.shine{
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:100%;
-pointer-events:none;
-border-radius:inherit;
-}
-*/
-
 .friends-btn{
 position:absolute;
 top:20px;
 right:20px;
-
 width:42px;
 height:42px;
-
 border:none;
 border-radius:10px;
-
 background:rgba(255,255,255,0.08);
 color:white;
 font-size:20px;
-
 cursor:pointer;
-
 border:1px solid rgba(255,255,255,0.2);
 backdrop-filter:blur(10px);
-
 transition:.2s;
 }
-
 .friends-btn:hover{
 transform:scale(1.1);
 background:rgba(255,255,255,0.15);
@@ -207,34 +248,9 @@ background:rgba(255,255,255,0.15);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline-block;
-
   animation: kernoShine 3s linear infinite;
 }
-
 @keyframes kernoShine {
-  0% { background-position: 0%; }
-  100% { background-position: 300%; }
-}
-
-.niki-name {
-  font-weight: bold;
-  background: linear-gradient(
-    90deg,
-    #ff6ec7,
-    #00f0ff,
-    #ff6ec7,
-    #00f0ff,
-    #ff6ec7
-  );
-  background-size: 300%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  display: inline-block;
-
-  animation: nikiShine 3s linear infinite;
-}
-
-@keyframes nikiShine {
   0% { background-position: 0%; }
   100% { background-position: 300%; }
 }
@@ -242,7 +258,6 @@ background:rgba(255,255,255,0.15);
 .page{
 transition:opacity .4s ease;
 }
-
 .hidden{
 opacity:0;
 pointer-events:none;
@@ -264,17 +279,13 @@ gap:14px;
   display:flex;
   align-items:center;
   justify-content:center;
-
-  /* No ring */
   background: none;
   padding: 0;
-
   box-shadow:
     0 0 10px rgba(255,255,255,0.6),
     0 0 20px rgba(255,255,255,0.4),
     0 0 35px rgba(255,255,255,0.2);
 }
-
 .avatar img{
   width:100%;
   height:100%;
@@ -293,32 +304,10 @@ margin:0;
 }
 
 .center{text-align:center;}
-
-h2{
-text-align:center;
-margin-top:40px;
-}
-
-hr{
-border:none;
-border-top:1px solid rgba(255,255,255,0.2);
-margin:30px 0;
-}
-
-.badges{
-display:flex;
-justify-content:center;
-flex-wrap:wrap;
-gap:10px;
-}
-
-.links{
-display:flex;
-flex-direction:column;
-align-items:center;
-gap:16px;
-}
-
+h2{text-align:center;margin-top:40px;}
+hr{border:none;border-top:1px solid rgba(255,255,255,0.2);margin:30px 0;}
+.badges{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;}
+.links{display:flex;flex-direction:column;align-items:center;gap:16px;}
 .button{
 color:white;
 padding:14px 28px;
@@ -327,48 +316,33 @@ text-decoration:none;
 font-weight:bold;
 transition:.25s;
 }
-
-.button:hover{
-transform:translateY(-3px) scale(1.05);
-}
-
+.button:hover{transform:translateY(-3px) scale(1.05);}
 .discord{background:#7289DA}
 .profile{background:#5865F2}
 .bot{background:#FFAC33}
 
 .friends{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:16px;
-margin-top:20px;
+  display: flex;
+  flex-direction: column;  /* stacks items vertically */
+  gap: 16px;               /* space between each item */
+  margin-top: 20px;
 }
-
 .friend{
 display:flex;
 align-items:center;
 gap:12px;
-
 background:rgba(255,255,255,0.08);
 padding:12px;
 border-radius:10px;
-
 border:1px solid rgba(255,255,255,0.15);
 }
-
 .friend img{
 width:48px;
 height:48px;
 border-radius:50%;
 }
-
-.friend .name{
-font-weight:bold;
-}
-
-.friend .desc{
-font-size:13px;
-opacity:.7;
-}
+.friend .name{font-weight:bold;}
+.friend .desc{font-size:13px;opacity:.7;}
 
 .back-btn{
 margin-top:25px;
@@ -383,420 +357,258 @@ margin-left:auto;
 margin-right:auto;
 }
 
-footer{
-text-align:center;
-opacity:.6;
-margin-top:30px;
-font-size:14px;
-}
+footer{text-align:center;opacity:.6;margin-top:30px;font-size:14px;}
 
 @media(max-width:700px){
-
-.container{
-max-width:90%;
-padding:25px;
-margin:40px auto;
-}
-
-.header{
-flex-direction:column;
-}
-
-.divider{
-display:none;
-}
-
-.header h1{
-font-size:34px;
-}
-
-.button{
-width:85%;
-text-align:center;
-}
-
-.friends{
-grid-template-columns:1fr;
-}
-
+.container{max-width:90%;padding:25px;margin:40px auto;}
+.header{flex-direction:column;}
+.divider{display:none;}
+.header h1{font-size:34px;}
+.button{width:85%;text-align:center;}
+.friends{grid-template-columns:1fr;}
 }
 
 .music-btn{
 position:absolute;
 top:20px;
 right:70px;
-
 width:42px;
 height:42px;
-
 border:none;
 border-radius:10px;
-
 background:rgba(255,255,255,0.08);
 color:white;
 font-size:20px;
-
 cursor:pointer;
-
 border:1px solid rgba(255,255,255,0.2);
 backdrop-filter:blur(10px);
-
 transition:.2s;
 }
-
 .music-btn:hover{
 transform:scale(1.1);
 background:rgba(255,255,255,0.15);
 }
-
 </style>
 </head>
-
 <body>
 
 <div id="particles-js"></div>
 
-
 <div id="login-screen">
-
 <div class="terminal">
-
 <div class="terminal-header">
 <span class="dot red"></span>
 <span class="dot yellow"></span>
 <span class="dot green"></span>
 <span class="title">Version 1.8</span>
 </div>
-
 <div class="terminal-body">
-
 <p>> Connecting...</p>
 <p>> Initializing User Session...</p>
-
 <p>> Username: <span id="user-typing"></span></p>
 <p>> Password: <span id="pass-typing"></span></p>
-
 <button id="login-btn" disabled>LOGIN</button>
-
 </div>
-
 </div>
-
 </div>
-
 
 <div id="site" style="display:none;">
-
 <div class="container">
-
-<div class="shine" id="shine"></div>
-
 <button class="friends-btn" onclick="showFriends()">👥</button>
 <button class="music-btn" onclick="showMusic()">🎵</button>
-
+<button class="comment-btn" onclick="openPage('commentsPage')">💬</button>
 
 <div id="mainPage" class="page">
-
 <div class="header">
 <div class="avatar">
-  <img src="https://cdn.discordapp.com/avatars/1420110702516899910/e780ec2241784db6e02497fc75693a43.png?size=1024" />
+<img src="https://cdn.discordapp.com/avatars/1420110702516899910/e780ec2241784db6e02497fc75693a43.png?size=1024" />
 </div>
 <span class="divider">|</span>
 <h1 class="rainbow-text">Sh4d0w</h1>
 </div>
-
 <hr>
-
 <h2>About Me</h2>
-
 <p class="center">
 Hi! I'm <b>Sh4dow</b>, a developer focused on building Discord & Fortnite Bots!<br>
 I enjoy coding useful tools and improving experiences with bots.
 </p>
-
 <hr>
-
 <h2>Developer Badges</h2>
-
 <div class="badges">
-
 <img src="https://img.shields.io/badge/HTML-%23E34F26?style=for-the-badge&logo=html5&logoColor=white">
 <img src="https://img.shields.io/badge/CSS-%231572B6?style=for-the-badge&logo=css3&logoColor=white">
 <img src="https://img.shields.io/badge/JavaScript-%23F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
 <img src="https://img.shields.io/badge/Python-%2314354C?style=for-the-badge&logo=python&logoColor=white">
 <img src="https://img.shields.io/badge/Go-%2300ADD8?style=for-the-badge&logo=go&logoColor=white">
 <img src="https://img.shields.io/badge/Lua-%23007ACC?style=for-the-badge&logo=lua&logoColor=white">
-
 </div>
-
 <hr>
-
 <h2>My Bots</h2>
-
 <p class="center">
 <b>omg.bot</b><br>
 Formerly known as <b>cr4zy.bot</b><br>
 Active - Multipurpose Discord Bot
 </p>
-
 <p class="center">
 <b>Utility-Bot#8077</b><br>
 Discontinued since February 2026<br>
 Transferred to omg.bot
 </p>
-
 <hr>
-
 <h2>Links</h2>
-
 <div class="links">
-
 <a class="button discord" href="https://discord.gg/HQpNG7Cy4Q" target="_blank">Join My Discord Server</a>
-
 <a class="button profile" href="https://discord.com/users/1420110702516899910" target="_blank">My Discord Profile</a>
-
 <a class="button bot" href="https://discord.com/users/1477661871338291391" target="_blank">My Bot Profile</a>
-
 </div>
-
+<p id="visitCounter" class="center"></p>
 <footer>© 2026 Sh4dow</footer>
-
 </div>
 
 <div id="friendsPage" class="page hidden">
-
-<h2>My Friends</h2>
-
+<h2>VIP Users</h2>
 <div class="friends">
-
 <div class="friend">
-  <img src="https://cdn.discordapp.com/avatars/1354184587755913410/24747532efe6fd0b450eca4cec1bde83.png?size=1024">
-  <div>
-    <div class="name kerno-name">Kerno</div>
-    <div class="desc">Der Motherfucker</div>
-  </div>
+<img src="https://cdn.discordapp.com/avatars/1354184587755913410/24747532efe6fd0b450eca4cec1bde83.png?size=1024">
+<div>
+<div class="name kerno-name">Kerno</div>
+<div class="desc">Der Motherfucker</div>
 </div>
-
-<!--
-<div class="friend">
-  <img src="https://i.imgur.com/tztFA4A.png">
-  <div>
-    <div class="name niki-name">Niki</div>
-    <div class="desc">„Lowkey Dumm“</div>
-  </div>
 </div>
--->
-
 </div>
-
 <button class="back-btn" onclick="showMain()">Back</button>
-
 </div>
 
 <div id="musicPage" class="page hidden">
-
 <h2>My Music</h2>
-
 <div class="center">
-
 <audio id="mySong">
 <source src="https://github.com/unkn0wn-sh4d0w/unkn0wn-sh4d0w.github.io/raw/refs/heads/main/motekk.mp3" type="audio/mpeg">
 </audio>
-
 <br><br>
-
 <button class="button profile" onclick="playSong()">Play</button>
 <button class="button discord" onclick="pauseSong()">Pause</button>
 <button class="button bot" onclick="stopSong()">Stop</button>
-
 </div>
-
 <button class="back-btn" onclick="backFromMusic()">Back</button>
-
 </div>
 
-</div>
+<div id="commentsPage" class="page hidden">
 
-</div>
+  <div class="center">
+    <a href="#" id="emailCommentBtn" class="button bot" style="margin-top:10px;">
+      Submit Comment
+    </a>
+  </div>
 
+  <h2>Comments</h2>
+
+
+
+  <hr>
+
+  <!-- Manually added comments (stacked vertically) -->
+  <div class="comments" style="display:flex; flex-direction:column; gap:16px; margin-top:20px;">
+    <div class="comment-box" style="background:rgba(255,255,255,0.08); padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.15);">
+      <div class="name">Alice</div>
+      <div class="desc">Awesome Bot Developer</div>
+    </div>
+    <div class="comment-box" style="background:rgba(255,255,255,0.08); padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.15);">
+      <div class="name">Bob</div>
+      <div class="desc">Loves Fortnite Bots</div>
+    </div>
+  </div>
+
+  <button class="back-btn" onclick="showMain()">Back</button>
+</div>
 
 <audio id="music" loop>
 <source src="https://stream.laut.fm/electrolounge" type="audio/mpeg">
 </audio>
 
 <script>
-
-
 particlesJS("particles-js",{
-particles:{
-number:{value:60},
-size:{value:3},
-color:{value:"#ffffff"},
-line_linked:{
-enable:true,
-distance:150,
-color:"#ffffff",
-opacity:.25
-},
-move:{speed:.7},
-opacity:{value:.6}
-}
+  particles:{
+    number:{value:60},
+    size:{value:3},
+    color:{value:"#ffffff"},
+    line_linked:{
+      enable:true,
+      distance:150,
+      color:"#ffffff",
+      opacity:.25
+    },
+    move:{speed:.7},
+    opacity:{value:.6}
+  }
 });
 
+const user = "Sh4d0w";
+const pass = "1234";
+let ui = 0, pi = 0;
 
-const user="Sh4d0w";
-const pass="1234";
-
-let ui=0;
-let pi=0;
-
-function typeUser(){
-
-if(ui<user.length){
-document.getElementById("user-typing").innerHTML+=user.charAt(ui);
-ui++;
-setTimeout(typeUser,120);
-}else{
-setTimeout(typePass,400);
+function typeUser() {
+    if(ui < user.length){
+        document.getElementById("user-typing").innerHTML += user.charAt(ui);
+        ui++;
+        setTimeout(typeUser, 120);
+    } else { setTimeout(typePass, 400); }
 }
 
+function typePass() {
+    if(pi < pass.length){
+        document.getElementById("pass-typing").innerHTML += "*";
+        pi++;
+        setTimeout(typePass, 120);
+    } else {
+        const btn = document.getElementById("login-btn");
+        btn.disabled = false;
+        btn.style.cursor = "pointer";
+        btn.style.opacity = "1";
+    }
 }
 
-function typePass(){
+setTimeout(typeUser, 1200);
 
-if(pi<pass.length){
-document.getElementById("pass-typing").innerHTML+="*";
-pi++;
-setTimeout(typePass,120);
-}else{
-
-const btn=document.getElementById("login-btn");
-
-btn.disabled=false;
-btn.style.cursor="pointer";
-btn.style.opacity="1";
-
+document.getElementById("login-btn").onclick = function() {
+    document.getElementById("login-screen").style.display = "none";
+    document.getElementById("site").style.display = "block";
+    const bgMusic = document.getElementById("music");
+    bgMusic.volume = 0.5;
+    bgMusic.play();
 }
 
+const mainPage = document.getElementById("mainPage");
+const friendsPage = document.getElementById("friendsPage");
+const musicPage = document.getElementById("musicPage");
+const commentsPage = document.getElementById("commentsPage");
+
+function hideAllPages() {
+    [mainPage,friendsPage,musicPage,commentsPage].forEach(p=>p.classList.add("hidden"));
 }
+function showMain() { hideAllPages(); mainPage.classList.remove("hidden"); }
+function showFriends() { hideAllPages(); friendsPage.classList.remove("hidden"); }
+function showMusic() { hideAllPages(); musicPage.classList.remove("hidden"); }
+function openPage(id) { hideAllPages(); document.getElementById(id).classList.remove("hidden"); }
 
-setTimeout(typeUser,1200);
+const mySong = document.getElementById("mySong");
+const bgMusic = document.getElementById("music");
 
-document.getElementById("login-btn").onclick=function(){
+function playSong() { mySong.play(); bgMusic.pause(); }
+function pauseSong() { mySong.pause(); }
+function stopSong() { mySong.pause(); mySong.currentTime = 0; }
 
-document.getElementById("login-screen").style.display="none";
-document.getElementById("site").style.display="block";
+const emailCommentBtn = document.getElementById("emailCommentBtn");
 
-const music=document.getElementById("music");
-music.volume=0.5;
-music.play();
-
-};
-
-/*
-
-const text="Sh4dow";
-let i=0;
-
-function type(){
-if(i<text.length){
-document.getElementById("typing").innerHTML+=text.charAt(i);
-i++;
-setTimeout(type,120);
-}
-}
-
-setTimeout(type,600);
-*/
-
-const shine=document.getElementById("shine");
-
-document.querySelector(".container").addEventListener("mousemove",e=>{
-
-const rect=e.currentTarget.getBoundingClientRect();
-
-const x=e.clientX-rect.left;
-const y=e.clientY-rect.top;
-
-shine.style.background=`radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.25), transparent 60%)`;
-
+emailCommentBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    const subject = encodeURIComponent("Comment");
+    const body = encodeURIComponent("Name: \nComment: ");
+    const mailtoLink = `mailto:your-email@example.com?subject=${subject}&body=${body}`;
+    window.location.href = mailtoLink;
 });
 
-
-const mainPage=document.getElementById("mainPage");
-const friendsPage=document.getElementById("friendsPage");
-
-function showFriends(){
-
-mainPage.classList.add("hidden");
-
-setTimeout(()=>{
-friendsPage.classList.remove("hidden");
-},200);
-
-}
-
-function showMain(){
-
-friendsPage.classList.add("hidden");
-
-setTimeout(()=>{
-mainPage.classList.remove("hidden");
-},200);
-
-}
-
-
-const musicPage=document.getElementById("musicPage");
-const bgMusic=document.getElementById("music");
-const mySong=document.getElementById("mySong");
-
-function showMusic(){
-
-mainPage.classList.add("hidden");
-
-setTimeout(()=>{
-musicPage.classList.remove("hidden");
-},200);
-
-bgMusic.pause();
-
-}
-
-function backFromMusic(){
-
-musicPage.classList.add("hidden");
-
-setTimeout(()=>{
-mainPage.classList.remove("hidden");
-},200);
-
-}
-
-function playSong(){
-
-bgMusic.pause();
-mySong.play();
-
-}
-
-function pauseSong(){
-
-mySong.pause();
-bgMusic.play();
-
-}
-
-function stopSong(){
-
-mySong.pause();
-mySong.currentTime=0;
-
-bgMusic.play();
-
-}
-
+if(!localStorage.visitCount) localStorage.visitCount = 0;
+localStorage.visitCount = Number(localStorage.visitCount) + 1;
+document.getElementById("visitCounter").innerText = `Visits: ${localStorage.visitCount}`;
 </script>
-
-</body>
-</html>
