@@ -27,10 +27,6 @@ text-align:center;
 box-shadow:0 0 25px rgba(0,0,0,0.6);
 }
 
-h2{
-margin-top:0;
-}
-
 input{
 padding:10px;
 width:220px;
@@ -58,7 +54,6 @@ cursor:not-allowed;
 
 #msg{
 margin-top:15px;
-font-size:14px;
 }
 
 #counter{
@@ -117,7 +112,7 @@ transform:translateY(110vh) rotate(720deg);
 
 <script>
 
-// 1 in 10000
+// 1 in 10000 chance
 const secret = Math.floor(Math.random()*10000)
 
 const overrideCode = "secret"
@@ -135,10 +130,6 @@ bypass=true
 }
 
 if(cooldown && !bypass) return
-
-rollAnimation()
-
-setTimeout(()=>{
 
 const guess=Number(document.getElementById("guess").value)
 
@@ -161,28 +152,6 @@ startCooldown()
 }
 
 }
-
-},600)
-
-}
-
-function rollAnimation(){
-
-const input=document.getElementById("guess")
-
-let i=0
-
-const interval=setInterval(()=>{
-
-input.value=Math.floor(Math.random()*10000)
-
-i++
-
-if(i>10){
-clearInterval(interval)
-}
-
-},50)
 
 }
 
