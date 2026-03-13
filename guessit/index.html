@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Secret Code Game</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+color:white;
+overflow:hidden;
+}
+
+.box{
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(10px);
+border-radius:15px;
+padding:40px;
+width:340px;
+text-align:center;
+box-shadow:0 0 25px rgba(0,0,0,0.6);
+}
+
+h2{
+margin-top:0;
+}
+
+input{
+padding:10px;
+width:220px;
+margin-top:8px;
+border-radius:6px;
+border:none;
+outline:none;
+}
+
+button{
+padding:10px 25px;
+margin-top:15px;
+border:none;
+border-radius:6px;
+background:#00ffb3;
+color:black;
+font-weight:bold;
+cursor:pointer;
+}
+
+button:disabled{
+background:#555;
+cursor:not-allowed;
+}
+
+#msg{
+margin-top:15px;
+font-size:14px;
+}
+
+#counter{
+margin-top:8px;
+font-size:12px;
+opacity:0.8;
+}
+
+#cooldown{
+margin-top:5px;
+font-size:12px;
+color:#ffcc00;
+}
+
+.confetti{
+position:fixed;
+width:10px;
+height:10px;
+top:-10px;
+animation:fall linear forwards;
+}
+
+@keyframes fall{
+to{
+transform:translateY(110vh) rotate(720deg);
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<h2>🎯 Guess the Secret Code</h2>
+
+<p>Pick a number between <b>0 – 9999</b></p>
+
+<input id="guess" placeholder="Your guess">
+
+<br>
+
+<input id="override" placeholder="Admin code">
+
+<br>
+
+<button id="btn" onclick="check()">Guess</button>
+
+<p id="msg"></p>
+
+<div id="cooldown"></div>
+<div id="counter">Guesses: 0</div>
+
+</div>
+
+<script>
+
+// 1 in 10000
+const secret = Math.floor(Math.random()*10000)
+
+const overrideCode = "secret"
+
+let cooldown=false
+let bypass=false
+let guesses=0
+
+function check(){
+
+const overrideInput=document.getElementById("override").value
+
+if(overrideInput===overrideCode){
+bypass=true
+}
+
+if(cooldown && !bypass) return
+
+rollAnimation()
+
+setTimeout(()=>{
+
+const guess=Number(document.getElementById("guess").value)
+
+guesses++
+document.getElementById("counter").innerText="Guesses: "+guesses
+
+if(guess===secret){
+
+document.getElementById("msg").innerText=
+"You guessed the Code! Congrats. Write me on Discord. @omg.skyeee"
+
+confetti()
+
+}else{
+
+document.getElementById("msg").innerText="Wrong code."
+
+if(!bypass){
+startCooldown()
+}
+
+}
+
+},600)
+
+}
+
+function rollAnimation(){
+
+const input=document.getElementById("guess")
+
+let i=0
+
+const interval=setInterval(()=>{
+
+input.value=Math.floor(Math.random()*10000)
+
+i++
+
+if(i>10){
+clearInterval(interval)
+}
+
+},50)
+
+}
+
+function startCooldown(){
+
+cooldown=true
+
+const btn=document.getElementById("btn")
+btn.disabled=true
+
+let time=3
+
+document.getElementById("cooldown").innerText=
+"Wait "+time+" seconds..."
+
+const timer=setInterval(()=>{
+
+time--
+
+document.getElementById("cooldown").innerText=
+"Wait "+time+" seconds..."
+
+if(time<=0){
+
+clearInterval(timer)
+
+cooldown=false
+btn.disabled=false
+document.getElementById("cooldown").innerText=""
+
+}
+
+},1000)
+
+}
+
+function confetti(){
+
+for(let i=0;i<120;i++){
+
+const piece=document.createElement("div")
+
+piece.className="confetti"
+
+piece.style.left=Math.random()*100+"vw"
+
+piece.style.background=
+"hsl("+Math.random()*360+"deg,100%,50%)"
+
+piece.style.animationDuration=
+(Math.random()*3+2)+"s"
+
+document.body.appendChild(piece)
+
+setTimeout(()=>piece.remove(),5000)
+
+}
+
+}
+
+// disable right click
+document.addEventListener("contextmenu",e=>e.preventDefault())
+
+// block inspect shortcuts
+document.addEventListener("keydown",function(e){
+
+if(
+e.key==="F12" ||
+(e.ctrlKey && e.shiftKey && e.key==="I") ||
+(e.ctrlKey && e.shiftKey && e.key==="J") ||
+(e.ctrlKey && e.key==="U")
+){
+location.reload()
+}
+
+})
+
+// devtools detection
+setInterval(function(){
+
+const threshold=160
+
+if(
+window.outerWidth-window.innerWidth>threshold ||
+window.outerHeight-window.innerHeight>threshold
+){
+location.reload()
+}
+
+},500)
+
+</script>
+
+</body>
+</html>
