@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>Guess The Code</title>
@@ -7,288 +7,228 @@
 
 <style>
 body{
-font-family:Arial;
-background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-color:white;
-margin:0;
-overflow:hidden;
+  font-family:Arial, sans-serif;
+  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:white;
+  margin:0;
+  overflow:hidden;
 }
 
-.version{
-position:fixed;
-bottom:10px;
-right:10px;
-font-size:12px;
-opacity:0.5;
+.commitment {
+  margin: 15px auto 0 auto;
+  font-size: 12px;
+  opacity: 0.7;
+  text-align: center;
+  white-space: pre;        /* preserve spaces, no wrapping */
+  background: rgba(0,0,0,0.2);
+  padding: 10px 15px;
+  border-radius: 12px;
+  display: inline-block;   /* shrink to fit content */
+  min-width: 100%;         /* at least full width of parent */
+  user-select: all;
 }
 
 .box{
-background:rgba(255,255,255,0.05);
-backdrop-filter:blur(10px);
-border-radius:20px;
-padding:50px;
-width:90%;
-max-width:420px;
-text-align:center;
-box-shadow:0 0 30px rgba(0,0,0,0.6);
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(10px);
+  border-radius:20px;
+  padding:50px;
+  width:90%;
+  max-width:420px;
+  text-align:center;
+  box-shadow:0 0 30px rgba(0,0,0,0.6);
 }
 
 input{
-padding:16px;
-width:85%;
-margin-top:12px;
-border-radius:8px;
-border:none;
-font-size:18px;
+  padding:16px;
+  width:85%;
+  margin-top:12px;
+  border-radius:8px;
+  border:none;
+  font-size:18px;
 }
 
 button{
-padding:16px 30px;
-margin-top:18px;
-border:none;
-border-radius:8px;
-background:#00ffb3;
-color:black;
-font-weight:bold;
-font-size:18px;
-cursor:pointer;
+  padding:16px 30px;
+  margin-top:18px;
+  border:none;
+  border-radius:8px;
+  background:#00ffb3;
+  color:black;
+  font-weight:bold;
+  font-size:18px;
+  cursor:pointer;
 }
 
 button:disabled{
-background:#555;
-cursor:not-allowed;
-}
-
-.commitment{
-  margin-top:8px;
-  font-size:12px;
-  opacity:0.7;
-  text-align:center;
-  word-break:break-all;
+  background:#555;
+  cursor:not-allowed;
 }
 
 #msg{
-margin-top:20px;
-font-size:18px;
+  margin-top:20px;
+  font-size:18px;
 }
 
 #counter{
-margin-top:10px;
-font-size:14px;
-opacity:0.8;
+  margin-top:10px;
+  font-size:14px;
+  opacity:0.8;
 }
 
 #cooldown{
-margin-top:5px;
-font-size:14px;
-color:#ffcc00;
+  margin-top:5px;
+  font-size:14px;
+  color:#ffcc00;
 }
 
 .confetti{
-position:fixed;
-width:10px;
-height:10px;
-top:-10px;
-animation:fall linear forwards;
+  position:fixed;
+  width:10px;
+  height:10px;
+  top:-10px;
+  animation:fall linear forwards;
 }
 
 @keyframes fall{
-to{
-transform:translateY(110vh) rotate(720deg);
+  to{
+    transform:translateY(110vh) rotate(720deg);
+  }
 }
+
+.version{
+  position:fixed;
+  bottom:10px;
+  right:10px;
+  font-size:12px;
+  opacity:0.5;
 }
 </style>
-
 </head>
+
 <body>
-
 <div class="box">
-
 <h2>🎯 Guess the Code</h2>
 <p>Pick a number between <b>0 – 9999</b></p>
 
 <input id="guess" type="number" min="0" max="9999" placeholder="Your guess">
-
 <br>
-
 <input id="override" placeholder="No Cooldown Code">
-
 <br>
-
 <button id="btn">Guess</button>
 
 <p id="msg"></p>
-
 <div id="cooldown"></div>
-
 <div id="counter">Guesses: 0</div>
-<div id="commitment"></div>
+<div class="commitment"></div>
+<div class="version">v1.3</div>
 </div>
-<script>
 
+<script>
 (async function(){
 
-document.addEventListener("contextmenu",e=>e.preventDefault())
+// Prevent inspect element / shortcuts
+document.addEventListener("contextmenu", e=>e.preventDefault());
+document.addEventListener("keydown", e=>{
+    if(e.key==="F12" || (e.ctrlKey && e.shiftKey && (e.key==="I"||e.key==="J")) || (e.ctrlKey && e.key==="U")){
+        e.preventDefault();
+    }
+});
 
-document.addEventListener("keydown",function(e){
-if(
-e.key==="F12" ||
-(e.ctrlKey && e.shiftKey && e.key==="I") ||
-(e.ctrlKey && e.shiftKey && e.key==="J") ||
-(e.ctrlKey && e.key==="U")
-){
-e.preventDefault()
-}
-})
-
-const encoder = new TextEncoder()
-
+// SHA-256 hash
+const encoder = new TextEncoder();
 async function hash(text){
-const buf = await crypto.subtle.digest(
-"SHA-256",
-encoder.encode(text)
-)
-
-return [...new Uint8Array(buf)]
-.map(x=>x.toString(16).padStart(2,"0"))
-.join("")
+    const buf = await crypto.subtle.digest("SHA-256", encoder.encode(text));
+    return [...new Uint8Array(buf)].map(x=>x.toString(16).padStart(2,"0")).join("");
 }
 
+// Random string for salt
 function randomString(len){
-const chars="abcdefghijklmnopqrstuvwxyz0123456789"
-let s=""
-for(let i=0;i<len;i++)
-s+=chars[Math.floor(Math.random()*chars.length)]
-return s
+    const chars="abcdefghijklmnopqrstuvwxyz0123456789";
+    let s="";
+    for(let i=0;i<len;i++) s+=chars[Math.floor(Math.random()*chars.length)];
+    return s;
 }
 
-const overrideCode = "Sh4d0w"
+// Config
+const overrideCode = "Sh4d0w";
+const secretNumber = Math.floor(Math.random()*10000);
+const salt = randomString(16);
+const secretHash = await hash(secretNumber + salt);
 
-const secretNumber = Math.floor(Math.random()*10000)
+// Display commitment token (for transparency)
+document.querySelector(".commitment").innerText = "Token:\n" + secretHash;
 
-const salt = randomString(16)
-
-const secretHash = await hash(secretNumber + salt)
-
-document.querySelector(".commitment").innerText = 
-  "Token:\n" + secretHash
-
-let guesses = 0
-let cooldown = false
-let bypass = false
+let guesses = 0;
+let cooldown = false;
+let bypass = false;
 
 document.getElementById("btn").onclick = async function(){
+    const overrideInput = document.getElementById("override").value;
+    if(overrideInput === overrideCode) bypass = true;
+    if(cooldown && !bypass) return;
 
-const overrideInput =
-document.getElementById("override").value
+    const guessInput = document.getElementById("guess").value;
+    const guess = Number(guessInput);
 
-if(overrideInput === overrideCode)
-bypass = true
+    // Validate input
+    if(guessInput === "" || isNaN(guess) || guess < 0 || guess > 9999){
+        document.getElementById("msg").innerText = "Enter a number between 0 and 9999.";
+        return; 
+    }
 
-if(cooldown && !bypass) return
+    guesses++; // Increment counter
+    document.getElementById("counter").innerText = "Guesses: " + guesses;
 
-const guess = Number(document.getElementById("guess").value)
+    const guessHash = await hash(guess + salt);
 
-if(guess === "" || guess < 0 || guess > 9999){
-document.getElementById("msg").innerText =
-"Enter a number between 0 and 9999."
-return
+    if(guessHash === secretHash){
+        document.getElementById("msg").innerHTML = "You guessed the Code! 🎉<br><br>" +
+            "Secret Number: " + secretNumber + "<br>ID (Salt): " + salt;
+        confetti();
+    } else {
+        document.getElementById("msg").innerText = "Wrong code. Try again!";
+        if(!bypass) startCooldown();
+    }
 }
 
-guesses++
-
-document.getElementById("counter").innerText =
-"Guesses: " + guesses
-
-const guessHash = await hash(guess + salt)
-
-if(guessHash === secretHash){
-
-document.getElementById("msg").innerHTML =
-"You guessed the Code! 🎉<br><br>" +
-"Secret Number: " + secretNumber + "<br>" +
-"ID (Salt): " + salt
-
-confetti()
-
-}else{
-
-document.getElementById("msg").innerText =
-"Wrong code. Try again!"
-
-if(!bypass)
-startCooldown()
-
-}
-
-}
-
+// Cooldown logic
 function startCooldown(){
+    cooldown = true;
+    const btn = document.getElementById("btn");
+    btn.disabled = true;
 
-cooldown = true
-
-const btn = document.getElementById("btn")
-
-btn.disabled = true
-
-let time = 3
-
-document.getElementById("cooldown").innerText =
-"Wait " + time + " seconds..."
-
-const timer = setInterval(()=>{
-
-time--
-
-document.getElementById("cooldown").innerText =
-"Wait " + time + " seconds..."
-
-if(time <= 0){
-
-clearInterval(timer)
-
-cooldown = false
-btn.disabled = false
-
-document.getElementById("cooldown").innerText=""
-
+    let time = 3;
+    document.getElementById("cooldown").innerText = "Wait " + time + " seconds...";
+    const timer = setInterval(()=>{
+        time--;
+        document.getElementById("cooldown").innerText = time>0 ? "Wait " + time + " seconds..." : "";
+        if(time<=0){ 
+            clearInterval(timer); 
+            cooldown=false; 
+            btn.disabled=false; 
+        }
+    },1000);
 }
 
-},1000)
-
-}
-
+// Confetti effect
 function confetti(){
-
-for(let i=0;i<120;i++){
-
-const piece=document.createElement("div")
-
-piece.className="confetti"
-
-piece.style.left=Math.random()*100+"vw"
-
-piece.style.background=
-"hsl("+Math.random()*360+"deg,100%,50%)"
-
-piece.style.animationDuration=
-(Math.random()*3+2)+"s"
-
-document.body.appendChild(piece)
-
-setTimeout(()=>piece.remove(),5000)
-
+    for(let i=0;i<120;i++){
+        const piece=document.createElement("div");
+        piece.className="confetti";
+        piece.style.left=Math.random()*100+"vw";
+        piece.style.background="hsl("+Math.random()*360+"deg,100%,50%)";
+        piece.style.animationDuration=(Math.random()*3+2)+"s";
+        document.body.appendChild(piece);
+        setTimeout(()=>piece.remove(),5000);
+    }
 }
 
-}
-
-})()
-
+})();
 </script>
-<div class="version">v1.3</div>
 </body>
 </html>
