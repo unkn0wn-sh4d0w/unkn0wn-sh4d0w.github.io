@@ -14,8 +14,8 @@ display:flex;
 justify-content:center;
 align-items:center;
 color:white;
-overflow:hidden;
 margin:0;
+overflow:hidden;
 }
 
 .box{
@@ -29,22 +29,12 @@ text-align:center;
 box-shadow:0 0 30px rgba(0,0,0,0.6);
 }
 
-h2{
-font-size:32px;
-margin-bottom:10px;
-}
-
-p{
-font-size:18px;
-}
-
 input{
 padding:16px;
 width:85%;
 margin-top:12px;
 border-radius:8px;
 border:none;
-outline:none;
 font-size:18px;
 }
 
@@ -82,14 +72,6 @@ font-size:14px;
 color:#ffcc00;
 }
 
-.version{
-position:fixed;
-bottom:10px;
-right:10px;
-font-size:12px;
-opacity:0.5;
-}
-
 .confetti{
 position:fixed;
 width:10px;
@@ -104,98 +86,41 @@ transform:translateY(110vh) rotate(720deg);
 }
 }
 </style>
-</head>
 
+</head>
 <body>
 
 <div class="box">
+
 <h2>🎯 Guess the Code</h2>
 <p>Pick a number between <b>0 – 9999</b></p>
 
-<input 
-id="guess" 
-type="number" 
-min="0" 
-max="9999"
-inputmode="numeric"
-placeholder="Your guess"
-oninput="this.value=this.value.replace(/[^0-9]/g,'')"
->
+<input id="guess" type="number" min="0" max="9999" placeholder="Your guess">
 
 <br>
+
 <input id="override" placeholder="No Cooldown Code">
+
 <br>
-<button id="btn" onclick="check()">Guess</button>
+
+<button id="btn">Guess</button>
 
 <p id="msg"></p>
+
 <div id="cooldown"></div>
+
 <div id="counter">Guesses: 0</div>
+
 </div>
 
-<div class="version">v1.2</div>
-
 <script>
-const VERSION="1.2"
-const secret = Math.floor(Math.random()*10000)
-const overrideCode="Sh4d0w"
-let cooldown=false
-let bypass=false
-let guesses=0
 
-function check(){
-const overrideInput=document.getElementById("override").value
-if(overrideInput===overrideCode) bypass=true
-if(cooldown && !bypass) return
+(async function(){
 
-const guess=Number(document.getElementById("guess").value)
-if(guess < 0 || guess > 9999 || isNaN(guess)){
-document.getElementById("msg").innerText="Enter a number between 0 and 9999."
-return
-}
-
-guesses++
-document.getElementById("counter").innerText="Guesses: "+guesses
-
-if(guess===secret){
-document.getElementById("msg").innerText="You guessed the Code! Congrats. Write me on Discord. @omg.skyeee"
-confetti()
-}else{
-document.getElementById("msg").innerText="Wrong code. Try Again!"
-if(!bypass) startCooldown()
-}
-}
-
-function startCooldown(){
-cooldown=true
-const btn=document.getElementById("btn")
-btn.disabled=true
-let time=3
-document.getElementById("cooldown").innerText="Wait "+time+" seconds..."
-const timer=setInterval(()=>{
-time--
-document.getElementById("cooldown").innerText="Wait "+time+" seconds..."
-if(time<=0){
-clearInterval(timer)
-cooldown=false
-btn.disabled=false
-document.getElementById("cooldown").innerText=""
-}
-},1000)
-}
-
-function confetti(){
-for(let i=0;i<120;i++){
-const piece=document.createElement("div")
-piece.className="confetti"
-piece.style.left=Math.random()*100+"vw"
-piece.style.background="hsl("+Math.random()*360+"deg,100%,50%)"
-piece.style.animationDuration=(Math.random()*3+2)+"s"
-document.body.appendChild(piece)
-setTimeout(()=>piece.remove(),5000)
-}
-}
-
+/* block right click */
 document.addEventListener("contextmenu",e=>e.preventDefault())
+
+/* block common inspect shortcuts */
 document.addEventListener("keydown",function(e){
 if(
 e.key==="F12" ||
@@ -203,30 +128,151 @@ e.key==="F12" ||
 (e.ctrlKey && e.shiftKey && e.key==="J") ||
 (e.ctrlKey && e.key==="U")
 ){
-location.reload()
+e.preventDefault()
 }
 })
 
-setInterval(function(){
-const threshold=160
-if(
-window.outerWidth-window.innerWidth>threshold ||
-window.outerHeight-window.innerHeight>threshold
-){
-location.reload()
-}
-},500)
+const encoder = new TextEncoder()
 
-setInterval(function(){
-const start = performance.now()
-debugger
-const end = performance.now()
-if(end - start > 100) location.reload()
+async function hash(text){
+const buf = await crypto.subtle.digest(
+"SHA-256",
+encoder.encode(text)
+)
+
+return [...new Uint8Array(buf)]
+.map(x=>x.toString(16).padStart(2,"0"))
+.join("")
+}
+
+function randomString(len){
+const chars="abcdefghijklmnopqrstuvwxyz0123456789"
+let s=""
+for(let i=0;i<len;i++)
+s+=chars[Math.floor(Math.random()*chars.length)]
+return s
+}
+
+/* game setup */
+
+const overrideCode = "Sh4d0w"
+
+const secretNumber = Math.floor(Math.random()*10000)
+
+const salt = randomString(16)
+
+const secretHash = await hash(secretNumber + salt)
+
+let guesses = 0
+let cooldown = false
+let bypass = false
+
+document.getElementById("btn").onclick = async function(){
+
+const overrideInput =
+document.getElementById("override").value
+
+if(overrideInput === overrideCode)
+bypass = true
+
+if(cooldown && !bypass) return
+
+const guess =
+document.getElementById("guess").value
+
+if(guess === "" || guess < 0 || guess > 9999){
+document.getElementById("msg").innerText =
+"Enter a number between 0 and 9999."
+return
+}
+
+guesses++
+
+document.getElementById("counter").innerText =
+"Guesses: " + guesses
+
+const guessHash = await hash(guess + salt)
+
+if(guessHash === secretHash){
+
+document.getElementById("msg").innerText =
+"You guessed the Code! 🎉"
+
+confetti()
+
+}else{
+
+document.getElementById("msg").innerText =
+"Wrong code. Try again!"
+
+if(!bypass)
+startCooldown()
+
+}
+
+}
+
+function startCooldown(){
+
+cooldown = true
+
+const btn = document.getElementById("btn")
+
+btn.disabled = true
+
+let time = 3
+
+document.getElementById("cooldown").innerText =
+"Wait " + time + " seconds..."
+
+const timer = setInterval(()=>{
+
+time--
+
+document.getElementById("cooldown").innerText =
+"Wait " + time + " seconds..."
+
+if(time <= 0){
+
+clearInterval(timer)
+
+cooldown = false
+btn.disabled = false
+
+document.getElementById("cooldown").innerText=""
+
+}
+
 },1000)
 
-const originalCheck = check.toString()
-setInterval(()=>{if(check.toString() !== originalCheck) location.reload()},1000)
-Object.freeze(console)
+}
+
+function confetti(){
+
+for(let i=0;i<120;i++){
+
+const piece=document.createElement("div")
+
+piece.className="confetti"
+
+piece.style.left=Math.random()*100+"vw"
+
+piece.style.background=
+"hsl("+Math.random()*360+"deg,100%,50%)"
+
+piece.style.animationDuration=
+(Math.random()*3+2)+"s"
+
+document.body.appendChild(piece)
+
+setTimeout(()=>piece.remove(),5000)
+
+}
+
+}
+
+})()
+
 </script>
 
 </body>
