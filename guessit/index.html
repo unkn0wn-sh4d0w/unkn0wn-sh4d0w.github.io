@@ -63,11 +63,15 @@ background:#555;
 cursor:not-allowed;
 }
 
-#commitment{
-margin-top:10px;
-font-size:12px;
-opacity:0.7;
-word-break:break-all;
+.commitment{
+  position:fixed;
+  bottom:10px;          /* distance from bottom */
+  left:50%;             /* center horizontally */
+  transform:translateX(-50%); /* truly center */
+  font-size:12px;
+  opacity:0.7;
+  text-align:center;
+  white-space:pre-wrap; /* keeps line break between "Commitment:" and hash */
 }
 
 #msg{
@@ -126,8 +130,6 @@ transform:translateY(110vh) rotate(720deg);
 
 <div id="counter">Guesses: 0</div>
 
-<div id="commitment"></div>
-
 </div>
 <script>
 
@@ -174,6 +176,9 @@ const secretNumber = Math.floor(Math.random()*10000)
 const salt = randomString(16)
 
 const secretHash = await hash(secretNumber + salt)
+
+document.querySelector(".commitment").innerText = 
+  "Token:\n" + secretHash
 
 let guesses = 0
 let cooldown = false
@@ -287,10 +292,8 @@ setTimeout(()=>piece.remove(),5000)
 
 })()
 
-document.getElementById("commitment").innerText =
-"Token: " + secretHash
-
 </script>
 <div class="version">v1.3</div>
+<div id="commitment"></div>
 </body>
 </html>
