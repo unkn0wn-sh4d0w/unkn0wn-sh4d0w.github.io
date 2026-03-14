@@ -203,9 +203,6 @@ guesses++
 document.getElementById("counter").innerText =
 "Guesses: " + guesses
 
-document.getElementById("commitment").innerText =
-"Token: " + secretHash
-
 const guessHash = await hash(guess + salt)
 
 if(guessHash === secretHash){
@@ -289,6 +286,9 @@ setTimeout(()=>piece.remove(),5000)
 }
 
 })()
+
+document.getElementById("commitment").innerText =
+"Token: " + secretHash
 
 </script>
 <div class="version">v1.3</div>
