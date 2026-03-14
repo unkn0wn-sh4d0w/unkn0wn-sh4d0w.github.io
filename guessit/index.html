@@ -18,6 +18,14 @@ margin:0;
 overflow:hidden;
 }
 
+.version{
+position:fixed;
+bottom:10px;
+right:10px;
+font-size:12px;
+opacity:0.5;
+}
+
 .box{
 background:rgba(255,255,255,0.05);
 backdrop-filter:blur(10px);
@@ -53,6 +61,13 @@ cursor:pointer;
 button:disabled{
 background:#555;
 cursor:not-allowed;
+}
+
+#commitment{
+margin-top:10px;
+font-size:12px;
+opacity:0.7;
+word-break:break-all;
 }
 
 #msg{
@@ -111,8 +126,9 @@ transform:translateY(110vh) rotate(720deg);
 
 <div id="counter">Guesses: 0</div>
 
-</div>
 <div id="commitment"></div>
+
+</div>
 <script>
 
 (async function(){
@@ -275,6 +291,6 @@ setTimeout(()=>piece.remove(),5000)
 })()
 
 </script>
-
+<div class="version">v1.3</div>
 </body>
 </html>
