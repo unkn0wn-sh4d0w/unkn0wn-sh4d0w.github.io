@@ -125,13 +125,12 @@ button:disabled{
 <div id="cooldown"></div>
 <div id="counter">Guesses: 0</div>
 <div class="commitment"></div>
-<div class="version">v1.3</div>
+<div class="version">v1.4</div>
 </div>
 
 <script>
 (async function(){
 
-// Prevent inspect element / shortcuts
 document.addEventListener("contextmenu", e=>e.preventDefault());
 document.addEventListener("keydown", e=>{
     if(e.key==="F12" || (e.ctrlKey && e.shiftKey && (e.key==="I"||e.key==="J")) || (e.ctrlKey && e.key==="U")){
@@ -139,14 +138,12 @@ document.addEventListener("keydown", e=>{
     }
 });
 
-// SHA-256 hash
 const encoder = new TextEncoder();
 async function hash(text){
     const buf = await crypto.subtle.digest("SHA-256", encoder.encode(text));
     return [...new Uint8Array(buf)].map(x=>x.toString(16).padStart(2,"0")).join("");
 }
 
-// Random string for salt
 function randomString(len){
     const chars="abcdefghijklmnopqrstuvwxyz0123456789";
     let s="";
@@ -154,20 +151,28 @@ function randomString(len){
     return s;
 }
 
-// Config
 const overrideCode = "Sh4d0w";
 const secretNumber = Math.floor(Math.random()*10000);
 const salt = randomString(16);
 const secretHash = await hash(secretNumber + salt);
 
-// Display commitment token (for transparency)
 document.querySelector(".commitment").innerText = "Token:\n" + secretHash;
 
 let guesses = 0;
 let cooldown = false;
 let bypass = false;
 
-document.getElementById("btn").onclick = async function(){
+let guessTimes = [];
+  document.getElementById("btn").onclick = async function(){
+    const now = Date.now();
+    guessTimes.push(now);
+    guessTimes = guessTimes.filter(t => now - t <= 3000);
+    if(guessTimes.length >= 5){
+        alert("Too many guesses! Reloading...");
+        location.reload();
+        return;
+    }
+  
     const overrideInput = document.getElementById("override").value;
     if(overrideInput === overrideCode) bypass = true;
     if(cooldown && !bypass) return;
@@ -196,7 +201,6 @@ document.getElementById("btn").onclick = async function(){
     }
 }
 
-// Cooldown logic
 function startCooldown(){
     cooldown = true;
     const btn = document.getElementById("btn");
@@ -215,7 +219,6 @@ function startCooldown(){
     },1000);
 }
 
-// Confetti effect
 function confetti(){
     for(let i=0;i<120;i++){
         const piece=document.createElement("div");
