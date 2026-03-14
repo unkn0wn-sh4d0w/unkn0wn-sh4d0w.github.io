@@ -117,8 +117,6 @@ button:disabled{
 
 <input id="guess" type="number" min="0" max="9999" placeholder="Your guess">
 <br>
-<input id="override" placeholder="No Cooldown Code">
-<br>
 <button id="btn">Guess</button>
 
 <p id="msg"></p>
@@ -151,7 +149,6 @@ function randomString(len){
     return s;
 }
 
-const overrideCode = "Sh4d0w";
 const secretNumber = Math.floor(Math.random()*10000);
 const salt = randomString(16);
 const secretHash = await hash(secretNumber + salt);
@@ -160,7 +157,6 @@ document.querySelector(".commitment").innerText = "Token:\n" + secretHash;
 
 let guesses = 0;
 let cooldown = false;
-let bypass = false;
 
 let guessTimes = [];
   document.getElementById("btn").onclick = async function(){
@@ -172,11 +168,7 @@ let guessTimes = [];
         location.reload();
         return;
     }
-  
-    const overrideInput = document.getElementById("override").value;
-    if(overrideInput === overrideCode) bypass = true;
-    if(cooldown && !bypass) return;
-
+    if(cooldown) return;
     const guessInput = document.getElementById("guess").value;
     const guess = Number(guessInput);
 
