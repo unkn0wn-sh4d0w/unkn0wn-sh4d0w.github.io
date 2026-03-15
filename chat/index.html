@@ -69,11 +69,10 @@ button:hover {
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 <script>
-
 // ==== SUPABASE SETUP ====
-const supabase = window.supabase.createClient(
-  "https://txfjkoduiftbwcjnxipp.supabase.co",       // z.B. https://abcd1234xyz.supabase.co
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR4Zmprb2R1aWZ0Yndjam54aXBwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1NzYyMjQsImV4cCI6MjA4OTE1MjIyNH0.YJHnMFScXleuH1VBaf7igYMuZVDQp9lg7kW8Hmoljpo"     // anon public key aus Settings → API
+const supabase = supabase.createClient(
+  "https://txfjkoduiftbwcjnxipp.supabase.co",
+  "YOUR_PUBLIC_ANON_KEY"
 );
 
 // ==== VARIABLES ====
@@ -95,12 +94,14 @@ function scrollChat(){
 
 // ==== LOAD MESSAGES ====
 async function loadMessages(){
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from("messages")
     .select("*")
-    .order("created_at");
+    .order("created_at", { ascending: true });
 
-  chat.innerHTML = ""; // clear
+  if(error){ console.error(error); return; }
+
+  chat.innerHTML = "";
   data.forEach(m => {
     chat.innerHTML += `<p>${badge(m.role)} <b>${m.username}</b>: ${m.message}</p>`;
   });
@@ -114,13 +115,16 @@ async function send(){
   let msg = document.getElementById("msg").value.trim();
   if(!msg) return;
 
-  await supabase.from("messages").insert({
+  const { error } = await supabase.from("messages").insert({
     username: username,
     message: msg,
     role: role
   });
 
+  if(error) return console.error(error);
+
   document.getElementById("msg").value = "";
+  loadMessages();
 }
 
 // ==== ENTER KEY TO SEND ====
@@ -132,15 +136,16 @@ document.getElementById("msg").addEventListener("keydown", function(e){
 async function adminLogin(){
   let user = prompt("Username");
   let pass = prompt("Password");
-
   if(!user || !pass) return alert("Username and Password required");
 
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from("users")
     .select("*")
     .eq("username", user)
     .eq("password", pass)
-    .single();
+    .maybeSingle(); // v2 uses maybeSingle instead of single
+
+  if(error){ console.error(error); return alert("Error logging in"); }
 
   if(data){
     username = data.username;
@@ -152,8 +157,7 @@ async function adminLogin(){
 }
 
 // ==== REALTIME SUBSCRIPTION ====
-supabase
-  .channel('chat')
+supabase.channel('chat')
   .on(
     'postgres_changes',
     { event:'INSERT', schema:'public', table:'messages' },
@@ -164,7 +168,6 @@ supabase
     }
   )
   .subscribe();
-
 </script>
 
 </body>
