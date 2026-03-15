@@ -18,18 +18,20 @@ body{
   overflow:hidden;
 }
 
-.commitment {
-  margin: 15px auto 0 auto;
-  font-size: 12px;
-  opacity: 0.7;
-  text-align: center;
-  white-space: pre;        /* preserve spaces, no wrapping */
-  background: rgba(0,0,0,0.2);
-  padding: 10px 15px;
-  border-radius: 12px;
-  display: inline-block;   /* shrink to fit content */
-  min-width: 100%;         /* at least full width of parent */
-  user-select: all;
+.commitment{
+  margin:15px auto;
+  font-size:12px;
+  opacity:0.7;
+  text-align:center;
+  white-space:pre;
+
+  background:rgba(0,0,0,0.2);
+  padding:10px 15px;
+  border-radius:12px;
+
+  display:block;
+  width:fit-content;
+  max-width:100%;
 }
 
 .box{
@@ -64,6 +66,33 @@ button{
   cursor:pointer;
 }
 
+.leaderboard-btn{
+  position:fixed;
+  top:20px;
+  right:20px;
+
+  width:50px;
+  height:50px;
+
+  border:none;
+  border-radius:12px;
+
+  background:#00ffb3;
+  color:black;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:24px;
+  line-height:1;
+
+  cursor:pointer;
+  box-shadow:0 0 10px rgba(0,0,0,0.5);
+
+  padding:0;
+}
+
 button:disabled{
   background:#555;
   cursor:not-allowed;
@@ -84,6 +113,108 @@ button:disabled{
   margin-top:5px;
   font-size:14px;
   color:#ffcc00;
+}
+
+/* Leaderboard button (top right) */
+.leaderboard-btn{
+  position:fixed;
+  top:20px;
+  right:20px;
+  width:50px;
+  height:50px;
+  border:none;
+  border-radius:12px;
+  background:#00ffb3;
+  color:black;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:24px;
+  cursor:pointer;
+  box-shadow:0 0 10px rgba(0,0,0,0.5);
+  padding:0;
+}
+
+.leaderboard-btn:hover{
+  transform:scale(1.1);
+}
+
+
+/* Popup background */
+.popup{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.7);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+
+
+/* Popup box */
+.popup-content{
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(10px);
+  padding:30px;
+  border-radius:20px;
+  width:380px;
+  max-width:90%;
+  text-align:center;
+  box-shadow:0 0 20px rgba(0,0,0,0.6);
+}
+
+
+/* Leaderboard table */
+.leaderboard-table{
+  width:100%;
+  margin-top:10px;
+}
+
+
+/* Row layout */
+.leader{
+  display:grid;
+  grid-template-columns:60px 1fr 130px 60px;
+  padding:8px;
+  border-radius:8px;
+  margin:4px 0;
+  font-weight:bold;
+  font-size:14px;
+  align-items:center;
+}
+
+
+/* Header row */
+.header{
+  background:rgba(255,255,255,0.15);
+  font-size:13px;
+}
+
+
+/* Medal colors */
+.gold{
+  background:linear-gradient(90deg,#ffd700,#ffb700);
+  color:black;
+}
+
+.silver{
+  background:linear-gradient(90deg,#c0c0c0,#e0e0e0);
+  color:black;
+}
+
+.bronze{
+  background:linear-gradient(90deg,#cd7f32,#e6a15c);
+  color:black;
+}
+
+
+/* Other players */
+.normal{
+  background:rgba(255,255,255,0.08);
 }
 
 .confetti{
@@ -111,7 +242,8 @@ button:disabled{
 </head>
 
 <body>
-<div class="box">
+<button class="leaderboard-btn" onclick="openLeaderboard()">🏆</button>
+  <div class="box">
 <h2>🎯 Guess the Code</h2>
 <p>Pick a number between <b>0 – 9999</b></p>
 
@@ -123,9 +255,57 @@ button:disabled{
 <div id="cooldown"></div>
 <div id="counter">Guesses: 0</div>
 <div class="commitment"></div>
-<div class="version">v1.4</div>
+<div class="version">v1.6</div>
 </div>
+<div id="leaderboardPopup" class="popup">
+  <div class="popup-content">
 
+    <h2>🏆 Leaderboard</h2>
+
+    <div class="leaderboard-table">
+
+      <div class="leader header">
+        <span>Place</span>
+        <span>Name</span>
+        <span>Avg. Guesses</span>
+        <span>Wins</span>
+      </div>
+
+      <div class="leader gold">
+        <span>1.</span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <div class="leader silver">
+        <span>2.</span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <div class="leader bronze">
+        <span>3.</span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <div class="leader normal">
+        <span>4.</span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+    </div>
+
+    <br>
+    <button onclick="closeLeaderboard()">Close</button>
+
+  </div>
+</div>
 <script>
 (async function(){
 
@@ -224,6 +404,14 @@ function confetti(){
 }
 
 })();
+  
+function openLeaderboard(){
+  document.getElementById("leaderboardPopup").style.display="flex";
+}
+
+function closeLeaderboard(){
+  document.getElementById("leaderboardPopup").style.display="none";
+}
 </script>
 </body>
 </html>
