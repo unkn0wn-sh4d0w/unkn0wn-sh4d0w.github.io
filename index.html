@@ -291,6 +291,28 @@ gap:14px;
   display:block;
 }
 
+.menu-btn{
+position:absolute;
+top:20px;
+right:20px;
+width:42px;
+height:42px;
+border:none;
+border-radius:10px;
+background:rgba(255,255,255,0.08);
+color:white;
+font-size:22px;
+cursor:pointer;
+border:1px solid rgba(255,255,255,0.2);
+backdrop-filter:blur(10px);
+transition:.2s;
+}
+
+.menu-btn:hover{
+transform:scale(1.1);
+background:rgba(255,255,255,0.15);
+}
+
 .divider{
 font-size:42px;
 opacity:.7;
@@ -365,6 +387,32 @@ footer{text-align:center;opacity:.6;margin-top:30px;font-size:14px;}
 .button{width:85%;text-align:center;}
 .friends{grid-template-columns:1fr;}
 }
+/* Stack menu buttons vertically inside .links */
+.links {
+  display: flex;
+  flex-direction: column;  /* vertical stacking */
+  align-items: center;     /* center buttons horizontally */
+  gap: 15px;               /* spacing between buttons */
+  margin: 20px 0;          /* optional spacing from heading/back button */
+}
+
+/* Your existing button styles */
+.menu-inside {
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  transition: 0.2s;
+  padding: 12px 25px;      /* size of buttons */
+  width: 220px;             /* uniform width */
+  text-align: center;
+}
+
+.menu-inside:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: scale(1.1);
+}
 
 .music-btn{
 position:absolute;
@@ -412,10 +460,14 @@ background:rgba(255,255,255,0.15);
 
 <div id="site" style="display:none;">
 <div class="container">
-<button class="friends-btn" onclick="showFriends()">⭐</button>
-<button class="music-btn" onclick="showMusic()">🎵</button>
-<button class="comment-btn" onclick="openPage('commentsPage')">💬</button>
+<button class="menu-btn" onclick="openPage('menuPage')">☰</button>
 
+<div id="menuDropdown" class="menu-dropdown hidden">
+  <button onclick="showFriends()">⭐ Friends</button>
+  <button onclick="showMusic()">🎵 Music</button>
+  <button onclick="openPage('commentsPage')">💬 Comments</button>
+  <button onclick="openGuess()">🎮 GuessIt</button>
+</div>
 <div id="mainPage" class="page">
 <div class="header">
 <div class="avatar">
@@ -474,7 +526,7 @@ Transferred to omg.bot
 </div>
 </div>
 </div>
-<button class="back-btn" onclick="showMain()">Back</button>
+<button class="back-btn" onclick="showMenu()">Back</button>
 </div>
 
 <div id="musicPage" class="page hidden">
@@ -488,7 +540,7 @@ Transferred to omg.bot
 <button class="button discord" onclick="pauseSong()">Pause</button>
 <button class="button bot" onclick="stopSong()">Stop</button>
 </div>
-<button class="back-btn" onclick="showMain()">Back</button>
+<button class="back-btn" onclick="showMenu()">Back</button>
 </div>
 
 <div id="commentsPage" class="page hidden">
@@ -519,12 +571,23 @@ Transferred to omg.bot
 
   </div>
 
-  <button class="back-btn" onclick="showMain()">Back</button>
+  <button class="back-btn" onclick="showMenu()">Back</button>
 </div>
 
 <audio id="music" loop>
 <source src="https://stream.laut.fm/electrolounge" type="audio/mpeg">
 </audio>
+
+<div id="menuPage" class="page hidden">
+  <h2>Menu</h2>
+  <div class="links">
+    <button class="menu-inside" onclick="showFriends()">⭐ Friends</button>
+    <button class="menu-inside" onclick="showMusic()">🎵 Music</button>
+    <button class="menu-inside" onclick="openPage('commentsPage')">💬 Comments</button>
+    <button class="menu-inside" onclick="openGuess()">🎮 GuessIt</button>
+  </div>
+  <button class="back-btn" onclick="showMain()">Back</button>
+</div>
 
 <script>
 particlesJS("particles-js",{
@@ -582,14 +645,19 @@ const mainPage = document.getElementById("mainPage");
 const friendsPage = document.getElementById("friendsPage");
 const musicPage = document.getElementById("musicPage");
 const commentsPage = document.getElementById("commentsPage");
+const menuPage = document.getElementById("menuPage");
 
 function hideAllPages() {
-    [mainPage,friendsPage,musicPage,commentsPage].forEach(p=>p.classList.add("hidden"));
+    [mainPage,friendsPage,musicPage,commentsPage,menuPage].forEach(p=>p.classList.add("hidden"));
 }
-function showMain() { hideAllPages(); mainPage.classList.remove("hidden"); }
+function showMain() {
+    hideAllPages();
+    mainPage.classList.remove("hidden");
+}
 function showFriends() { hideAllPages(); friendsPage.classList.remove("hidden"); }
 function showMusic() { hideAllPages(); musicPage.classList.remove("hidden"); }
 function openPage(id) { hideAllPages(); document.getElementById(id).classList.remove("hidden"); }
+function showMenu() { hideAllPages(); menuPage.classList.remove("hidden"); }
 
 const mySong = document.getElementById("mySong");
 const bgMusic = document.getElementById("music");
@@ -611,4 +679,9 @@ emailCommentBtn.addEventListener("click", (e) => {
 if(!localStorage.visitCount) localStorage.visitCount = 0;
 localStorage.visitCount = Number(localStorage.visitCount) + 1;
 document.getElementById("visitCounter").innerText = `Visits: ${localStorage.visitCount}`;
+
+function openGuess() {
+    window.open("https://unkn0wn-sh4d0w.github.io/guessit", "_blank");
+}
+
 </script>
