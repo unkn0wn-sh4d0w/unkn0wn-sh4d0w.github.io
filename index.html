@@ -64,7 +64,7 @@ z-index:0;
   height: 42px;
   border: none;
   border-radius: 10px;
-  background: rgba(255,255,255,0.08); /* same as other buttons */
+  background: rgba(255,255,255,0.08);
   color: white;
   font-size: 20px;
   cursor: pointer;
@@ -387,16 +387,15 @@ footer{text-align:center;opacity:.6;margin-top:30px;font-size:14px;}
 .button{width:85%;text-align:center;}
 .friends{grid-template-columns:1fr;}
 }
-/* Stack menu buttons vertically inside .links */
 .links {
   display: flex;
-  flex-direction: column;  /* vertical stacking */
-  align-items: center;     /* center buttons horizontally */
-  gap: 15px;               /* spacing between buttons */
-  margin: 20px 0;          /* optional spacing from heading/back button */
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin: 20px 0;
 }
 
-/* Your existing button styles */
+
 .menu-inside {
   background: rgba(255, 255, 255, 0.08);
   color: white;
@@ -404,8 +403,8 @@ footer{text-align:center;opacity:.6;margin-top:30px;font-size:14px;}
   backdrop-filter: blur(10px);
   border-radius: 10px;
   transition: 0.2s;
-  padding: 12px 25px;      /* size of buttons */
-  width: 220px;             /* uniform width */
+  padding: 12px 25px;
+  width: 220px;
   text-align: center;
 }
 
@@ -414,26 +413,6 @@ footer{text-align:center;opacity:.6;margin-top:30px;font-size:14px;}
   transform: scale(1.1);
 }
 
-.music-btn{
-position:absolute;
-top:20px;
-right:70px;
-width:42px;
-height:42px;
-border:none;
-border-radius:10px;
-background:rgba(255,255,255,0.08);
-color:white;
-font-size:20px;
-cursor:pointer;
-border:1px solid rgba(255,255,255,0.2);
-backdrop-filter:blur(10px);
-transition:.2s;
-}
-.music-btn:hover{
-transform:scale(1.1);
-background:rgba(255,255,255,0.15);
-}
 </style>
 </head>
 <body>
@@ -461,13 +440,6 @@ background:rgba(255,255,255,0.15);
 <div id="site" style="display:none;">
 <div class="container">
 <button class="menu-btn" onclick="openPage('menuPage')">☰</button>
-
-<div id="menuDropdown" class="menu-dropdown hidden">
-  <button onclick="showFriends()">⭐ Friends</button>
-  <button onclick="showMusic()">🎵 Music</button>
-  <button onclick="openPage('commentsPage')">💬 Comments</button>
-  <button onclick="openGuess()">🎮 GuessIt</button>
-</div>
 <div id="mainPage" class="page">
 <div class="header">
 <div class="avatar">
