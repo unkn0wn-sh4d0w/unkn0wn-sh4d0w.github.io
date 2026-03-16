@@ -337,13 +337,12 @@ let guessTimes = [];
     const guessInput = document.getElementById("guess").value;
     const guess = Number(guessInput);
 
-    // Validate input
     if(guessInput === "" || isNaN(guess) || guess < 0 || guess > 9999){
         document.getElementById("msg").innerText = "Enter a number between 0 and 9999.";
         return; 
     }
 
-    guesses++; // Increment counter
+    guesses++;
     document.getElementById("counter").innerText = "Guesses: " + guesses;
 
     const guessHash = await hash(guess + salt);
