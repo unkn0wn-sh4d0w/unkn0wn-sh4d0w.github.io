@@ -342,7 +342,7 @@ let guessTimes = [];
         return; 
     }
 
-    guesses++; // Increment counter
+    guesses++;
     document.getElementById("counter").innerText = "Guesses: " + guesses;
 
     const guessHash = await hash(guess + salt);
