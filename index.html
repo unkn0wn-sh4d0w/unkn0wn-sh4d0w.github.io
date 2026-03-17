@@ -754,16 +754,6 @@ function playSong() { mySong.play(); bgMusic.pause(); }
 function pauseSong() { mySong.pause(); }
 function stopSong() { mySong.pause(); mySong.currentTime = 0; }
 
-const emailCommentBtn = document.getElementById("emailCommentBtn");
-
-emailCommentBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    const subject = encodeURIComponent("Comment");
-    const body = encodeURIComponent("Name: \nComment: ");
-    const mailtoLink = `mailto:your-email@example.com?subject=${subject}&body=${body}`;
-    window.location.href = mailtoLink;
-});
-
 if(!localStorage.visitCount) localStorage.visitCount = 0;
 localStorage.visitCount = Number(localStorage.visitCount) + 1;
 document.getElementById("visitCounter").innerText = `Visits: ${localStorage.visitCount}`;
