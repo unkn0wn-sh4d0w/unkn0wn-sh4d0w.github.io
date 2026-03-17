@@ -396,10 +396,16 @@ transition:.25s;
 
 #ad-close-btn {
   padding: 8px 16px;
-  background: #5865F2;
   color: white;
   border: none;
   border-radius:6px;
+  cursor: pointer;
+  background: grey;
+  transition: background 0.2s;
+}
+
+#ad-close-btn.enabled {
+  background: #5865F2;
 }
 
 .friends{
@@ -777,16 +783,19 @@ function showAd() {
 
   adCountdown = 5;
   btn.disabled = true;
+  btn.classList.remove("enabled");
+  label.style.display = "block";
   label.innerText = `Wait ${adCountdown}s`;
 
   const interval = setInterval(() => {
     adCountdown--;
-    label.innerText = `Wait ${adCountdown}s`;
-
-    if (adCountdown <= 0) {
+    if (adCountdown > 0) {
+      label.innerText = `Wait ${adCountdown}s`;
+    } else {
       clearInterval(interval);
       btn.disabled = false;
-      label.innerText = "Close Ad";
+      btn.classList.add("enabled");
+      label.style.display = "none";
     }
   }, 1000);
 }
