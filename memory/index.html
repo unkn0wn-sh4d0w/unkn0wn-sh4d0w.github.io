@@ -37,7 +37,7 @@
     border-radius: 8px;
     user-select: none;
     transition: transform 0.3s, background 0.3s;
-    color: #000; /* emoji color */
+    color: #000;
   }
 
   .card.flipped {
@@ -48,7 +48,7 @@
   .card.matched {
     background: #50e3c2;
     cursor: default;
-    color: #000; /* emoji visible */
+    color: #000;
   }
 
   #reloadBtn {
@@ -109,6 +109,9 @@ gameEmojis.forEach(emoji => {
   game.appendChild(card);
 });
 
+
+let tries = 0;
+
 function flipCard(e) {
   if (!e.currentTarget.classList.contains('card')) return;
   if (lockBoard || this.classList.contains('matched')) return;
@@ -152,8 +155,6 @@ function resetTurn() {
   [firstCard, secondCard] = [null, null];
   lockBoard = false;
 }
-
-let tries = 0;
 
 tries++;
 document.getElementById('tries').textContent = `Tries: ${tries}`;
