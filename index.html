@@ -784,25 +784,22 @@ function openTicTacToe() {
     window.open("https://unkn0wn-sh4d0w.github.io/tictactoe", "_blank");
 }
 
-let adCountdown = 5;
-
 function showAd() {
   const popup = document.getElementById("ad-popup");
   const btn = document.getElementById("ad-close-btn");
   const label = document.getElementById("close-label");
 
   popup.style.display = "flex";
-
-  adCountdown = 5;
+  let countdown = 3;
   btn.disabled = true;
   btn.classList.remove("enabled");
   label.style.display = "block";
-  label.innerText = `Wait ${adCountdown}s`;
+  label.innerText = `Wait ${countdown}s`;
 
   const interval = setInterval(() => {
-    adCountdown--;
-    if (adCountdown > 0) {
-      label.innerText = `Wait ${adCountdown}s`;
+    countdown--;
+    if (countdown > 0) {
+      label.innerText = `Wait ${countdown}s`;
     } else {
       clearInterval(interval);
       btn.disabled = false;
