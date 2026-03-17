@@ -70,6 +70,7 @@
 </head>
 <body>
 <h1>Emoji Memory</h1>
+<p id="tries">Tries: 0</p>
 <div id="game"></div>
 <button id="reloadBtn" onclick="location.reload()">Play Again</button>
 
@@ -110,7 +111,6 @@ gameEmojis.forEach(emoji => {
 
 function flipCard(e) {
   if (!e.currentTarget.classList.contains('card')) return;
-
   if (lockBoard || this.classList.contains('matched')) return;
   if (this === firstCard) return;
 
@@ -123,6 +123,10 @@ function flipCard(e) {
   }
 
   secondCard = this;
+
+  tries++;
+  document.getElementById('tries').textContent = `Tries: ${tries}`;
+
   lockBoard = true;
 
   if (firstCard.dataset.emoji === secondCard.dataset.emoji) {
@@ -148,6 +152,11 @@ function resetTurn() {
   [firstCard, secondCard] = [null, null];
   lockBoard = false;
 }
+
+let tries = 0;
+
+tries++;
+document.getElementById('tries').textContent = `Tries: ${tries}`;
 </script>
 </body>
 </html>
