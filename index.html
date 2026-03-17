@@ -423,6 +423,28 @@ margin-left:auto;
 margin-right:auto;
 }
 
+.ad-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.visit-btn {
+  padding: 8px 16px;
+  background: #00c853;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.visit-btn:hover {
+  transform: scale(1.05);
+  background: #00e676;
+}
+
 footer{text-align:center;opacity:.6;margin-top:30px;font-size:14px;}
 
 @media(max-width:700px){
@@ -609,11 +631,21 @@ Transferred to omg.bot
 </div>
 
 <div id="ad-popup">
-  <div class="ad-box">
-    <p class="ad-label">Sponsored Advertisement</p>
-    <img src="https://via.placeholder.com/400x200" alt="Ad Image">
-    <button onclick="closeAd()">Close ✕</button>
+<div class="ad-box">
+  <p class="ad-label">Sponsored Advertisement</p>
+
+  <img src="https://via.placeholder.com/500x250" alt="Ad Image">
+
+  <div class="ad-buttons">
+    <a href="https://example.com" target="_blank" class="visit-btn">
+      Visit Sponsor
+    </a>
+
+    <button id="ad-close-btn" onclick="closeAd()" disabled>
+      Close (5)
+    </button>
   </div>
+</div>
 </div>
 
 <script>
@@ -717,11 +749,35 @@ function openTicTacToe() {
     window.open("https://unkn0wn-sh4d0w.github.io/tictactoe", "_blank");
 }
 
+let adCountdown = 5;
+
 function showAd() {
-  document.getElementById("ad-popup").style.display = "flex";
+  const popup = document.getElementById("ad-popup");
+  const btn = document.getElementById("ad-close-btn");
+
+  popup.style.display = "flex";
+  adCountdown = 5;
+
+  btn.disabled = true;
+  btn.innerText = `Close (${adCountdown})`;
+
+  const interval = setInterval(() => {
+    adCountdown--;
+    btn.innerText = `Close (${adCountdown})`;
+
+    if (adCountdown <= 0) {
+      clearInterval(interval);
+      btn.disabled = false;
+      btn.innerText = "Close ✕";
+    }
+  }, 1000);
 }
 
 function closeAd() {
+  const btn = document.getElementById("ad-close-btn");
+
+  if (btn.disabled) return;
+
   document.getElementById("ad-popup").style.display = "none";
 }
 </script>
