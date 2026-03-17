@@ -171,8 +171,28 @@ function handleClick(i){
 }
 
 function aiMove(){
-  let move = (mode==='easy')?randomMove():bestMove();
-  cells[move]='O'; playerTurn=true; update(); endCheck();
+  let move;
+
+  if(mode === 'easy'){
+    move = randomMove();
+  }
+
+  else if(mode === 'medium'){
+    move = Math.random() < 0.5 ? randomMove() : bestMove();
+  }
+
+  else if(mode === 'hard'){
+    move = Math.random() < 0.8 ? bestMove() : randomMove();
+  }
+
+  else if(mode === 'impossible'){
+    move = bestMove();
+ }
+
+  cells[move]='O';
+  playerTurn=true;
+  update();
+  endCheck();
 }
 
 function randomMove(){ 
