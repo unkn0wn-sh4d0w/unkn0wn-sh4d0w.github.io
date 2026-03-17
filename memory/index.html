@@ -110,7 +110,9 @@ gameEmojis.forEach(emoji => {
 });
 
 
-let tries = 0;
+let tries = -1;
+
+document.getElementById('tries').textContent = `Tries: 0`;
 
 function flipCard(e) {
   if (!e.currentTarget.classList.contains('card')) return;
@@ -155,9 +157,6 @@ function resetTurn() {
   [firstCard, secondCard] = [null, null];
   lockBoard = false;
 }
-
-tries++;
-document.getElementById('tries').textContent = `Tries: ${tries}`;
 </script>
 </body>
 </html>
