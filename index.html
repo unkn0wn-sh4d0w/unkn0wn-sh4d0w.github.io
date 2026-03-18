@@ -581,7 +581,6 @@ Transferred to omg.bot
 <a class="button profile" href="https://discord.com/users/1420110702516899910" target="_blank">My Discord Profile</a>
 <a class="button bot" href="https://discord.com/users/1477661871338291391" target="_blank">My Bot Profile</a>
 </div>
-<p id="visitCounter" class="center"></p>
 <footer>© 2026 Sh4dow</footer>
 </div>
 
@@ -771,10 +770,6 @@ const bgMusic = document.getElementById("music");
 function playSong() { mySong.play(); bgMusic.pause(); }
 function pauseSong() { mySong.pause(); }
 function stopSong() { mySong.pause(); mySong.currentTime = 0; }
-
-if(!localStorage.visitCount) localStorage.visitCount = 0;
-localStorage.visitCount = Number(localStorage.visitCount) + 1;
-document.getElementById("visitCounter").innerText = `Visits: ${localStorage.visitCount}`;
 
 function openGuess() {
     window.open("https://unkn0wn-sh4d0w.github.io/guessit", "_blank");
