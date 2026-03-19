@@ -4,23 +4,37 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Password Game GOD MODE</title>
 <style>
-body { font-family: Arial; background:#050505; color:#eee; display:flex; flex-direction:column; align-items:center; padding:20px; }
-input { padding:10px; width:360px; font-size:16px; border-radius:8px; border:none; }
-.rules { margin-top:20px; width:380px; max-height:450px; overflow-y:auto; }
-.rule { padding:6px; margin:4px 0; border-radius:6px; background:#222; font-size:12px; }
-.valid { background:#1e7e34; }
-#win { margin-top:20px; font-size:18px; color:#00ff88; display:none; }
-footer { margin-top:40px; opacity:0.6; }
-</style>
+body {
+  font-family: Arial;
+  background:#050505;
+  color:#eee;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:20px;
+}input { padding:12px; width:380px; font-size:16px; border-radius:10px; border:none; outline:none; transition:0.3s; }
+
+input:focus { box-shadow:0 0 10px #00ff88; }
+
+.rules { margin-top:20px; width:400px; max-height:500px; overflow-y:auto; }
+
+.rule { padding:8px; margin:6px 0; border-radius:8px; background:#222; font-size:13px; opacity:0; transform:translateY(10px); transition:all 0.4s ease; }
+
+.rule.show { opacity:1; transform:translateY(0); }
+
+.valid { background:#1e7e34; transform:scale(1.02); }
+
+#win { margin-top:20px; font-size:18px; color:#00ff88; display:none; animation:pop 0.5s ease; }
+
+@keyframes pop { from { transform:scale(0.8); opacity:0; } to { transform:scale(1); opacity:1; } }
+
+footer { margin-top:40px; opacity:0.6; } </style>
+
 </head>
-<body>
-<h1>Password Game</h1>
-<input id="password" placeholder="Enter password...">
-<div class="rules" id="rules"></div>
-<div id="win"></div>
-<footer>© 2026 Sh4d0w</footer><script>
+<body><h1>Password Game</h1>
+<input id="password" placeholder="Enter password..."><div class="rules" id="rules"></div>
+<div id="win"></div><footer>© 2026 Sh4d0w</footer><script>
 const rules = [
-// BASIC → INSANE
 {t:"Length ≥ 6",c:p=>p.length>=6},
 {t:"Length ≥ 10",c:p=>p.length>=10},
 {t:"Contains number",c:p=>/\d/.test(p)},
@@ -65,12 +79,12 @@ const rules = [
 {t:"Contains 0xFF",c:p=>p.includes('0xFF')},
 {t:"Contains base64 'test'",c:p=>p.includes('dGVzdA==')},
 {t:"Contains '1337'",c:p=>p.includes('1337')},
-{t:"Contains first two Digits after comma from π",c:p=>p.includes('3.14')},
-{t:"Contains first 6 Digits of the Fibonacci Sequence",c:p=>p.includes('112358')},
+{t:"Contains π digits",c:p=>p.includes('3.14')},
+{t:"Contains Fibonacci",c:p=>p.includes('112358')},
 {t:"Contains Morse SOS",c:p=>p.includes('...---...')},
-{t:"Contains hex deadbeef",c:p=>p.toLowerCase().includes('deadbeef')},
+{t:"Contains deadbeef",c:p=>p.toLowerCase().includes('deadbeef')},
 {t:"Contains binary 101010",c:p=>p.includes('101010')},
-{t:"Contains 'NaN'",c:p=>p.includes('NaN')},
+{t:"Contains NaN",c:p=>p.includes('NaN')},
 {t:"Exactly 6 digits",c:p=>(p.match(/\d/g)||[]).length===6},
 {t:"Length is prime",c:p=>{let l=p.length;if(l<2)return false;for(let i=2;i<l;i++)if(l%i===0)return false;return true;}},
 {t:"Start = end char",c:p=>p[0]&&p[0]===p[p.length-1]},
@@ -80,15 +94,16 @@ const rules = [
 {t:"Contains '??'",c:p=>p.includes('??')},
 {t:"Contains 'XY'",c:p=>p.includes('XY')},
 {t:"Length > 25",c:p=>p.length>25},
-{t:"Contains Unicode snowman",c:p=>p.includes('☃')}
+{t:"Contains ☃",c:p=>p.includes('☃')}
 ];
 
 const container=document.getElementById("rules");
+
 rules.forEach((r,i)=>{
  const d=document.createElement("div");
  d.className="rule";
  d.id="rule-"+i;
- d.innerText="Rule " + (i+1);
+ d.innerText="Rule "+(i+1)+": "+r.t;
  container.appendChild(d);
 });
 
@@ -98,15 +113,22 @@ const win=document.getElementById("win");
 input.addEventListener("input",()=>{
  const val=input.value;
  let all=true;
+
  rules.forEach((r,i)=>{
+  const el=document.getElementById("rule-"+i);
   const ok=r.c(val);
-  document.getElementById("rule-"+i).classList.toggle("valid",ok);
+
+  if(i===0 || document.getElementById("rule-"+(i-1)).classList.contains("valid")){
+    el.classList.add("show");
+  }
+
+  el.classList.toggle("valid",ok);
   if(!ok) all=false;
  });
 
  if(all){
   win.style.display="block";
-  win.innerText="Congrats, Your Password is: "+val;
+  win.innerText="Your new Password is:\n"+val;
  } else {
   win.style.display="none";
  }
