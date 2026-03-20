@@ -2,135 +2,151 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Password Game GOD MODE</title>
+<title>Password Game</title>
 <style>
 body {
   font-family: Arial;
-  background:#050505;
-  color:#eee;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  padding:20px;
-}input { padding:12px; width:380px; font-size:16px; border-radius:10px; border:none; outline:none; transition:0.3s; }
+  background: #050505;
+  color: #eee;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}h1 { margin-bottom: 10px; }
 
-input:focus { box-shadow:0 0 10px #00ff88; }
+input { padding: 14px; width: 420px; font-size: 16px; border-radius: 12px; border: none; outline: none; background: #111; color: #fff; }
 
-.rules { margin-top:20px; width:400px; max-height:500px; overflow-y:auto; }
+.rules { margin-top: 20px; width: 450px; }
 
-.rule { padding:8px; margin:6px 0; border-radius:8px; background:#222; font-size:13px; opacity:0; transform:translateY(10px); transition:all 0.4s ease; }
+.rule { padding: 10px; margin: 6px 0; border-radius: 8px; background: #222; opacity: 0.4; transition: 0.3s; }
 
-.rule.show { opacity:1; transform:translateY(0); }
+.rule.active { opacity: 1; } .rule.valid { background: #1e7e34; } .rule.invalid { background: #7e1e1e; }
 
-.valid { background:#1e7e34; transform:scale(1.02); }
-
-#win { margin-top:20px; font-size:18px; color:#00ff88; display:none; animation:pop 0.5s ease; }
-
-@keyframes pop { from { transform:scale(0.8); opacity:0; } to { transform:scale(1); opacity:1; } }
-
-footer { margin-top:40px; opacity:0.6; } </style>
+#progress { margin-top: 10px; } #win { margin-top: 20px; color: #00ff88; display: none; } </style>
 
 </head>
-<body><h1>Password Game</h1>
-<input id="password" placeholder="Enter password..."><div class="rules" id="rules"></div>
-<div id="win"></div><footer>© 2026 Sh4d0w</footer><script>
-const rules = [
-{t:"Length ≥ 6",c:p=>p.length>=6},
-{t:"Length ≥ 10",c:p=>p.length>=10},
-{t:"Contains number",c:p=>/\d/.test(p)},
-{t:"Contains uppercase",c:p=>/[A-Z]/.test(p)},
-{t:"Contains lowercase",c:p=>/[a-z]/.test(p)},
-{t:"Contains symbol",c:p=>/[^A-Za-z0-9]/.test(p)},
-{t:"No spaces",c:p=>!/\s/.test(p)},
-{t:"Starts with letter",c:p=>/^[A-Za-z]/.test(p)},
-{t:"Ends with digit",c:p=>/\d$/.test(p)},
-{t:"Contains 3 digits",c:p=>(p.match(/\d/g)||[]).length>=3},
-{t:"Contains month",c:p=>/(january|february|march|april|may|june|july|august|september|october|november|december)/i.test(p)},
-{t:"Contains weekday",c:p=>/(monday|tuesday|wednesday|thursday|friday|saturday|sunday)/i.test(p)},
-{t:"Contains Roman numeral",c:p=>/(I|V|X|L|C|D|M)/.test(p)},
-{t:"Digit sum = 18",c:p=>(p.match(/\d/g)||[]).reduce((a,b)=>a+ +b,0)===18},
-{t:"Even length",c:p=>p.length%2===0},
-{t:"3 vowels",c:p=>(p.match(/[aeiou]/gi)||[]).length>=3},
-{t:"3 consonants",c:p=>(p.match(/[bcdfghjklmnpqrstvwxyz]/gi)||[]).length>=3},
-{t:"Contains 42",c:p=>p.includes('42')},
-{t:"No 123",c:p=>!p.includes('123')},
-{t:"Contains palindrome",c:p=>/(.).\1/.test(p)},
-{t:"Contains emoji",c:p=>/[\u{1F600}-\u{1F64F}]/u.test(p)},
-{t:"Contains AI",c:p=>/AI/.test(p)},
-{t:"Exactly 2 x",c:p=>(p.match(/x/g)||[]).length===2},
-{t:"Contains color",c:p=>/(red|blue|green)/i.test(p)},
-{t:"Contains country",c:p=>/(germany|france|japan)/i.test(p)},
-{t:"Math symbol",c:p=>/[+\-*\/]/.test(p)},
-{t:"Unique ≥ 8",c:p=>new Set(p).size>=8},
-{t:"No triple repeat",c:p=>!/(.)\1\1/.test(p)},
-{t:"Prime digit",c:p=>/[2357]/.test(p)},
-{t:"Length > 15",c:p=>p.length>15},
-{t:"Contains drowssap",c:p=>p.includes('drowssap')},
-{t:"Digit sum = 22",c:p=>(p.match(/\d/g)||[]).reduce((a,b)=>a+ +b,0)===22},
-{t:"Exactly 4 vowels",c:p=>(p.match(/[aeiou]/gi)||[]).length===4},
-{t:"3 symbols",c:p=>(p.match(/[^A-Za-z0-9]/g)||[]).length>=3},
-{t:"Contains 777",c:p=>p.includes('777')},
-{t:"2 uppercase together",c:p=>/[A-Z]{2}/.test(p)},
-{t:"3 digits in row",c:p=>/\d{3}/.test(p)},
-{t:"Length %3 = 0",c:p=>p.length%3===0},
-{t:"Contains zz",c:p=>p.includes('zz')},
-{t:"No letter a",c:p=>!/a/i.test(p)},
-{t:"Contains Hello in binary",c:p=>p.includes('0100100001100101011011000110110001101111')},
-{t:"Contains 0xFF",c:p=>p.includes('0xFF')},
-{t:"Contains base64 'test'",c:p=>p.includes('dGVzdA==')},
-{t:"Contains '1337'",c:p=>p.includes('1337')},
-{t:"Contains π digits",c:p=>p.includes('3.14')},
-{t:"Contains Fibonacci",c:p=>p.includes('112358')},
-{t:"Contains Morse SOS",c:p=>p.includes('...---...')},
-{t:"Contains deadbeef",c:p=>p.toLowerCase().includes('deadbeef')},
-{t:"Contains binary 101010",c:p=>p.includes('101010')},
-{t:"Contains NaN",c:p=>p.includes('NaN')},
-{t:"Exactly 6 digits",c:p=>(p.match(/\d/g)||[]).length===6},
-{t:"Length is prime",c:p=>{let l=p.length;if(l<2)return false;for(let i=2;i<l;i++)if(l%i===0)return false;return true;}},
-{t:"Start = end char",c:p=>p[0]&&p[0]===p[p.length-1]},
-{t:"Contains alternating case",c:p=>/[a-z][A-Z]|[A-Z][a-z]/.test(p)},
-{t:"Unique ≥ 12",c:p=>new Set(p).size>=12},
-{t:"Digit sum = 30",c:p=>(p.match(/\d/g)||[]).reduce((a,b)=>a+ +b,0)===30},
-{t:"Contains '??'",c:p=>p.includes('??')},
-{t:"Contains 'XY'",c:p=>p.includes('XY')},
-{t:"Length > 25",c:p=>p.length>25},
-{t:"Contains ☃",c:p=>p.includes('☃')}
+<body><h1>AI Password Game</h1>
+<input id="password" placeholder="Enter password...">
+<div id="progress"></div>
+<div class="rules" id="rules"></div>
+<div id="win"></div><script>
+const pool = [
+ // EASY
+ {t:"Length ≥ 6", c:p=>p.length>=6},
+ {t:"Contains number", c:p=>/\d/.test(p)},
+ {t:"Contains uppercase", c:p=>/[A-Z]/.test(p)},
+ {t:"Contains lowercase", c:p=>/[a-z]/.test(p)},
+ {t:"Contains symbol", c:p=>/[^A-Za-z0-9]/.test(p)},
+ {t:"Starts with letter", c:p=>/^[A-Za-z]/.test(p)},
+ {t:"Ends with digit", c:p=>/\d$/.test(p)},
+ {t:"Contains 42", c:p=>p.includes('42')},
+ {t:"Contains 'AI'", c:p=>p.includes('AI')},
+ {t:"No spaces", c:p=>!/\s/.test(p)},
+
+ // MEDIUM
+ {t:"At least 3 digits", c:p=>(p.match(/\d/g)||[]).length>=3},
+ {t:"Even length", c:p=>p.length%2===0},
+ {t:"Contains emoji 😀", c:p=>/[\u{1F600}-\u{1F64F}]/u.test(p)},
+ {t:"Contains month", c:p=>/(march|may|july)/i.test(p)},
+ {t:"Contains weekday", c:p=>/(monday|friday)/i.test(p)},
+ {t:"Contains roman numeral", c:p=>/[IVX]/.test(p)},
+ {t:"Unique chars ≥ 10", c:p=>new Set(p).size>=10},
+ {t:"Contains 1337", c:p=>p.includes('1337')},
+ {t:"Contains an Palindrome Pair", c:p=>/(.)\1/.test(p)},
+ {t:"Length divisible by 3", c:p=>p.length%3===0},
+
+ // HARD
+ {t:"Contains binary 1010", c:p=>p.includes('1010')},
+ {t:"Contains 'dead'", c:p=>p.includes('dead')},
+ {t:"Contains '??'", c:p=>p.includes('??')},
+ {t:"Contains ☃", c:p=>p.includes('☃')},
+ {t:"No letter e", c:p=>!/e/i.test(p)},
+ {t:"Contains 'XY'", c:p=>p.includes('XY')},
+ {t:"Contains first 4 Digits from the Fibonacci Sequence", c:p=>p.includes('1123')},
+ {t:"Contains 777", c:p=>p.includes('777')},
+ {t:"Exactly 2 uppercase in a row", c:p=>/[A-Z]{2}/.test(p)},
+ {t:"At least 4 vowels", c:p=>(p.match(/[aeiou]/gi)||[]).length>=4},
+
+ // EXTRA HARD
+ {t:"Length is prime", c:p=>{let l=p.length;if(l<2)return false;for(let i=2;i<l;i++)if(l%i===0)return false;return true;}},
+ {t:"Start = end", c:p=>p[0]===p[p.length-1]},
+ {t:"Exactly 5 vowels", c:p=>(p.match(/[aeiou]/gi)||[]).length===5},
+ {t:"Contains 'NaN'", c:p=>p.includes('NaN')},
+ {t:"Contains alternating case", c:p=>/[a-z][A-Z]|[A-Z][a-z]/.test(p)}
 ];
 
-const container=document.getElementById("rules");
+function createDigitSumRule(){
+ let target = Math.floor(Math.random()*10)+18;
+ return {
+  t:"Digit sum = "+target,
+  c:p=>(p.match(/\d/g)||[]).reduce((a,b)=>a+ +b,0)===target
+ };
+}
+
+function generateRules(){
+ let selected = [];
+ let shuffled = shuffle([...pool]);
+
+ for(let r of shuffled){
+  if(selected.length >= 19) break;
+  selected.push(r);
+ }
+
+ selected.push(createDigitSumRule());
+
+ return shuffle(selected);
+}
+
+function shuffle(arr){
+ return arr.sort(()=>Math.random()-0.5);
+}
+
+const rules = generateRules();
+
+const container = document.getElementById("rules");
 
 rules.forEach((r,i)=>{
- const d=document.createElement("div");
+ let d=document.createElement("div");
  d.className="rule";
  d.id="rule-"+i;
  d.innerText="Rule "+(i+1)+": "+r.t;
  container.appendChild(d);
 });
 
-const input=document.getElementById("password");
-const win=document.getElementById("win");
+const input = document.getElementById("password");
+const progress = document.getElementById("progress");
+const win = document.getElementById("win");
 
-input.addEventListener("input",()=>{
- const val=input.value;
- let all=true;
+let unlocked = 1;
+
+input.addEventListener("input", ()=>{
+ let val = input.value;
+ let passed = 0;
 
  rules.forEach((r,i)=>{
-  const el=document.getElementById("rule-"+i);
-  const ok=r.c(val);
+  let el = document.getElementById("rule-"+i);
 
-  if(i===0 || document.getElementById("rule-"+(i-1)).classList.contains("valid")){
-    el.classList.add("show");
+  if(i < unlocked){
+    el.classList.add("active");
+    let ok = r.c(val);
+
+    el.classList.toggle("valid", ok);
+    el.classList.toggle("invalid", !ok);
+
+    if(ok){
+      passed++;
+      if(i === unlocked-1 && unlocked < rules.length){
+        unlocked++;
+      }
+    }
   }
-
-  el.classList.toggle("valid",ok);
-  if(!ok) all=false;
  });
 
- if(all){
+ progress.innerText = passed + " / " + rules.length;
+
+ if(passed === rules.length){
   win.style.display="block";
-  win.innerText="Your new Password is:\n"+val;
- } else {
-  win.style.display="none";
+  win.innerText="You succsefully created an new Password.";
  }
 });
 </script></body>
