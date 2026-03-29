@@ -26,6 +26,18 @@
   </url>
 
   <url>
+    <loc>https://unkn0wn-sh4d0w.github.io/memory</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://unkn0wn-sh4d0w.github.io/tictcatoe</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
     <loc>https://unkn0wn-sh4d0w.github.io/guessit</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -34,29 +46,17 @@
   <url>
     <loc>https://unkn0wn-sh4d0w.github.io/guessit/easy</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://unkn0wn-sh4d0w.github.io/guessit/medium</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://unkn0wn-sh4d0w.github.io/guessit/hard</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://unkn0wn-sh4d0w.github.io/memory</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://unkn0wn-sh4d0w.github.io/tictcatoe</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
