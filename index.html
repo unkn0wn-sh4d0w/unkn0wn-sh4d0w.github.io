@@ -865,4 +865,9 @@ function closeAd() {
 
   document.getElementById("ad-popup").style.display = "none";
 }
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js')
+    .then(() => console.log('Service Worker registered'));
+}
 </script>
