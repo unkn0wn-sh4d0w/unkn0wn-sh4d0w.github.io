@@ -37,6 +37,39 @@ height:100%;
 z-index:0;
 }
 
+.music-btn {
+  position: absolute;
+  top:20px;
+  left:20px;
+  width:42px;
+  height:42px;
+  border:none;
+  border-radius:10px;
+  background:rgba(255,255,255,0.08);
+  color:white;
+  font-size:20px;
+  cursor:pointer;
+  border:1px solid rgba(255,255,255,0.2);
+  backdrop-filter:blur(10px);
+  transition:.2s;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.music-btn .icon {
+  position: relative;
+}
+
+.music-btn.muted::after {
+  content: "";
+  position: absolute;
+  width: 28px;
+  height: 2px;
+  background: white;
+  transform: rotate(-45deg);
+}
+
 #commentsPage {
     max-width: 820px;
     margin: 70px auto;
@@ -617,20 +650,6 @@ Transferred to omg.bot
 <button class="back-btn" onclick="showMenu()">Back</button>
 </div>
 
-<div id="musicPage" class="page hidden">
-<h2>🎵 My Music</h2>
-<div class="center">
-<audio id="mySong">
-<source src="https://github.com/unkn0wn-sh4d0w/unkn0wn-sh4d0w.github.io/raw/refs/heads/main/motekk.mp3" type="audio/mpeg">
-</audio>
-<br><br>
-<button class="button profile" onclick="playSong()">Play</button>
-<button class="button discord" onclick="pauseSong()">Pause</button>
-<button class="button bot" onclick="stopSong()">Stop</button>
-</div>
-<button class="back-btn" onclick="showMenu()">Back</button>
-</div>
-
 <div id="commentsPage" class="page hidden">
 
 <div class="center">
@@ -664,15 +683,14 @@ Transferred to omg.bot
   <button class="back-btn" onclick="showMenu()">Back</button>
 </div>
 
-<audio id="music" loop>
-<source src="https://stream.laut.fm/electrolounge" type="audio/mpeg">
-</audio>
+<button id="musicToggle" class="music-btn" onclick="toggleMusic()">
+  <span class="icon">🎵</span>
+</button>
 
 <div id="menuPage" class="page hidden">
   <h2>Menu</h2>
   <div class="links">
     <button class="menu-inside" onclick="showFriends()">⭐ Special Users</button>
-    <button class="menu-inside" onclick="showMusic()">🎵 My Music</button>
     <button class="menu-inside" onclick="openPage('commentsPage')">💬 Comments</button>
     <button class="menu-inside" onclick="openGuess()">🎯 GuessIt</button>
     <button class="menu-inside" onclick="openTicTacToe()">🎮 Tic Tac Toe</button>
@@ -700,6 +718,10 @@ Transferred to omg.bot
     </div>
   </div>
 </div>
+
+<audio id="music" loop>
+<source src="https://stream.laut.fm/electrolounge" type="audio/mpeg">
+</audio>
 
 <script>
 particlesJS("particles-js",{
@@ -757,19 +779,17 @@ document.getElementById("login-btn").onclick = function() {
 }
 const mainPage = document.getElementById("mainPage");
 const friendsPage = document.getElementById("friendsPage");
-const musicPage = document.getElementById("musicPage");
 const commentsPage = document.getElementById("commentsPage");
 const menuPage = document.getElementById("menuPage");
 
 function hideAllPages() {
-    [mainPage,friendsPage,musicPage,commentsPage,menuPage].forEach(p=>p.classList.add("hidden"));
+    [mainPage,friendsPage,commentsPage,menuPage].forEach(p=>p.classList.add("hidden"));
 }
 function showMain() {
     hideAllPages();
     mainPage.classList.remove("hidden");
 }
 function showFriends() { hideAllPages(); friendsPage.classList.remove("hidden"); }
-function showMusic() { hideAllPages(); musicPage.classList.remove("hidden"); }
 function openPage(id) { hideAllPages(); document.getElementById(id).classList.remove("hidden"); }
 function showMenu() { hideAllPages(); menuPage.classList.remove("hidden"); }
 
@@ -819,6 +839,24 @@ function showAd() {
       label.style.display = "none";
     }
   }, 1000);
+}
+
+let musicPlaying = true;
+const bgMusicElement = document.getElementById("music");
+const musicBtn = document.getElementById("musicToggle");
+
+function toggleMusic(){
+    const btn = document.getElementById("musicToggle");
+
+    if(musicPlaying){
+        bgMusic.pause();
+        btn.classList.add("muted");
+    } else {
+        bgMusic.play();
+        btn.classList.remove("muted");
+    }
+
+    musicPlaying = !musicPlaying;
 }
 
 function closeAd() {
