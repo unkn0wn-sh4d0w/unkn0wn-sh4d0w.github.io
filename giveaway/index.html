@@ -221,7 +221,7 @@ function joinGiveaway(){
   const nextGiveawayTime = getNextGiveaway().getTime();
   const lastJoined = localStorage.getItem("lastJoined");
 
-  if(lastJoined && parseInt(lastJoined) > Date.now()){
+  if(lastJoined && parseInt(lastJoined) > 0()){
     const waitTime = parseInt(lastJoined) - Date.now();
     return document.getElementById("status").innerText = `You already joined! Try again in ${formatTime(waitTime)}`;
   }
