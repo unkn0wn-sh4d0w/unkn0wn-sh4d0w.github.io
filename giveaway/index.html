@@ -147,7 +147,6 @@ button:hover {
 <audio id="bgMusic" src="https://stream.laut.fm/double-bass-fm" autoplay loop></audio>
 
 <script>
-const webhookURL = "https://discord.com/api/webhooks/1487819655476285490/ptlKdNtkeY51v0Dif9v1aoutUvIc-2NCATFBOZnX2jdJGIXc75wHNzgnUKW8aU-G2CDm";
 const giveawayHour = 20;
 const possibleWins = ["Discord Subscriptions", "Nitro Subscriptions", "Giftcards", "Twitch Subscriptions", "Cryptocurrencies", "Game Accounts", "Other Subscriptions", "Virtual Currencies"];
 
@@ -229,11 +228,14 @@ function joinGiveaway(){
 
   localStorage.setItem("lastJoined", nextGiveawayTime);
 
-  fetch(webhookURL,{
-    method: "POST",
-    headers: {"Content-Type":"application/json"},
-    body: JSON.stringify({content: `# ${username}`})
-  }).then(res => {
+fetch("https://backend-kappa-rust-47.vercel.app/api/send", {
+  method: "POST",
+  headers: {"Content-Type":"application/json"},
+  body: JSON.stringify({
+    type: "giveaway",
+    username: username
+  })
+}).then(res => {
     if(res.ok){
       document.getElementById("status").innerText = "✅ Successfully joined!";
       document.getElementById("username").value = "";
