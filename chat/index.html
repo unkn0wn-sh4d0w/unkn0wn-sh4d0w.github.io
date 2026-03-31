@@ -5,42 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Live Chat</title>
 <style>
-  /* Reset & base */
-  body { margin:0; font-family: "Segoe UI", sans-serif; background:#181818; color:#fff; display:flex; flex-direction:column; height:100vh; }
-  input, button { font-family: inherit; }
-
-  /* Chat container */
-  #chat-container { flex:1; display:flex; flex-direction:column; max-width:800px; margin:auto; width:100%; }
-  #chat { flex:1; overflow-y:auto; padding:10px; display:flex; flex-direction:column; gap:6px; }
-
-  /* Message bubbles */
-  .msg { padding:8px 12px; border-radius:16px; max-width:70%; word-wrap:break-word; }
-  .msg.self { align-self:flex-end; background:#4f9aff; color:#fff; }
-  .msg.other { align-self:flex-start; background:#2b2b2b; color:#fff; }
-  .user { font-weight:bold; margin-bottom:2px; display:block; }
-
-  /* Input bar */
-  #input-bar { display:flex; padding:8px; background:#222; gap:6px; }
-  #input { flex:1; padding:10px 12px; border-radius:20px; border:none; outline:none; background:#333; color:#fff; }
-  #send-btn { padding:10px 16px; border:none; border-radius:20px; background:#4f9aff; color:#fff; cursor:pointer; transition:background 0.2s; }
-  #send-btn:hover { background:#1a73e8; }
-
-  /* Scrollbar */
-  #chat::-webkit-scrollbar { width:8px; }
-  #chat::-webkit-scrollbar-thumb { background: #555; border-radius:4px; }
-  #chat::-webkit-scrollbar-track { background:#222; }
-
-  /* Responsive */
-  @media(max-width:600px) {
-    #chat { padding:6px; }
-    .msg { max-width:85%; font-size:14px; }
-    #input-bar { flex-direction:column; gap:4px; }
-    #send-btn { width:100%; }
-  }
+body { margin:0; font-family:"Segoe UI",sans-serif; background:#181818; color:#fff; display:flex; flex-direction:column; height:100vh; }
+#chat-container { flex:1; display:flex; flex-direction:column; max-width:800px; margin:auto; width:100%; }
+#chat { flex:1; overflow-y:auto; padding:10px; display:flex; flex-direction:column; gap:6px; }
+.msg { padding:8px 12px; border-radius:16px; max-width:70%; word-wrap:break-word; }
+.msg.self { align-self:flex-end; background:#4f9aff; color:#fff; }
+.msg.other { align-self:flex-start; background:#2b2b2b; color:#fff; }
+.user { font-weight:bold; margin-bottom:2px; display:block; }
+#input-bar { display:flex; padding:8px; background:#222; gap:6px; }
+#input { flex:1; padding:10px 12px; border-radius:20px; border:none; outline:none; background:#333; color:#fff; }
+#send-btn { padding:10px 16px; border:none; border-radius:20px; background:#4f9aff; color:#fff; cursor:pointer; transition:background 0.2s; }
+#send-btn:hover { background:#1a73e8; }
+#chat::-webkit-scrollbar { width:8px; }
+#chat::-webkit-scrollbar-thumb { background:#555; border-radius:4px; }
+#chat::-webkit-scrollbar-track { background:#222; }
+@media(max-width:600px){ #chat{padding:6px} .msg{max-width:85%; font-size:14px} #input-bar{flex-direction:column; gap:4px} #send-btn{width:100%} }
 </style>
 </head>
 <body>
-
 <div id="chat-container">
   <div id="chat"></div>
   <div id="input-bar">
@@ -52,57 +34,47 @@
 <script>
 const API = "https://backend-kappa-rust-47.vercel.app/api";
 
-// --- Username & ID ---
+// Username & ID
 let username = localStorage.getItem("username");
 let userId = localStorage.getItem("userid");
-if (!userId) { userId = crypto.randomUUID(); localStorage.setItem("userid", userId); }
-function validName(name){ return name && name.length>=2 && name.length<=20; }
-if (!username || !validName(username)) {
-  while (!validName(username)) { username = prompt("What do you want to be called?"); }
-  localStorage.setItem("username", username);
-}
+if(!userId){ userId=crypto.randomUUID(); localStorage.setItem("userid",userId); }
+function validName(n){return n&&n.length>=2&&n.length<=20;}
+if(!username||!validName(username)){while(!validName(username)){username=prompt("What do you want to be called?");} localStorage.setItem("username",username);}
 
-// --- Send message ---
+// Send message
 const input = document.getElementById("input");
 const sendBtn = document.getElementById("send-btn");
 sendBtn.addEventListener("click", sendMessage);
-input.addEventListener("keydown", e => { if(e.key==="Enter") sendMessage(); });
+input.addEventListener("keydown", e=>{if(e.key==="Enter") sendMessage();});
 
-async function sendMessage() {
+async function sendMessage(){
   const text = input.value.trim();
   if(!text) return;
-  try {
-    await fetch(API+"/message", {
-      method:"POST",
-      headers:{ "Content-Type":"application/json" },
-      body: JSON.stringify({ text, user: username, id: userId })
-    });
-  } catch(err){ console.error("Send error:", err); }
-  input.value = "";
+  try{await fetch(API+"/message",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text,user:username,id:userId})});}catch(err){console.error(err);}
+  input.value="";
 }
 
-// --- Render messages ---
-const chatDiv = document.getElementById("chat");
-function render(messages) {
-  chatDiv.innerHTML = "";
-  messages.forEach(m => {
-    const div = document.createElement("div");
-    const isSelf = m.id===userId;
-    div.className = "msg " + (isSelf?"self":"other");
-    div.innerHTML = `<span class="user">${m.user||"Anonymous"}</span>${m.text||""}`;
+// Render messages
+const chatDiv=document.getElementById("chat");
+function render(messages){
+  chatDiv.innerHTML="";
+  messages.forEach(m=>{
+    const div=document.createElement("div");
+    const isSelf=m.id===userId;
+    div.className="msg "+(isSelf?"self":"other");
+    div.innerHTML=`<span class="user">${m.user||"Anonymous"}</span>${m.text||""}`;
     chatDiv.appendChild(div);
   });
-  chatDiv.scrollTop = chatDiv.scrollHeight;
+  chatDiv.scrollTop=chatDiv.scrollHeight;
 }
 
-// --- Live chat SSE ---
+// Live SSE
 const evt = new EventSource(API+"/live");
-evt.onmessage = e => {
+evt.onmessage=e=>{
   try{
-    const raw = JSON.parse(e.data);
-    const msgs = raw.map(m=>JSON.parse(m)).reverse();
-    render(msgs);
-  }catch(err){ console.error(err); }
+    const messages=JSON.parse(e.data);
+    render(messages);
+  }catch(err){console.error(err);}
 };
 </script>
 </body>
