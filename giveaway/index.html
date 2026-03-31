@@ -216,7 +216,7 @@ document.addEventListener("click", tryPlayMusic);
 
 function joinGiveaway(){
   const username = document.getElementById("username").value.trim();
-  if(!username) return document.getElementById("status").innerText = "Please enter your username!";
+  if(!username) return document.getElementById("status").innerText = "Please enter your Discord Username!";
 
   const nextGiveawayTime = getNextGiveaway().getTime();
   const lastJoined = localStorage.getItem("lastJoined");
