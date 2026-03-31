@@ -34,12 +34,16 @@ body { margin:0; font-family:"Segoe UI",sans-serif; background:#181818; color:#f
 <script>
 const API = "https://backend-kappa-rust-47.vercel.app/api";
 
-// Username & ID
-let username = localStorage.getItem("username");
+// Generate or get persistent user ID
 let userId = localStorage.getItem("userid");
-if(!userId){ userId=crypto.randomUUID(); localStorage.setItem("userid",userId); }
-function validName(n){return n&&n.length>=2&&n.length<=20;}
-if(!username||!validName(username)){while(!validName(username)){username=prompt("What do you want to be called?");} localStorage.setItem("username",username);}
+if(!userId){ userId = crypto.randomUUID(); localStorage.setItem("userid", userId); }
+
+// Prompt for username if not set or invalid
+let username = localStorage.getItem("username");
+while(!username || username.length<2 || username.length>20){
+  username = prompt("What do you want to be called?");
+}
+localStorage.setItem("username", username);
 
 // Send message
 const input = document.getElementById("input");
@@ -50,7 +54,14 @@ input.addEventListener("keydown", e=>{if(e.key==="Enter") sendMessage();});
 async function sendMessage(){
   const text = input.value.trim();
   if(!text) return;
-  try{await fetch(API+"/message",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text,user:username,id:userId})});}catch(err){console.error(err);}
+  console.log("Sending message:", {text,user:username,id:userId});
+  try{
+    await fetch(API+"/message",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({text,user:username,id:userId})
+    });
+  }catch(err){console.error(err);}
   input.value="";
 }
 
@@ -60,22 +71,32 @@ function render(messages){
   chatDiv.innerHTML="";
   messages.forEach(m=>{
     const div=document.createElement("div");
-    const isSelf=m.id===userId;
+    const isSelf = m.id===userId;
     div.className="msg "+(isSelf?"self":"other");
     div.innerHTML=`<span class="user">${m.user||"Anonymous"}</span>${m.text||""}`;
     chatDiv.appendChild(div);
   });
-  chatDiv.scrollTop=chatDiv.scrollHeight;
+  chatDiv.scrollTop = chatDiv.scrollHeight;
 }
 
-// Live SSE
+// Live SSE updates
 const evt = new EventSource(API+"/live");
-evt.onmessage=e=>{
+evt.onmessage = e => {
   try{
-    const messages=JSON.parse(e.data);
+    const messages = JSON.parse(e.data);
     render(messages);
   }catch(err){console.error(err);}
 };
+
+// Optional: fetch last messages on load
+async function loadMessages(){
+  try{
+    const res = await fetch(API+"/chat");
+    const messages = await res.json();
+    render(messages);
+  }catch(err){console.error(err);}
+}
+loadMessages();
 </script>
 </body>
 </html>
