@@ -39,7 +39,7 @@ let userId = localStorage.getItem("userid");
 if(!userId){ userId = crypto.randomUUID(); localStorage.setItem("userid", userId); }
 
 let username = localStorage.getItem("username");
-while(!username || username.length<2 || username.length>20){
+while(!username || username.length < 2 || username.length > 20){
   username = prompt("What do you want to be called?");
 }
 localStorage.setItem("username", username);
@@ -48,42 +48,43 @@ localStorage.setItem("username", username);
 const input = document.getElementById("input");
 const sendBtn = document.getElementById("send-btn");
 sendBtn.addEventListener("click", sendMessage);
-input.addEventListener("keydown", e=>{if(e.key==="Enter") sendMessage();});
+input.addEventListener("keydown", e => { if(e.key==="Enter") sendMessage(); });
 
 async function sendMessage(){
   const text = input.value.trim();
   if(!text) return;
   try{
-    await fetch(API+"/message",{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body: JSON.stringify({text,user:username,id:userId})
+    await fetch(API + "/message", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      // Use unique ID per message
+      body: JSON.stringify({ text, user: username, id: crypto.randomUUID() })
     });
-  }catch(err){console.error(err);}
-  input.value="";
+  } catch(err){ console.error(err); }
+  input.value = "";
 }
 
 // Render messages
-const chatDiv=document.getElementById("chat");
+const chatDiv = document.getElementById("chat");
 function render(messages){
-  chatDiv.innerHTML="";
-  messages.forEach(m=>{
-    const div=document.createElement("div");
-    const isSelf=m.id===userId;
-    div.className="msg "+(isSelf?"self":"other");
-    div.innerHTML=`<span class="user">${m.user}</span>${m.text}`;
+  chatDiv.innerHTML = "";
+  messages.forEach(m => {
+    const div = document.createElement("div");
+    const isSelf = m.id === userId;
+    div.className = "msg " + (isSelf ? "self" : "other");
+    div.innerHTML = `<span class="user">${m.user}</span>${m.text}`;
     chatDiv.appendChild(div);
   });
-  chatDiv.scrollTop=chatDiv.scrollHeight;
+  chatDiv.scrollTop = chatDiv.scrollHeight;
 }
 
 // Load messages on page load
 async function loadMessages(){
   try{
-    const res = await fetch(API+"/chat");
+    const res = await fetch(API + "/chat");
     const messages = await res.json();
     render(messages);
-  }catch(err){console.error(err);}
+  } catch(err){ console.error(err); }
 }
 loadMessages();
 
