@@ -32,6 +32,7 @@ body { margin:0; font-family:"Segoe UI",sans-serif; background:#181818; color:#f
 </div>
 
 <script>
+// Replace with your deployed backend API URL
 const API = "https://backend-kappa-rust-47.vercel.app/api";
 
 // Persistent userId & username
@@ -39,36 +40,21 @@ let userId = localStorage.getItem("userid");
 if(!userId){ userId = crypto.randomUUID(); localStorage.setItem("userid", userId); }
 
 let username = localStorage.getItem("username");
-while(!username || username.length < 2 || username.length > 20){
+while(!username || username.length<2 || username.length>20){
   username = prompt("What do you want to be called?");
 }
 localStorage.setItem("username", username);
 
-// Send message
+// Chat elements
+const chatDiv = document.getElementById("chat");
 const input = document.getElementById("input");
 const sendBtn = document.getElementById("send-btn");
-sendBtn.addEventListener("click", sendMessage);
-input.addEventListener("keydown", e => { if(e.key==="Enter") sendMessage(); });
-
-async function sendMessage(){
-  const text = input.value.trim();
-  if(!text) return;
-  try{
-    await fetch(API + "/message", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      // Use unique ID per message
-      body: JSON.stringify({ text, user: username, id: crypto.randomUUID() })
-    });
-  } catch(err){ console.error(err); }
-  input.value = "";
-}
 
 // Render messages
-const chatDiv = document.getElementById("chat");
 function render(messages){
   chatDiv.innerHTML = "";
   messages.forEach(m => {
+    if(!m) return;
     const div = document.createElement("div");
     const isSelf = m.id === userId;
     div.className = "msg " + (isSelf ? "self" : "other");
@@ -78,18 +64,57 @@ function render(messages){
   chatDiv.scrollTop = chatDiv.scrollHeight;
 }
 
-// Load messages on page load
+// Load messages
 async function loadMessages(){
-  try{
-    const res = await fetch(API + "/chat");
+  try {
+    const res = await fetch(API + "/chat", { cache: "no-store" });
+    if(!res.ok) throw new Error("HTTP " + res.status);
     const messages = await res.json();
-    render(messages);
-  } catch(err){ console.error(err); }
+    if(Array.isArray(messages)) render(messages);
+  } catch(err){
+    console.error("Failed to load messages:", err);
+  }
 }
+
+// Send message
+async function sendMessage(){
+  const text = input.value.trim();
+  if(!text) return;
+  try {
+    const res = await fetch(API + "/message", {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({text, user: username, id: userId})
+    });
+    if(!res.ok) console.error("Failed to send message:", await res.text());
+  } catch(err){
+    console.error("Send error:", err);
+  }
+  input.value = "";
+}
+
+// Event listeners
+sendBtn.addEventListener("click", sendMessage);
+input.addEventListener("keydown", e => { if(e.key==="Enter") sendMessage(); });
+
+// Initial load
 loadMessages();
 
-// Optional: Polling every 2s for live updates
+// Poll every 2 seconds for new messages
 setInterval(loadMessages, 2000);
+
+// Optional: SSE live updates (if backend supports it)
+if (typeof EventSource !== "undefined") {
+  const evtSource = new EventSource(API + "/live");
+  evtSource.onmessage = e => {
+    try {
+      const messages = JSON.parse(e.data);
+      render(messages);
+    } catch(err){
+      console.error("SSE parse error:", err);
+    }
+  };
+}
 </script>
 </body>
 </html>
