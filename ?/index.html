@@ -18,7 +18,6 @@ body {
     overflow: hidden;
 }
 
-/* 🌌 Matrix background */
 canvas {
     position: fixed;
     top: 0;
@@ -26,7 +25,6 @@ canvas {
     z-index: -2;
 }
 
-/* 🧊 Card */
 .card {
     position: absolute;
     top: 50%;
@@ -51,7 +49,6 @@ canvas {
     animation: fadeIn 1.5s ease forwards, float 5s ease-in-out infinite;
 }
 
-/* 🖼️ PFP */
 .pfp {
     width: 90px;
     height: 90px;
@@ -60,7 +57,6 @@ canvas {
     margin-bottom: 12px;
 }
 
-/* Name + GIF */
 .name-container {
     display: flex;
     align-items: center;
@@ -108,7 +104,6 @@ canvas {
     color: #00ff66;
 }
 
-/* Role badge (optional) */
 .role-badge img {
     width: 25px;
     height: 25px;
@@ -175,7 +170,6 @@ canvas {
 <div class="card">
     <img class="pfp" src="https://cdn.discordapp.com/avatars/1420110702516899910/e780ec2241784db6e02497fc75693a43.png?size=1024" alt="pfp">
 
-    <!-- Name + GIF with tooltip -->
     <div class="name-container">
         <div class="name">Sh4d0w</div>
         <div class="name-gif-wrapper" data-tooltip="Owner">
@@ -183,7 +177,6 @@ canvas {
         </div>
     </div>
 
-    <!-- Optional role badge -->
     <div class="role-badge" data-tooltip="Owner"></div>
 
     <div class="desc">
@@ -236,11 +229,10 @@ let i = 0;
 
 function animateTitle() {
     if (i <= siteTitle.length) {
-        document.title = siteTitle.substring(0, i); // show letters up to i
+        document.title = siteTitle.substring(0, i);
         i++;
-        setTimeout(animateTitle, 9990); // typing speed in ms
+        setTimeout(animateTitle, 9990);
     } else {
-        // Optional: repeat or keep blinking cursor effect
         document.title = siteTitle; 
     }
 }
