@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>@omg.skyeee</title>
+
+<style>
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: 'Orbitron', sans-serif;
+  background: black;
+  color: white;
+}
+
+/* Background GIF */
+.bg {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -4;
+  filter: brightness(0.3) contrast(1.4) saturate(1);
+  animation: pulse 6s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+  0% { filter: brightness(0.3) contrast(1.4) saturate(1); }
+  50% { filter: brightness(0.4) contrast(1.6) saturate(1); }
+  100% { filter: brightness(0.3) contrast(1.4) saturate(1); }
+}
+
+/* Glitch overlay */
+.glitch {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: -3;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    rgba(255,255,255,0.05) 0px,
+    rgba(255,255,255,0.05) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  animation: flicker 0.15s infinite;
+}
+
+@keyframes flicker {
+  0% { opacity: 0.9; }
+  50% { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+
+/* RGB glitch (turned monochrome) */
+.rgb {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  mix-blend-mode: screen;
+  animation: rgbShift 0.15s infinite;
+  background: transparent;
+}
+
+@keyframes rgbShift {
+  0% { transform: translate(0,0); }
+  33% { transform: translate(2px,-2px); }
+  66% { transform: translate(-2px,2px); }
+  100% { transform: translate(0,0); }
+}
+
+/* Container */
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  opacity: 0;
+  text-align: center;
+  animation: fadeIn 1.2s ease forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Card */
+.card {
+  background: rgba(0,0,0,0.6);
+  border: 1px solid white;
+  box-shadow: 0 0 50px white, 0 0 100px white inset;
+  padding: 30px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  text-align: center;
+}
+
+/* Profile */
+.pfp {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+  border: 2px solid white;
+  box-shadow: 0 0 20px white, 0 0 40px white inset;
+}
+
+/* Text */
+h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  background: linear-gradient(90deg, black,black,red,red,yellow,yellow,red,red,black,black);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 50px white;
+}
+
+h2 {
+  margin: -5px 0 25px;
+  font-size: 1rem;
+  opacity: 0.8;
+  color: grey;
+}
+
+p {
+  font-size: 0.9rem;
+  color: white;
+  opacity: 0.7;
+}
+
+/* Intro */
+#intro {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-family: 'Orbitron', monospace;
+  border-right: 2px solid white;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+  animation: typing 2s steps(10) forwards, blink 0.7s infinite;
+}
+
+@keyframes typing {
+  to { width: 90px; }
+}
+
+@keyframes blink {
+  50% { border-color: transparent; }
+}
+
+.hidden { display: none; }
+
+footer {
+  text-align: center;
+  color: white;
+  font-family: 'Orbitron', monospace;
+  opacity: 0.7;
+  font-size: 0.9rem;
+  text-shadow: 0 0 10px white;
+  pointer-events: none;
+}
+</style>
+
+<!-- Google Fonts Orbitron -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+<img class="bg" src="https://img1.picmix.com/output/pic/normal/3/5/2/4/11644253_d249e.gif">
+
+<div class="glitch"></div>
+<div class="rgb"></div>
+
+<audio id="music" loop preload="auto">
+  <source src="audio.mp3" type="audio/mpeg">
+</audio>
+
+<div id="intro">Click Me...</div>
+
+<div id="main" class="container hidden">
+  <div class="card">
+    <img class="pfp" src="https://cdn.discordapp.com/avatars/1420110702516899910/e780ec2241784db6e02497fc75693a43.png?size=1024">
+    <h1>Sh4d0w</h1>
+    <h2>@omg.skyeee</h2>
+    <p>Owner of:<br>© Sh4d0w Productions<br><br>If you want an Site like this, DM me on Discord!</p>
+  </div>
+  <footer><br>© 2026 Sh4d0w</footer>
+</div>
+
+<script>
+const intro = document.getElementById('intro');
+const main = document.getElementById('main');
+const music = document.getElementById('music');
+
+window.addEventListener('click', () => {
+  intro.classList.add('hidden');
+  main.classList.remove('hidden');
+
+  music.currentTime = 0;
+  music.volume = 0;
+  music.loop = true;
+
+  music.play();
+
+  let vol = 0;
+  const fade = setInterval(() => {
+    if (vol < 1) {
+      vol += 0.02;
+      music.volume = vol;
+    } else {
+      clearInterval(fade);
+    }
+  }, 100);
+
+}, { once: true });
+
+music.addEventListener('ended', () => {
+  music.currentTime = 0;
+  music.play();
+});
+</script>
+
+</body>
+</html>
