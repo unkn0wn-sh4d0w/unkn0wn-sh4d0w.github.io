@@ -1,4 +1,4 @@
-© 2026 Your Name. ALL RIGHTS RESERVED.
+© 2026 Sh4d0w. ALL RIGHTS RESERVED.
 
 This website, its repository, and all of its contents, including text, images, graphics, layouts, code (HTML, CSS, JavaScript), and multimedia, are the exclusive property of the copyright holder.
 
