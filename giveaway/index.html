@@ -230,10 +230,7 @@ function joinGiveaway(){
 
 fetch("https://backend-kappa-rust-47.vercel.app/api/send", {
   method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-    "x-api-key": process.env.API_KEY
-  },
+  headers: {"Content-Type":"application/json"},
   body: JSON.stringify({
     type: "giveaway",
     username: username
