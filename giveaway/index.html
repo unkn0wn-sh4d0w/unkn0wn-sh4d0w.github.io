@@ -7,7 +7,7 @@
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  background: linear-gradient(135deg, red,black,red);
   color: white;
   display: flex;
   justify-content: center;
@@ -22,7 +22,6 @@ body {
   background: rgba(0,0,0,0.75);
   border-radius: 20px;
   padding: 40px 30px;
-  box-shadow: 0 0 30px rgba(0,255,255,0.3);
   text-align: center;
   position: relative;
 }
@@ -30,27 +29,7 @@ body {
 h1 {
   font-size: 2.5em;
   margin-bottom: 15px;
-  background: linear-gradient(90deg, #ff0000, #ff9900, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: rainbow 5s linear infinite;
-}
-@keyframes rainbow {
-  0% { background-position: 0%; }
-  100% { background-position: 400%; }
-}
-
-#countdown {
-  font-size: 1.3em;
-  margin-bottom: 30px;
-}
-
-.carousel {
-  position: relative;
-  height: 120px;
-  margin-bottom: 30px;
-  perspective: 1000px;
-}
+  color: red;}
 
 .card {
   background: rgba(255,255,255,0.1);
@@ -59,9 +38,6 @@ h1 {
   padding: 40px;
   font-size: 1.5em;
   font-weight: bold;
-  color: #00ffe0;
-  text-shadow: 0 0 15px rgba(0,255,255,0.4);
-  box-shadow: 0 0 25px rgba(0,255,255,0.3);
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
@@ -70,183 +46,18 @@ h1 {
   left: 50%;
   top: 0;
   transform: translateX(-50%);
-  opacity: 0;
+  opacity: 0
 }
 
 .card.active {
   opacity: 1;
   transform: translateX(-50%) scale(1.05);
 }
-
-input {
-  padding: 12px;
-  border-radius: 12px;
-  border: none;
-  width: 70%;
-  margin-bottom: 15px;
-  font-size: 1em;
-}
-
-button {
-  padding: 12px 25px;
-  border-radius: 12px;
-  border: none;
-  background: #5865F2;
-  font-weight: bold;
-  cursor: pointer;
-  color: white;
-  font-size: 1em;
-  transition: transform 0.2s, background 0.2s;
-}
-button:hover {
-  transform: scale(1.05);
-  background: #4752c4;
-}
-
-#status {
-  margin-top: 15px;
-  font-size: 1em;
-}
-
-#musicToggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 12px;
-  width: 50px;
-  height: 50px;
-  font-size: 24px;
-  cursor: pointer;
-  backdrop-filter: blur(8px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-#musicToggle:hover { background: rgba(255,255,255,0.2); }
-
 </style>
 </head>
 <body>
 
 <div class="container">
-  <h1>🎁 Daily Giveaway</h1>
-  <div id="countdown">Loading countdown...</div>
-
-  <div class="carousel" id="carousel">
+  <h1>Error 404 - No Access</h1>
+  <div>Your access to this Sub-Page has been denied.</div>
   </div>
-
-  <input type="text" id="username" placeholder="Enter your Discord Username"><br>
-  <button onclick="joinGiveaway()">Join Giveaway</button>
-  <p id="status"></p>
-
-  <button id="musicToggle">🎵</button>
-</div>
-
-<audio id="bgMusic" src="https://stream.laut.fm/double-bass-fm" autoplay loop></audio>
-
-<script>
-const giveawayHour = 20;
-const possibleWins = ["Discord Subscriptions", "Nitro Subscriptions", "Giftcards", "Twitch Subscriptions", "Cryptocurrencies", "Game Accounts", "Other Subscriptions", "Virtual Currencies"];
-
-function getNextGiveaway() {
-  const now = new Date();
-  const next = new Date();
-  next.setHours(giveawayHour,0,0,0);
-  if(now >= next) next.setDate(next.getDate()+1);
-  return next;
-}
-
-function formatTime(ms){
-  const totalSec = Math.floor(ms/1000);
-  const hours = Math.floor(totalSec/3600);
-  const minutes = Math.floor((totalSec%3600)/60);
-  const seconds = totalSec%60;
-  return `${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
-}
-
-function updateCountdown(){
-  const now = new Date();
-  const next = getNextGiveaway();
-  const diff = next - now;
-  document.getElementById("countdown").innerText = "Next Giveaway in: " + formatTime(diff);
-  setTimeout(updateCountdown,1000);
-}
-updateCountdown();
-
-const carousel = document.getElementById("carousel");
-possibleWins.forEach(win => {
-  const div = document.createElement("div");
-  div.className = "card";
-  div.innerText = win;
-  carousel.appendChild(div);
-});
-
-let cardIndex = 0;
-function cycleCards(){
-  const cards = document.querySelectorAll(".card");
-  cards.forEach((c,i)=>c.classList.remove("active"));
-  cards[cardIndex].classList.add("active");
-  cardIndex = (cardIndex + 1) % cards.length;
-  setTimeout(cycleCards, 3000);
-}
-cycleCards();
-const bgMusic = document.getElementById("bgMusic");
-let musicPlaying = true;
-const musicBtn = document.getElementById("musicToggle");
-musicBtn.onclick = () => {
-  if(musicPlaying){
-    bgMusic.pause();
-    musicBtn.innerText = "🔇";
-  } else {
-    bgMusic.play();
-    musicBtn.innerText = "🎵";
-  }
-  musicPlaying = !musicPlaying;
-}
-
-function tryPlayMusic() {
-  bgMusic.play().catch(err => {
-    console.log("Autoplay blocked:", err);
-  });
-  document.removeEventListener("click", tryPlayMusic);
-}
-document.addEventListener("click", tryPlayMusic);
-
-function joinGiveaway(){
-  const username = document.getElementById("username").value.trim();
-  if(!username) return document.getElementById("status").innerText = "Please enter your Discord Username!";
-
-  const nextGiveawayTime = getNextGiveaway().getTime();
-  const lastJoined = localStorage.getItem("lastJoined");
-
-  if(lastJoined && parseInt(lastJoined) > Date.now()){
-    const waitTime = parseInt(lastJoined) - Date.now();
-    return document.getElementById("status").innerText = `You already joined! Try again in ${formatTime(waitTime)}`;
-  }
-
-  localStorage.setItem("lastJoined", nextGiveawayTime);
-
-fetch("https://backend-kappa-rust-47.vercel.app/api/send", {
-  method: "POST",
-  headers: {"Content-Type":"application/json"},
-  body: JSON.stringify({
-    type: "giveaway",
-    username: username
-  })
-}).then(res => {
-    if(res.ok){
-      document.getElementById("status").innerText = "✅ Successfully joined!";
-      document.getElementById("username").value = "";
-    } else {
-      document.getElementById("status").innerText = "❌ Failed to send entry.";
-    }
-  }).catch(err => {
-    console.error(err);
-    document.getElementById("status").innerText = "❌ Error sending entry.";
-  });
-}
-</script>
-</body>
-</html>
