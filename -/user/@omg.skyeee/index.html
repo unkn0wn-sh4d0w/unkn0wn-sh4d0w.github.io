@@ -102,31 +102,6 @@ body {
   border: 2px solid white;
   box-shadow: 0 0 20px white, 0 0 40px white inset;
 }
-
- h1 {
-  margin: 0;
-  font-size: 2.5rem;
-
-  background: linear-gradient(
-    90deg,
-    #5BCEFA,
-    #F5A9B8,
-    #FFFFFF,
-    #F5A9B8,
-    #5BCEFA
-  );
-
-  background-size: 200% 100%;
-  background-position: center;
-
-  -webkit-background-clip: text;
-  background-clip: text;
-
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-
-  text-shadow: none;
-}
   
 h2 {
   margin: -5px 0 25px;
@@ -174,6 +149,23 @@ footer {
   text-shadow: 0 0 10px white;
   pointer-events: none;
 }
+
+.name {
+  background: linear-gradient(
+    90deg,
+    #5BCEFA,
+    #F5A9B8,
+    #FFFFFF,
+    #F5A9B8,
+    #5BCEFA
+  );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
 </style>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
@@ -195,7 +187,7 @@ footer {
 <div id="main" class="container hidden">
   <div class="card">
     <img class="pfp" src="https://cdn.discordapp.com/avatars/1420110702516899910/e780ec2241784db6e02497fc75693a43.png?size=1024">
-    <h1>Sh4d0w</h1>
+    <h1><span class="name">Sh4d0w</span></h1>
     <h2>@omg.skyeee</h2>
     <p>Owner of:<br>© Sh4d0w Productions<br><br>If you want an Site like this, DM me on Discord!</p>
   </div>
