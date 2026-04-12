@@ -98,14 +98,9 @@ function checkCode() {
         }, 3000);
 
     } else {
-        message.textContent = "ACCESS DENIED";
+        message.textContent = "ACCESS DENIED - CODE: 0000";
         message.className = "message denied flicker";
         deniedSound.play();
-
-        
-        setTimeout(() => {
-            window.location.href = "https://unkn0wn-sh4d0w.github.io/-/404";
-        }, 3000);
 
         input.value = "";
     }
