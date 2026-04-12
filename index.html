@@ -646,10 +646,9 @@ Transferred to omg.bot
 <div id="menuPage" class="page hidden">
   <h2>Menu</h2>
   <div class="links">
-    <button class="menu-inside" onclick="showFriends()">⭐ Special Users</button>
-    <button class="menu-inside" onclick="openSecret()">Secret</button>
+    <button class="menu-inside" onclick="showFriends()">💬 Comments</button>
     <button class="menu-inside" onclick="openGames()">🎮 Games</button>
-    <button class="menu-inside" onclick="openMinus()">Custom Users</button>
+    <button class="menu-inside" onclick="openMinus()">🖌️ Custom Profiles</button>
   </div>
   <button class="back-btn" onclick="showMain()">Back</button>
 </div>
@@ -753,10 +752,6 @@ const bgMusic = document.getElementById("music");
 function playSong() { mySong.play(); bgMusic.pause(); }
 function pauseSong() { mySong.pause(); }
 function stopSong() { mySong.pause(); mySong.currentTime = 0; }
-
-function openSecret() {
-    window.open("https://unkn0wn-sh4d0w.github.io/secret", "_blank");
-}
 
 function openProfile() {
     window.open("https://discord.com/users/1420110702516899910");
