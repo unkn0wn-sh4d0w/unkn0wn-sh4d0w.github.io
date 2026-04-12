@@ -106,17 +106,28 @@ body {
 h1 {
   margin: 0;
   font-size: 2.5rem;
+
   background: linear-gradient(
     90deg,
-    #5BCEFA,
-    #F5A9B8,
-    #FFFFFF,
-    #F5A9B8,
-    #5BCEFA
+    #5BCEFA 0%,
+    #5BCEFA 20%,
+    #F5A9B8 20%,
+    #F5A9B8 40%,
+    #FFFFFF 40%,
+    #FFFFFF 60%,
+    #F5A9B8 60%,
+    #F5A9B8 80%,
+    #5BCEFA 80%,
+    #5BCEFA 100%
   );
+
   -webkit-background-clip: text;
+  background-clip: text;
+
+  color: transparent;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 50px white;
+
+  text-shadow: none;
 }
 
 h2 {
