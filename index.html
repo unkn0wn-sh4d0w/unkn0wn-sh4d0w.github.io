@@ -78,79 +78,6 @@ z-index:0;
   transform: rotate(-45deg);
 }
 
-#commentsPage {
-    max-width: 820px;
-    margin: 70px auto;
-    padding: 40px;
-    border-radius: 18px;
-    background: rgba(255,255,255,0.06);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    border: 1px solid rgba(255,255,255,0.15);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-}
-
-#commentsPage h2 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.comment {
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 12px;
-    padding: 15px 20px;
-    margin-bottom: 15px;
-    color: #e0ffe0;
-    box-shadow: 0 0 10px rgba(0,255,0,0.1);
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.comment b {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: #33ff33;
-}
-
-.comment-btn {
-  width: 42px;
-  height: 42px;
-  border: none;
-  border-radius: 10px;
-  background: rgba(255,255,255,0.08);
-  color: white;
-  font-size: 20px;
-  cursor: pointer;
-  border: 1px solid rgba(255,255,255,0.2);
-  backdrop-filter: blur(10px);
-  transition: transform 0.2s, background 0.2s;
-}
-
-.comment-btn:hover {
-  transform: scale(1.1);
-  background: rgba(255,255,255,0.15);
-}
-
-.comment p {
-    margin: 0;
-    font-size: 14px;
-    opacity: 0.8;
-}
-
-#commentsPage .back-btn {
-    margin-top: 25px;
-    background: #5865F2;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    color: white;
-    cursor: pointer;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
 #login-screen{
 position:fixed;
 top:0;
@@ -284,31 +211,6 @@ transition:.2s;
 .friends-btn:hover{
 transform:scale(1.1);
 background:rgba(255,255,255,0.15);
-}
-
-.mango-name {
-  color: black;
-}
-
-.kerno-name {
-  font-weight: bold;
-  background: linear-gradient(
-    90deg,
-    #ff0000,
-    #8000ff,
-    #000000,
-    #8000ff,
-    #ff0000
-  );
-  background-size: 300%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  display: inline-block;
-  animation: kernoShine 3s linear infinite;
-}
-@keyframes kernoShine {
-  0% { background-position: 0%; }
-  100% { background-position: 300%; }
 }
 
 .page {
@@ -643,13 +545,6 @@ footer{text-align:center;opacity:.6;margin-top:30px;font-size:14px;}
   background: linear-gradient(135deg, #4752c4, #5865F2);
   transform: scale(1.05);
 }
-
-#commentStatus {
-  margin-top: 10px;
-  font-size: 13px;
-  color: #33ff33;
-}
-
 </style>
 </head>
 <body>
@@ -733,65 +628,15 @@ Transferred to omg.bot
 <div class="friends">
 
 <div class="friend">
-<img src="https://cdn.discordapp.com/avatars/1354184587755913410/24747532efe6fd0b450eca4cec1bde83.png?size=1024">
+<img src="">
 <div>
-<div class="name kerno-name">Kerno</div>
-<div class="desc">Der Motherfucker</div>
-</div>
-</div>
-
-<div class="friend">
-<img src="https://i.imgur.com/VXQAYuW.png">
-<div>
-<div class="name mango-name">Mango</div>
-<div class="desc">Voll der mogger</div>
+<div class="name"></div>
+<div class="desc"></div>
 </div>
 </div>
 
 </div>
 <button class="back-btn" onclick="showMenu()">Back</button>
-</div>
-
-<div id="commentsPage" class="page hidden">
-
-<div class="center">
-  <button id="openCommentBtn" class="button cmt">Submit Comment</button>
-</div>
-
-<div id="commentPopup" class="popup hidden">
-  <div class="popup-content">
-    <span id="closeCommentBtn" class="close">&times;</span>
-    <h3>Submit Your Comment</h3>
-    <input type="text" id="commentUsername" placeholder="Your Username">
-    <textarea id="commentMessage" placeholder="Your Comment"></textarea>
-    <button id="submitCommentBtn">Submit</button>
-    <p id="commentStatus"></p>
-  </div>
-</div>
-
-  <h2>💬 Comments</h2>
-
-  <hr>
-
-  <div class="comments" style="display:flex; flex-direction:column; gap:16px; margin-top:20px;">
-
-    <div class="comment-box" style="background:rgba(255,255,255,0.08); padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.15);">
-      <div class="name">Alisson_Weidel</div>
-      <div class="desc">Nice discord bot</div>
-    </div>
-
-    <div class="comment-box" style="background:rgba(255,255,255,0.08); padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.15);">
-      <div class="name">Sk8r</div>
-      <div class="desc">Best Bot Dev</div>
-    </div>
-
-    <div class="comment-box" style="background:rgba(255,255,255,0.08); padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.15);">
-      <div class="name">madafak</div>
-      <div class="desc">Geile website diggi</div>
-    </div>
-  </div>
-
-  <button class="back-btn" onclick="showMenu()">Back</button>
 </div>
 
 <button id="musicToggle" class="music-btn" onclick="toggleMusic()">
@@ -802,10 +647,9 @@ Transferred to omg.bot
   <h2>Menu</h2>
   <div class="links">
     <button class="menu-inside" onclick="showFriends()">⭐ Special Users</button>
-    <button class="menu-inside" onclick="openPage('commentsPage')">💬 Comments</button>
-    <button class="menu-inside" onclick="openGuess()">🎯 GuessIt</button>
-    <button class="menu-inside" onclick="openTicTacToe()">🎮 Tic Tac Toe</button>
-    <button class="menu-inside" onclick="openMemory()">🧩 Emoji Memory</button>
+    <button class="menu-inside" onclick="openSecret()">Secret</button>
+    <button class="menu-inside" onclick="openGames()">🎮 Games</button>
+    <button class="menu-inside" onclick="openMinus()">Custom Users</button>
   </div>
   <button class="back-btn" onclick="showMain()">Back</button>
 </div>
@@ -886,15 +730,14 @@ document.getElementById("login-btn").onclick = function() {
     bgMusic.volume = 0.5;
     bgMusic.play();
 
-    setTimeout(showAd, 3000);
+    setTimeout(showAd, 1000);
 }
 const mainPage = document.getElementById("mainPage");
 const friendsPage = document.getElementById("friendsPage");
-const commentsPage = document.getElementById("commentsPage");
 const menuPage = document.getElementById("menuPage");
 
 function hideAllPages() {
-    [mainPage,friendsPage,commentsPage,menuPage].forEach(p=>p.classList.add("hidden"));
+    [mainPage,friendsPage,menuPage].forEach(p=>p.classList.add("hidden"));
 }
 function showMain() {
     hideAllPages();
@@ -911,20 +754,20 @@ function playSong() { mySong.play(); bgMusic.pause(); }
 function pauseSong() { mySong.pause(); }
 function stopSong() { mySong.pause(); mySong.currentTime = 0; }
 
-function openGuess() {
-    window.open("https://unkn0wn-sh4d0w.github.io/guessit", "_blank");
+function openskye() {
+    window.open("https://unkn0wn-sh4d0w.github.io/secret", "_blank");
 }
 
 function openProfile() {
     window.open("https://discord.com/users/1420110702516899910");
 }
 
-function openMemory() {
-    window.open("https://unkn0wn-sh4d0w.github.io/memory", "_blank");
+function openMinus() {
+    window.open("https://unkn0wn-sh4d0w.github.io/-/", "_blank");
 }
 
-function openTicTacToe() {
-    window.open("https://unkn0wn-sh4d0w.github.io/tictactoe", "_blank");
+function openGames() {
+    window.open("https://unkn0wn-sh4d0w.github.io/games/", "_blank");
 }
 
 function showAd() {
@@ -981,51 +824,4 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/service-worker.js')
     .then(() => console.log('Service Worker registered'));
 }
-
-const openBtn = document.getElementById("openCommentBtn");
-const closeBtn = document.getElementById("closeCommentBtn");
-const popup = document.getElementById("commentPopup");
-const submitBtn = document.getElementById("submitCommentBtn");
-
-openBtn.addEventListener("click", () => {
-  popup.classList.remove("hidden");
-});
-
-closeBtn.addEventListener("click", () => {
-  popup.classList.add("hidden");
-});
-
-submitBtn.addEventListener("click", () => {
-  const username = document.getElementById("commentUsername").value.trim();
-  const message = document.getElementById("commentMessage").value.trim();
-  const status = document.getElementById("commentStatus");
-
-  if (!username || !message) {
-    status.innerText = "Please fill both fields!";
-    return;
-  }
-
-  fetch("https://backendbyshadow92.vercel.app/api/send", {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({
-      type: "comment",
-      username: username,
-      message: message
-    })
-  }).then(res => {
-    if (res.ok) {
-      status.innerText = "✅ Comment submitted!";
-      document.getElementById("commentUsername").value = "";
-      document.getElementById("commentMessage").value = "";
-      setTimeout(() => popup.classList.add("hidden"), 1000);
-    } else {
-      status.innerText = "❌ Failed to send comment.";
-    }
-  }).catch(err => {
-    console.error(err);
-    status.innerText = "❌ Error sending comment.";
-  });
-});
-
 </script>
