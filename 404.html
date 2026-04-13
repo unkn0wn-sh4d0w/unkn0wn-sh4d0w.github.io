@@ -1,90 +1,112 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>404 - Page Not Found</title>
+
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
       font-family: Arial, sans-serif;
-    }body {
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: white;
-  text-align: center;
-  overflow: hidden;
-}
+    }
 
-.container {
-  max-width: 600px;
-}
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
 
-h1 {
-  font-size: 8rem;
-  margin-bottom: 10px;
-  animation: float 3s ease-in-out infinite;
-}
+    body {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      text-align: center;
+    }
 
-h2 {
-  font-size: 1.8rem;
-  margin-bottom: 15px;
-}
+    .container {
+      max-width: 600px;
+      padding: 20px;
+      z-index: 1;
+    }
 
-p {
-  margin-bottom: 25px;
-  opacity: 0.9;
-}
+    h1 {
+      font-size: 8rem;
+      margin-bottom: 10px;
+      animation: float 3s ease-in-out infinite;
+    }
 
-a {
-  display: inline-block;
-  padding: 12px 25px;
-  background: white;
-  color: #764ba2;
-  text-decoration: none;
-  border-radius: 25px;
-  font-weight: bold;
-  transition: 0.3s ease;
-}
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+    }
 
-a:hover {
-  transform: scale(1.05);
-  background: #f1f1f1;
-}
+    p {
+      margin-bottom: 25px;
+      opacity: 0.9;
+    }
 
-.circle {
-  position: absolute;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  animation: move 10s linear infinite;
-}
+    a {
+      display: inline-block;
+      padding: 12px 25px;
+      background: white;
+      color: #764ba2;
+      text-decoration: none;
+      border-radius: 25px;
+      font-weight: bold;
+      transition: 0.3s ease;
+    }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-15px); }
-}
+    a:hover {
+      transform: scale(1.05);
+      background: #f1f1f1;
+    }
 
-@keyframes move {
-  from {
-    transform: translateY(100vh);
-  }
-  to {
-    transform: translateY(-100vh);
-  }
-}
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      animation: move linear infinite;
+      will-change: transform;
+    }
 
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    @keyframes move {
+      from {
+        transform: translateY(0);
+      }
+      to {
+        transform: translateY(-120vh);
+      }
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 5rem; }
+      h2 { font-size: 1.4rem; }
+      p { font-size: 0.95rem; }
+    }
   </style>
 </head>
-<body>  <div class="container">
+
+<body>
+
+  <div class="container">
     <h1>404</h1>
     <h2>Oops! Page not found</h2>
     <p>The page you are looking for might have been removed or is temporarily unavailable.</p>
     <a href="https://unkn0wn-sh4d0w.github.io/">Go Home</a>
-  </div>  <script>
+  </div>
+
+  <script>
     function createCircle() {
       const circle = document.createElement("div");
       circle.classList.add("circle");
@@ -92,7 +114,11 @@ a:hover {
       const size = Math.random() * 60 + 20;
       circle.style.width = size + "px";
       circle.style.height = size + "px";
-      circle.style.left = Math.random() * window.innerWidth + "px";
+
+      circle.style.left = Math.random() * (window.innerWidth - size) + "px";
+
+      circle.style.bottom = -size + "px";
+
       circle.style.animationDuration = (Math.random() * 5 + 5) + "s";
 
       document.body.appendChild(circle);
@@ -103,5 +129,7 @@ a:hover {
     }
 
     setInterval(createCircle, 500);
-  </script></body>
+  </script>
+
+</body>
 </html>
