@@ -1,0 +1,72 @@
+<div id="startScreen">
+  <div class="start-box">
+    <div class="icon">🚧</div>
+
+    <h1 class="title">Under Construction</h1>
+    <p class="subtitle">Check back soon...<br>You will be automatically redirected to our Website!</p>
+  </div>
+</div>
+
+<style>
+#startScreen{
+  position:fixed;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+  font-family: system-ui, sans-serif;
+  background:#ffffff;
+}
+
+.start-box{
+  text-align:center;
+  padding:55px;
+  border-radius:24px;
+  background: rgba(0,0,0);
+  backdrop-filter: blur(30px);
+  border:1px solid rgba(255,255,255,0.12);
+  box-shadow:0 20px 80px rgba(0,0,0,0.9);
+  animation: fadeIn 0.9s ease;
+  max-width:420px;
+}
+
+.icon{
+  font-size:60px;
+  margin-bottom:20px;
+  animation: bounce 1.6s infinite;
+}
+
+.title{
+  font-size:38px;
+  margin:0;
+  font-weight:900;
+  letter-spacing:-0.5px;
+  background: linear-gradient(90deg, #ffcc00, #ff8800, #ffcc00);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle{
+  margin-top:12px;
+  font-size:16px;
+  color:rgba(255,255,255,0.7);
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(25px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+@keyframes bounce{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-10px);}
+}
+</style>
+
+<script>
+setTimeout(function(){
+  window.location.href = "https://unkn0wn-sh4d0w.github.io";
+}, 5000);
+</script>
