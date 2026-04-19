@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{
+margin:0;
+font-family:Arial, sans-serif;
+background:#0f0f0f;
+color:#fff;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+}
+.container{
+width:420px;
+background:#1c1c1c;
+padding:20px;
+border-radius:12px;
+}
+h2{
+text-align:center;
+margin-bottom:10px;
+}
+input, textarea{
+width:100%;
+margin:8px 0;
+padding:10px;
+border:none;
+border-radius:8px;
+background:#2a2a2a;
+color:#fff;
+outline:none;
+box-sizing:border-box;
+}
+textarea{
+height:120px;
+resize:none;
+}
+button{
+width:100%;
+padding:10px;
+margin-top:10px;
+border:none;
+border-radius:8px;
+background:#5865F2;
+color:#fff;
+font-weight:bold;
+cursor:pointer;
+}
+button:disabled{
+opacity:0.6;
+cursor:not-allowed;
+}
+button:hover:not(:disabled){
+background:#4752c4;
+}
+.status{
+margin-top:10px;
+font-size:14px;
+text-align:center;
+min-height:18px;
+}
+.success{color:#3ba55d;}
+.error{color:#ed4245;}
+.info{color:#faa61a;}
+</style>
+</head>
+<body>
+<div class="container">
+<h2>Webhook Sender</h2>
+
+<input id="webhook" placeholder="Webhook URL">
+<input id="username" placeholder="Username (optional)">
+<input id="avatar" placeholder="Avatar URL (optional)">
+<input id="amount" type="number" placeholder="Amount (max 5)" min="1" max="5">
+<textarea id="message" placeholder="Message"></textarea>
+
+<button id="sendBtn" onclick="sendMessage()">Send</button>
+<div id="status" class="status"></div>
+</div>
+
+<script>
+function setStatus(text, type){
+const el = document.getElementById("status");
+el.textContent = text;
+el.className = "status " + type;
+}
+
+function isValidUrl(url){
+try{
+new URL(url);
+return true;
+}catch{
+return false;
+}
+}
+
+async function sendMessage(){
+const webhook = document.getElementById("webhook").value.trim();
+const username = document.getElementById("username").value.trim();
+const avatar = document.getElementById("avatar").value.trim();
+const message = document.getElementById("message").value.trim();
+let amount = parseInt(document.getElementById("amount").value);
+
+const btn = document.getElementById("sendBtn");
+
+if(!webhook){
+setStatus("Webhook URL is required.", "error");
+return;
+}
+
+if(!isValidUrl(webhook)){
+setStatus("Invalid webhook URL.", "error");
+return;
+}
+
+if(!message){
+setStatus("Message cannot be empty.", "error");
+return;
+}
+
+if(!amount || amount < 1) amount = 1;
+if(amount > 5) amount = 5;
+
+btn.disabled = true;
+setStatus("Sending...", "info");
+
+const payload = { content: message };
+
+if(username) payload.username = username;
+if(avatar) payload.avatar_url = avatar;
+
+let successCount = 0;
+let failCount = 0;
+
+for(let i = 0; i < amount; i++){
+try{
+const res = await fetch(webhook, {
+method: "POST",
+headers: { "Content-Type": "application/json" },
+body: JSON.stringify(payload)
+});
+
+if(res.ok){
+successCount++;
+}else{
+failCount++;
+}
+}catch{
+failCount++;
+}
+}
+
+btn.disabled = false;
+
+if(failCount === 0){
+setStatus("Successfully sent!", "success");
+}else if(successCount > 0){
+setStatus("Partially sent. Success: " + successCount + " Fail: " + failCount, "error");
+}else{
+setStatus("Failed to send message.", "error");
+}
+}
+</script>
+</body>
+</html>
