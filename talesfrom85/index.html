@@ -148,6 +148,22 @@ body{
     gap:10px;
 }
 
+.logo {
+    margin-bottom: 40px;
+}
+
+.title-logo {
+    max-width: 420px;
+    width: 100%;
+    height: auto;
+    transition: transform 0.4s ease;
+}
+
+
+.title-logo {
+    image-rendering: crisp-edges;
+}
+
 .btn{
     padding:10px 20px;
     border-radius:25px;
@@ -165,10 +181,14 @@ body{
 </head>
 
 <body>
-
+  
 <div class="entry" id="entry">
     <div class="entry-box">
-        <h1>Tales from '85</h1>
+        <div class="logo">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhhC3bzGpnU7-xW9YBxsiDYreiDq_Zp5pJtyTR3zwUNqyjHs5hSi4t5gFxHqO0Qkwdm91H4T8G537J2YAQUgdk0ZreEwIiyx6ZbnDgvfRKDsHOd9829_6EmIuRV7_SjtqkB87JaZFmR4JkNDGLIIN9RBlHnr0Zxz_R8E3S5CQGbHUYTaSbnDP13NBBc4rV7/s2515/IMG_9033.png" 
+                 alt="Tales from '85" 
+                 class="title-logo">
+                 </div>
 
         <div class="langs">
             <div class="lang-btn" onclick="selectLang('en', this)">🇬🇧 English</div>
