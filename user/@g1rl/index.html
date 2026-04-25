@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@g1rl.</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+        
+        :root {
+            --bg: #0a0a0a;
+            --accent: #ff00aa;
+            --text: #00ffcc;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Press Start 2P', system-ui;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .scanlines {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent 0px,
+                transparent 2px,
+                rgba(0, 255, 204, 0.03) 2px,
+                rgba(0, 255, 204, 0.03) 4px
+            );
+            pointer-events: none;
+            z-index: 9999;
+        }
+        
+        header {
+            text-align: center;
+            padding: 50px 20px 30px;
+            border-bottom: 4px solid var(--accent);
+        }
+        
+        .container {
+            max-width: 720px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .profile {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .avatar {
+            width: 130px;
+            height: 130px;
+            border: 6px solid var(--accent);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            overflow: hidden;
+            box-shadow: 0 0 40px var(--accent);
+        }
+        
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .username {
+            font-size: 2.2rem;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+        
+        .bio {
+            max-width: 500px;
+            margin: 0 auto;
+            font-size: 0.95rem;
+            opacity: 0.85;
+        }
+        
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+        
+        .link-card {
+            background: #111;
+            border: 3px solid var(--accent);
+            padding: 22px 28px;
+            color: var(--text);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.3s;
+        }
+        
+        .link-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 0 40px var(--accent);
+            background: #1a1a1a;
+        }
+        
+        .link-icon {
+            font-size: 2.4rem;
+            width: 55px;
+            flex-shrink: 0;
+        }
+        
+        .link-content h3 {
+            color: #fff;
+            font-size: 1.15rem;
+            margin-bottom: 6px;
+        }
+        
+        .link-content p {
+            font-size: 0.8rem;
+            opacity: 0.75;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 60px 20px 40px;
+            font-size: 0.75rem;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="scanlines"></div>
+    <div class="container">
+        <div class="profile">
+            <div class="avatar" id="avatar">
+                <img src="" alt="avatar" id="avatar-img">
+            </div>
+            <div class="username" id="username"></div>
+            <div class="bio" id="bio"></div>
+        </div>
+
+        <div class="links" id="links-container">
+        </div>
+    </div>
+
+    <footer>© Sh4d0w 2026
+    </footer>
+
+    <script>
+        const siteData = {
+            username: "@g1rl.",
+            avatar: "https://picsum.photos/id/25/400",
+            bio: "Who am i?",
+            
+            links: [
+                {
+                    title: "Do you also want an Site like this?",
+                    url: "https://discord.gg/z5hj8KPhtQ",
+                    icon: "$",
+                    desc: "Then click here and Join us!<br>(Its free)"
+                }
+            ]
+        };
+        
+        function renderProfile() {
+            document.getElementById('username').textContent = siteData.username;
+            document.getElementById('bio').textContent = siteData.bio;
+            document.getElementById('avatar-img').src = siteData.avatar;
+        }
+
+        function renderLinks() {
+            const container = document.getElementById('links-container');
+            container.innerHTML = '';
+
+            siteData.links.forEach(link => {
+                const card = document.createElement('a');
+                card.href = link.url;
+                card.target = "_blank";
+                card.className = 'link-card';
+                
+                card.innerHTML = `
+                    <div class="link-icon">${link.icon}</div>
+                    <div class="link-content">
+                        <h3>${link.title}</h3>
+                        <p>${link.desc || ''}</p>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        function init() {
+            renderProfile();
+            renderLinks();
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
