@@ -169,7 +169,7 @@ body{
 </head>
 
 <body>
-  
+
 <div class="entry" id="entry">
     <div class="entry-box">
         <div class="logo">
@@ -182,9 +182,8 @@ body{
             <div class="lang-btn" onclick="selectLang('en', this)"> English</div>
             <div class="lang-btn" onclick="selectLang('de', this)"> Deutsch</div>
         </div>
-
         <button id="enterBtn" class="enter-btn" onclick="enter()">ENTER</button>
-        <br><br>
+        <br><div id="adNote" style="margin-top:15px;color:#888;font-size:0.9rem;"></div><br>
         <footer>© Sh4d0w 2026 • © Netflix</footer>
     </div>
 </div>
@@ -200,6 +199,7 @@ body{
         <video id="videoPlayer" controls autoplay playsinline>
             Your browser does not support video playback.
         </video>
+        <iframe id="iframePlayer" style="display:none;width:100%;height:100%;border:0;" allowfullscreen></iframe>
     </div>
 
     <div class="ep" id="epText"></div>
@@ -235,8 +235,6 @@ const episodes = [...Array(10)].map((_, i) => ({
     id: i + 1
 }));
 
-
-/* VIDEOS */
 const videos={
     en:{
       1:"https://bold-cdn.noahwilliams911.workers.dev/video.m3u8?type=hls&q=Q0VtelVISmFNaFFhMTRzQTg1NlNSQTpNYkYtOGNZbGpvSmY2Q21JYWFfUGxYT1VBM1JaNk52UXBaLUlTZFZrOEVTczBkU24zYXRvcFktdHAyOGp5eWU3a1JUelNlSnN6R2RWOGY5UDZuZndoTWNEWmxEN0V5Z3hleTlLV0RrSm82a1o4ajhQbUdvbEs0R1FnZkV3M3c2WFpnV3QxZmRfclVmd1lqaTRyS1ZMZkRvc29kQzFTb1dvaUt0bGlqcURIWUk%3D",
@@ -254,14 +252,14 @@ const videos={
     de:{
       1:"https://voe.sx/e/kkmydsenvyvx",
       2:"https://voe.sx/e/akuhi0g0uphr",
-      3:"https://voe.sx/ylcwrulpuzpz",
-      4:"https://voe.sx/ksitys4ehafb",
-      5:"https://voe.sx/q0xknipbspia",
+      3:"https://voe.sx/e/ylcwrulpuzpz",
+      4:"https://voe.sx/e/ksitys4ehafb",
+      5:"https://voe.sx/e/q0xknipbspia",
       6:"https://voe.sx/e/ektbfnnz95k0",
-      7:"",
-      8:"",
-      9:"",
-      10:""
+      7:"https://voe.sx/e/kedrvzfo4hzz",
+      8:"https://voe.sx/e/vsnm1k2ugcp2",
+      9:"https://voe.sx/e/1vdmnobzqoio",
+      10:"https://voe.sx/e/fzjkqo4nrigv"
       }
 };
 
@@ -279,16 +277,16 @@ const chapters = {
         10:"Countdown"
     },
     de:{
-        1:"Der Anfang",
-        2:"Das Signal",
-        3:"Der Schatten",
-        4:"Die Flucht",
-        5:"",
-        6:"",
-        7:"",
-        8:"",
-        9:"",
-        10:""
+        1:"Willkommen in Hawkins",
+        2:"Schlechte Ernte",
+        3:"Evolution",
+        4:"Das Geständnis",
+        5:"Der Weekl, Watcher",
+        6:"Ein Sturm zieht auf",
+        7:"Gefangen im Sturm",
+        8:"Die Party",
+        9:"Der Verdacht",
+        10:"Ein letzter Wettlauf gegen die Zeit"
     }
 };
 
@@ -303,6 +301,14 @@ function selectLang(l, el){
 
     const btn=document.getElementById("enterBtn");
     btn.classList.add("enabled");
+
+    const note=document.getElementById("adNote");
+
+    if(lang === "de"){
+        note.innerText = "Wir empfehlen ein AdBlocker für ein besseres Seherlebnis.";
+    } else {
+        note.innerText = "";
+    }
 }
 
 function enter(){
@@ -347,44 +353,48 @@ function openPlayer(id) {
 
 function loadVideo() {
     const url = videos[lang][currentEpisode];
+
     if (!url) {
         alert("No video available for this episode yet.");
         return;
     }
 
     const video = document.getElementById("videoPlayer");
+    const iframe = document.getElementById("iframePlayer");
     const epText = document.getElementById("epText");
 
-const name = chapters[lang][currentEpisode] || "";
-const numText = lang === "en"
-    ? numberToEnglish(currentEpisode)
-    : numberToGerman(currentEpisode);
+    const name = chapters[lang][currentEpisode] || "";
 
-epText.innerText =
-    (lang === "en" ? "Chapter " : "Kapitel ") +
-    numText +
-    (name ? " - " + name : "");
+    epText.innerText =
+        (lang === "en" ? "Episode " : "Folge ") +
+        currentEpisode +
+        (name ? " - " + name : "");
+
+    if (url.includes("voe.sx")) {
+        video.style.display = "none";
+        iframe.style.display = "block";
+        iframe.src = url;
+        return;
+    }
+
+    iframe.style.display = "none";
+    video.style.display = "block";
+    iframe.src = "";
 
     video.innerHTML = '';
 
     if (Hls.isSupported()) {
-        const hls = new Hls({
-            enableWorker: true,
-            lowLatencyMode: true,
-            backBufferLength: 90
-        });
+        const hls = new Hls();
         hls.loadSource(url);
         hls.attachMedia(video);
-        
-        hls.on(Hls.Events.MANIFEST_PARSED, function() {
+
+        hls.on(Hls.Events.MANIFEST_PARSED, () => {
             video.play().catch(() => {});
         });
     } 
     else if (video.canPlayType('application/vnd.apple.mpegurl')) {
         video.src = url;
-        video.addEventListener('loadedmetadata', () => {
-            video.play().catch(() => {});
-        });
+        video.play().catch(() => {});
     } 
     else {
         alert("Your browser does not support HLS playback.");
